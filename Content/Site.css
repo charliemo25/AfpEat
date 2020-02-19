@@ -20,3 +20,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.bg-custom-afpa {
+    background-image: linear-gradient(15deg, #44a33d 0%, #87bb34 100%);
+}

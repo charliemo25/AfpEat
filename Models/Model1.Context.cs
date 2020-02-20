@@ -13,10 +13,10 @@ namespace AfpEat.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AfpEATEntities1 : DbContext
+    public partial class AfpEatEntities : DbContext
     {
-        public AfpEATEntities1()
-            : base("name=AfpEATEntities1")
+        public AfpEatEntities()
+            : base("name=AfpEatEntities")
         {
         }
     

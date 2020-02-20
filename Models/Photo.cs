@@ -17,6 +17,7 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Photo()
         {
+            this.TypeCuisines = new HashSet<TypeCuisine>();
             this.Produits = new HashSet<Produit>();
             this.Restaurants = new HashSet<Restaurant>();
         }
@@ -24,6 +25,8 @@ namespace AfpEat.Models
         public int IdPhoto { get; set; }
         public string Nom { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TypeCuisine> TypeCuisines { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Produit> Produits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

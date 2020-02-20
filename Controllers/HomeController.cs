@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AfpEat.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,14 @@ namespace AfpEat.Controllers
 {
     public class HomeController : Controller
     {
+
+        private AfpEatEntities db = new AfpEatEntities();
+
         public ActionResult Index()
         {
-            return View();
+
+            ViewBag.Restaurants = db.Restaurants.ToList();
+            return View(db.TypeCuisines.ToList());
         }
 
         public ActionResult About()

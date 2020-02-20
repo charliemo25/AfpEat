@@ -18,15 +18,14 @@ namespace AfpEat.Models
         public TypeCuisine()
         {
             this.Restaurants = new HashSet<Restaurant>();
-            this.Photos = new HashSet<Photo>();
         }
     
         public int IdTypeCuisine { get; set; }
+        public int IdPhoto { get; set; }
         public string Nom { get; set; }
     
+        public virtual Photo Photo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restaurant> Restaurants { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Photo> Photos { get; set; }
     }
 }

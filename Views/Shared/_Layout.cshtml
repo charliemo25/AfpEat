@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
@@ -9,7 +9,7 @@
 
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body class="d-flex flex-column h-100">
     <nav class="navbar navbar-dark bg-custom-afpa navbar-expand-sm pl-5 pr-5">
         <a class="navbar-brand" href="@Url.Action("Index","Home")">
             <img src="~/Images/logo-afpa.jpg" height="30" alt="logo">
@@ -36,14 +36,20 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="container-fluid body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mon application ASP.NET</p>
-        </footer>
-    </div>
 
+    </div>
+    <hr />
+    <footer class="mt-auto">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <p>&copy; @DateTime.Now.Year - AfpEat</p>
+                </div>
+            </div>
+        </div>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

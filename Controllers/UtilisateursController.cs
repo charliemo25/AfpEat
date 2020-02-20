@@ -14,6 +14,39 @@ namespace AfpEat.Controllers
     {
         private AfpEatEntities db = new AfpEatEntities();
 
+        // GET: Utilisateurs/Connexion
+        public ActionResult Connexion()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Connexion([Bind(Include = "Matricule,Password")] Utilisateur utilisateur)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var utilisateurs = db.Utilisateurs.Where(p => p.Matricule == utilisateur.Matricule
+                && p.Password == utilisateur.Password).ToList();
+
+                if (utilisateurs != null && utilisateurs.Count() == 1)
+                {
+                    utilisateur = utilisateurs.First();
+
+                    HttpContext.Session.Add("Utilisateur", utilisateur);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Erreur = "Erreur d'identification";
+                }
+            }
+
+            return View();
+        }
+
         // GET: Utilisateurs
         public ActionResult Index()
         {
@@ -46,13 +79,15 @@ namespace AfpEat.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdUtilisateur,Nom,Prenom,Matricule,Password,Statut,Solde")] Utilisateur utilisateur)
+        public ActionResult Create([Bind(Include = "IdUtilisateur,Nom,Prenom,Matricule,Password")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
+                utilisateur.Statut = true;
+                
                 db.Utilisateurs.Add(utilisateur);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(utilisateur);

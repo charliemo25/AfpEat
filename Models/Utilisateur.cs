@@ -11,7 +11,8 @@ namespace AfpEat.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Utilisateur
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,6 +26,9 @@ namespace AfpEat.Models
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public string Matricule { get; set; }
+
+        [Display(Name = "Mot de passe")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         public bool Statut { get; set; }
         public decimal Solde { get; set; }

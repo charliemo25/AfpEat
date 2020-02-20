@@ -220,6 +220,9 @@
     <Content Include="Images\Chinois.jpg" />
     <Content Include="Images\FastFood.jpg" />
     <Content Include="Images\Indien.jpg" />
+    <Content Include="Images\Kariya1.jpg" />
+    <Content Include="Images\Kariya2.jpg" />
+    <Content Include="Images\Kariya3.jpg" />
     <Content Include="Images\Libanais.jpg" />
     <Content Include="Images\logo-afpa.jpg" />
     <Content Include="Images\Japonais.jpg" />

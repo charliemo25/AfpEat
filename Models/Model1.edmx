@@ -54,7 +54,6 @@
             <PropertyRef Name="IdMenu" />
           </Key>
           <Property Name="IdMenu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdRestaurant" Type="int" Nullable="false" />
           <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Statut" Type="bit" Nullable="false" />
           <Property Name="Prix" Type="decimal" Precision="10" Scale="2" Nullable="false" />
@@ -63,9 +62,11 @@
           <Key>
             <PropertyRef Name="IdMenu" />
             <PropertyRef Name="IdCategorie" />
+            <PropertyRef Name="IdRestaurant" />
           </Key>
           <Property Name="IdMenu" Type="int" Nullable="false" />
           <Property Name="IdCategorie" Type="int" Nullable="false" />
+          <Property Name="IdRestaurant" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Operation">
           <Key>
@@ -89,7 +90,6 @@
             <PropertyRef Name="IdProduit" />
           </Key>
           <Property Name="IdProduit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdRestaurant" Type="int" Nullable="false" />
           <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Prix" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
@@ -100,9 +100,11 @@
           <Key>
             <PropertyRef Name="IdProduit" />
             <PropertyRef Name="IdCategorie" />
+            <PropertyRef Name="IdRestaurant" />
           </Key>
           <Property Name="IdProduit" Type="int" Nullable="false" />
           <Property Name="IdCategorie" Type="int" Nullable="false" />
+          <Property Name="IdRestaurant" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProduitMenu">
           <Key>
@@ -266,18 +268,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Menu_Restaurant">
-          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Restaurant">
-              <PropertyRef Name="IdRestaurant" />
-            </Principal>
-            <Dependent Role="Menu">
-              <PropertyRef Name="IdRestaurant" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MenuCategorie_Categorie">
           <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
           <End Role="MenuCategorie" Type="Self.MenuCategorie" Multiplicity="*" />
@@ -299,6 +289,18 @@
             </Principal>
             <Dependent Role="MenuCategorie">
               <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuCategorie_Restaurant">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="MenuCategorie" Type="Self.MenuCategorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="IdRestaurant" />
+            </Principal>
+            <Dependent Role="MenuCategorie">
+              <PropertyRef Name="IdRestaurant" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -326,18 +328,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Produit_Restaurant">
-          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
-          <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Restaurant">
-              <PropertyRef Name="IdRestaurant" />
-            </Principal>
-            <Dependent Role="Produit">
-              <PropertyRef Name="IdRestaurant" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProduitCategorie_Categorie">
           <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
           <End Role="ProduitCategorie" Type="Self.ProduitCategorie" Multiplicity="*" />
@@ -359,6 +349,18 @@
             </Principal>
             <Dependent Role="ProduitCategorie">
               <PropertyRef Name="IdProduit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProduitCategorie_Restaurant">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="ProduitCategorie" Type="Self.ProduitCategorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="IdRestaurant" />
+            </Principal>
+            <Dependent Role="ProduitCategorie">
+              <PropertyRef Name="IdRestaurant" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -506,16 +508,16 @@
             <End Role="Produit" EntitySet="Produit" />
             <End Role="CommandeProduit" EntitySet="CommandeProduit" />
           </AssociationSet>
-          <AssociationSet Name="FK_Menu_Restaurant" Association="Self.FK_Menu_Restaurant">
-            <End Role="Restaurant" EntitySet="Restaurant" />
-            <End Role="Menu" EntitySet="Menu" />
-          </AssociationSet>
           <AssociationSet Name="FK_MenuCategorie_Categorie" Association="Self.FK_MenuCategorie_Categorie">
             <End Role="Categorie" EntitySet="Categorie" />
             <End Role="MenuCategorie" EntitySet="MenuCategorie" />
           </AssociationSet>
           <AssociationSet Name="FK_MenuCategorie_Menu" Association="Self.FK_MenuCategorie_Menu">
             <End Role="Menu" EntitySet="Menu" />
+            <End Role="MenuCategorie" EntitySet="MenuCategorie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuCategorie_Restaurant" Association="Self.FK_MenuCategorie_Restaurant">
+            <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="MenuCategorie" EntitySet="MenuCategorie" />
           </AssociationSet>
           <AssociationSet Name="FK_Operation_TypeVersement" Association="Self.FK_Operation_TypeVersement">
@@ -526,16 +528,16 @@
             <End Role="Utilisateur" EntitySet="Utilisateur" />
             <End Role="Operation" EntitySet="Operation" />
           </AssociationSet>
-          <AssociationSet Name="FK_Produit_Restaurant" Association="Self.FK_Produit_Restaurant">
-            <End Role="Restaurant" EntitySet="Restaurant" />
-            <End Role="Produit" EntitySet="Produit" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProduitCategorie_Categorie" Association="Self.FK_ProduitCategorie_Categorie">
             <End Role="Categorie" EntitySet="Categorie" />
             <End Role="ProduitCategorie" EntitySet="ProduitCategorie" />
           </AssociationSet>
           <AssociationSet Name="FK_ProduitCategorie_Produit" Association="Self.FK_ProduitCategorie_Produit">
             <End Role="Produit" EntitySet="Produit" />
+            <End Role="ProduitCategorie" EntitySet="ProduitCategorie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProduitCategorie_Restaurant" Association="Self.FK_ProduitCategorie_Restaurant">
+            <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="ProduitCategorie" EntitySet="ProduitCategorie" />
           </AssociationSet>
           <AssociationSet Name="FK_ProduitMenu_CommandeProduit" Association="Self.FK_ProduitMenu_CommandeProduit">
@@ -583,8 +585,8 @@
           <Property Name="IdCategorie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Statut" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Menus" Relationship="Self.MenuCategorie" FromRole="Categorie" ToRole="Menu" />
-          <NavigationProperty Name="Produits" Relationship="Self.ProduitCategorie" FromRole="Categorie" ToRole="Produit" />
+          <NavigationProperty Name="MenuCategories" Relationship="Self.FK_MenuCategorie_Categorie" FromRole="Categorie" ToRole="MenuCategorie" />
+          <NavigationProperty Name="ProduitCategories" Relationship="Self.FK_ProduitCategorie_Categorie" FromRole="Categorie" ToRole="ProduitCategorie" />
         </EntityType>
         <EntityType Name="Commande">
           <Key>
@@ -628,14 +630,25 @@
             <PropertyRef Name="IdMenu" />
           </Key>
           <Property Name="IdMenu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdRestaurant" Type="Int32" Nullable="false" />
           <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Statut" Type="Boolean" Nullable="false" />
           <Property Name="Prix" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Restaurant" Relationship="Self.FK_Menu_Restaurant" FromRole="Menu" ToRole="Restaurant" />
+          <NavigationProperty Name="MenuCategories" Relationship="Self.FK_MenuCategorie_Menu" FromRole="Menu" ToRole="MenuCategorie" />
           <NavigationProperty Name="Commandes" Relationship="Self.CommandeMenu" FromRole="Menu" ToRole="Commande" />
-          <NavigationProperty Name="Categories" Relationship="Self.MenuCategorie" FromRole="Menu" ToRole="Categorie" />
           <NavigationProperty Name="CommandeProduits" Relationship="Self.ProduitMenu" FromRole="Menu" ToRole="CommandeProduit" />
+        </EntityType>
+        <EntityType Name="MenuCategorie">
+          <Key>
+            <PropertyRef Name="IdMenu" />
+            <PropertyRef Name="IdCategorie" />
+            <PropertyRef Name="IdRestaurant" />
+          </Key>
+          <Property Name="IdMenu" Type="Int32" Nullable="false" />
+          <Property Name="IdCategorie" Type="Int32" Nullable="false" />
+          <Property Name="IdRestaurant" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK_MenuCategorie_Categorie" FromRole="MenuCategorie" ToRole="Categorie" />
+          <NavigationProperty Name="Menu" Relationship="Self.FK_MenuCategorie_Menu" FromRole="MenuCategorie" ToRole="Menu" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.FK_MenuCategorie_Restaurant" FromRole="MenuCategorie" ToRole="Restaurant" />
         </EntityType>
         <EntityType Name="Operation">
           <Key>
@@ -664,16 +677,27 @@
             <PropertyRef Name="IdProduit" />
           </Key>
           <Property Name="IdProduit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdRestaurant" Type="Int32" Nullable="false" />
           <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Prix" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Quantite" Type="Int32" Nullable="false" />
           <Property Name="Statut" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="CommandeProduits" Relationship="Self.FK_CommandeProduit_Produit" FromRole="Produit" ToRole="CommandeProduit" />
-          <NavigationProperty Name="Restaurant" Relationship="Self.FK_Produit_Restaurant" FromRole="Produit" ToRole="Restaurant" />
-          <NavigationProperty Name="Categories" Relationship="Self.ProduitCategorie" FromRole="Produit" ToRole="Categorie" />
+          <NavigationProperty Name="ProduitCategories" Relationship="Self.FK_ProduitCategorie_Produit" FromRole="Produit" ToRole="ProduitCategorie" />
           <NavigationProperty Name="Photos" Relationship="Self.ProduitPhoto" FromRole="Produit" ToRole="Photo" />
+        </EntityType>
+        <EntityType Name="ProduitCategorie">
+          <Key>
+            <PropertyRef Name="IdProduit" />
+            <PropertyRef Name="IdCategorie" />
+            <PropertyRef Name="IdRestaurant" />
+          </Key>
+          <Property Name="IdProduit" Type="Int32" Nullable="false" />
+          <Property Name="IdCategorie" Type="Int32" Nullable="false" />
+          <Property Name="IdRestaurant" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Categorie" Relationship="Self.FK_ProduitCategorie_Categorie" FromRole="ProduitCategorie" ToRole="Categorie" />
+          <NavigationProperty Name="Produit" Relationship="Self.FK_ProduitCategorie_Produit" FromRole="ProduitCategorie" ToRole="Produit" />
+          <NavigationProperty Name="Restaurant" Relationship="Self.FK_ProduitCategorie_Restaurant" FromRole="ProduitCategorie" ToRole="Restaurant" />
         </EntityType>
         <EntityType Name="Restaurant">
           <Key>
@@ -691,8 +715,8 @@
           <Property Name="Ville" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Statut" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Commandes" Relationship="Self.FK_Commande_Restaurant" FromRole="Restaurant" ToRole="Commande" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK_Menu_Restaurant" FromRole="Restaurant" ToRole="Menu" />
-          <NavigationProperty Name="Produits" Relationship="Self.FK_Produit_Restaurant" FromRole="Restaurant" ToRole="Produit" />
+          <NavigationProperty Name="MenuCategories" Relationship="Self.FK_MenuCategorie_Restaurant" FromRole="Restaurant" ToRole="MenuCategorie" />
+          <NavigationProperty Name="ProduitCategories" Relationship="Self.FK_ProduitCategorie_Restaurant" FromRole="Restaurant" ToRole="ProduitCategorie" />
           <NavigationProperty Name="TypeCuisine" Relationship="Self.FK_Restaurant_TypeCuisine" FromRole="Restaurant" ToRole="TypeCuisine" />
           <NavigationProperty Name="Photos" Relationship="Self.RestaurantPhoto" FromRole="Restaurant" ToRole="Photo" />
         </EntityType>
@@ -739,6 +763,30 @@
           <NavigationProperty Name="Commandes" Relationship="Self.FK_Commande_Utilisateur" FromRole="Utilisateur" ToRole="Commande" />
           <NavigationProperty Name="Operations" Relationship="Self.FK_Operation_Utilisateur" FromRole="Utilisateur" ToRole="Operation" />
         </EntityType>
+        <Association Name="FK_MenuCategorie_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="MenuCategorie" Type="Self.MenuCategorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="IdCategorie" />
+            </Principal>
+            <Dependent Role="MenuCategorie">
+              <PropertyRef Name="IdCategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProduitCategorie_Categorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
+          <End Role="ProduitCategorie" Type="Self.ProduitCategorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorie">
+              <PropertyRef Name="IdCategorie" />
+            </Principal>
+            <Dependent Role="ProduitCategorie">
+              <PropertyRef Name="IdCategorie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Commande_EtatCommande">
           <End Role="EtatCommande" Type="Self.EtatCommande" Multiplicity="1" />
           <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
@@ -799,14 +847,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Menu_Restaurant">
+        <Association Name="FK_MenuCategorie_Menu">
+          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
+          <End Role="MenuCategorie" Type="Self.MenuCategorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menu">
+              <PropertyRef Name="IdMenu" />
+            </Principal>
+            <Dependent Role="MenuCategorie">
+              <PropertyRef Name="IdMenu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuCategorie_Restaurant">
           <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <End Role="MenuCategorie" Type="Self.MenuCategorie" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Restaurant">
               <PropertyRef Name="IdRestaurant" />
             </Principal>
-            <Dependent Role="Menu">
+            <Dependent Role="MenuCategorie">
               <PropertyRef Name="IdRestaurant" />
             </Dependent>
           </ReferentialConstraint>
@@ -847,14 +907,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Produit_Restaurant">
+        <Association Name="FK_ProduitCategorie_Produit">
+          <End Role="Produit" Type="Self.Produit" Multiplicity="1" />
+          <End Role="ProduitCategorie" Type="Self.ProduitCategorie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produit">
+              <PropertyRef Name="IdProduit" />
+            </Principal>
+            <Dependent Role="ProduitCategorie">
+              <PropertyRef Name="IdProduit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProduitCategorie_Restaurant">
           <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
-          <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
+          <End Role="ProduitCategorie" Type="Self.ProduitCategorie" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Restaurant">
               <PropertyRef Name="IdRestaurant" />
             </Principal>
-            <Dependent Role="Produit">
+            <Dependent Role="ProduitCategorie">
               <PropertyRef Name="IdRestaurant" />
             </Dependent>
           </ReferentialConstraint>
@@ -875,14 +947,6 @@
           <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
         </Association>
-        <Association Name="MenuCategorie">
-          <End Role="Categorie" Type="Self.Categorie" Multiplicity="*" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-        </Association>
-        <Association Name="ProduitCategorie">
-          <End Role="Categorie" Type="Self.Categorie" Multiplicity="*" />
-          <End Role="Produit" Type="Self.Produit" Multiplicity="*" />
-        </Association>
         <Association Name="ProduitMenu">
           <End Role="CommandeProduit" Type="Self.CommandeProduit" Multiplicity="*" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
@@ -901,14 +965,24 @@
           <EntitySet Name="CommandeProduits" EntityType="Self.CommandeProduit" />
           <EntitySet Name="EtatCommandes" EntityType="Self.EtatCommande" />
           <EntitySet Name="Menus" EntityType="Self.Menu" />
+          <EntitySet Name="MenuCategories" EntityType="Self.MenuCategorie" />
           <EntitySet Name="Operations" EntityType="Self.Operation" />
           <EntitySet Name="Photos" EntityType="Self.Photo" />
           <EntitySet Name="Produits" EntityType="Self.Produit" />
+          <EntitySet Name="ProduitCategories" EntityType="Self.ProduitCategorie" />
           <EntitySet Name="Restaurants" EntityType="Self.Restaurant" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TypeCuisines" EntityType="Self.TypeCuisine" />
           <EntitySet Name="TypeVersements" EntityType="Self.TypeVersement" />
           <EntitySet Name="Utilisateurs" EntityType="Self.Utilisateur" />
+          <AssociationSet Name="FK_MenuCategorie_Categorie" Association="Self.FK_MenuCategorie_Categorie">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="MenuCategorie" EntitySet="MenuCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProduitCategorie_Categorie" Association="Self.FK_ProduitCategorie_Categorie">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="ProduitCategorie" EntitySet="ProduitCategories" />
+          </AssociationSet>
           <AssociationSet Name="FK_Commande_EtatCommande" Association="Self.FK_Commande_EtatCommande">
             <End Role="EtatCommande" EntitySet="EtatCommandes" />
             <End Role="Commande" EntitySet="Commandes" />
@@ -929,9 +1003,13 @@
             <End Role="Produit" EntitySet="Produits" />
             <End Role="CommandeProduit" EntitySet="CommandeProduits" />
           </AssociationSet>
-          <AssociationSet Name="FK_Menu_Restaurant" Association="Self.FK_Menu_Restaurant">
-            <End Role="Restaurant" EntitySet="Restaurants" />
+          <AssociationSet Name="FK_MenuCategorie_Menu" Association="Self.FK_MenuCategorie_Menu">
             <End Role="Menu" EntitySet="Menus" />
+            <End Role="MenuCategorie" EntitySet="MenuCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuCategorie_Restaurant" Association="Self.FK_MenuCategorie_Restaurant">
+            <End Role="Restaurant" EntitySet="Restaurants" />
+            <End Role="MenuCategorie" EntitySet="MenuCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_Operation_TypeVersement" Association="Self.FK_Operation_TypeVersement">
             <End Role="TypeVersement" EntitySet="TypeVersements" />
@@ -945,9 +1023,13 @@
             <End Role="Photo" EntitySet="Photos" />
             <End Role="TypeCuisine" EntitySet="TypeCuisines" />
           </AssociationSet>
-          <AssociationSet Name="FK_Produit_Restaurant" Association="Self.FK_Produit_Restaurant">
-            <End Role="Restaurant" EntitySet="Restaurants" />
+          <AssociationSet Name="FK_ProduitCategorie_Produit" Association="Self.FK_ProduitCategorie_Produit">
             <End Role="Produit" EntitySet="Produits" />
+            <End Role="ProduitCategorie" EntitySet="ProduitCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProduitCategorie_Restaurant" Association="Self.FK_ProduitCategorie_Restaurant">
+            <End Role="Restaurant" EntitySet="Restaurants" />
+            <End Role="ProduitCategorie" EntitySet="ProduitCategories" />
           </AssociationSet>
           <AssociationSet Name="FK_Restaurant_TypeCuisine" Association="Self.FK_Restaurant_TypeCuisine">
             <End Role="TypeCuisine" EntitySet="TypeCuisines" />
@@ -956,14 +1038,6 @@
           <AssociationSet Name="CommandeMenu" Association="Self.CommandeMenu">
             <End Role="Commande" EntitySet="Commandes" />
             <End Role="Menu" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="MenuCategorie" Association="Self.MenuCategorie">
-            <End Role="Categorie" EntitySet="Categories" />
-            <End Role="Menu" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="ProduitCategorie" Association="Self.ProduitCategorie">
-            <End Role="Categorie" EntitySet="Categories" />
-            <End Role="Produit" EntitySet="Produits" />
           </AssociationSet>
           <AssociationSet Name="ProduitMenu" Association="Self.ProduitMenu">
             <End Role="CommandeProduit" EntitySet="CommandeProduits" />
@@ -1028,10 +1102,18 @@
             <EntityTypeMapping TypeName="AfpEatModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-                <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
                 <ScalarProperty Name="Statut" ColumnName="Statut" />
                 <ScalarProperty Name="Prix" ColumnName="Prix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuCategories">
+            <EntityTypeMapping TypeName="AfpEatModel.MenuCategorie">
+              <MappingFragment StoreEntitySet="MenuCategorie">
+                <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
+                <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
+                <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1058,12 +1140,20 @@
             <EntityTypeMapping TypeName="AfpEatModel.Produit">
               <MappingFragment StoreEntitySet="Produit">
                 <ScalarProperty Name="IdProduit" ColumnName="IdProduit" />
-                <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
                 <ScalarProperty Name="Prix" ColumnName="Prix" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Quantite" ColumnName="Quantite" />
                 <ScalarProperty Name="Statut" ColumnName="Statut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProduitCategories">
+            <EntityTypeMapping TypeName="AfpEatModel.ProduitCategorie">
+              <MappingFragment StoreEntitySet="ProduitCategorie">
+                <ScalarProperty Name="IdProduit" ColumnName="IdProduit" />
+                <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
+                <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1132,22 +1222,6 @@
             </EndProperty>
             <EndProperty Name="Menu">
               <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="MenuCategorie" TypeName="AfpEatModel.MenuCategorie" StoreEntitySet="MenuCategorie">
-            <EndProperty Name="Categorie">
-              <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
-            </EndProperty>
-            <EndProperty Name="Menu">
-              <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="ProduitCategorie" TypeName="AfpEatModel.ProduitCategorie" StoreEntitySet="ProduitCategorie">
-            <EndProperty Name="Categorie">
-              <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
-            </EndProperty>
-            <EndProperty Name="Produit">
-              <ScalarProperty Name="IdProduit" ColumnName="IdProduit" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="ProduitMenu" TypeName="AfpEatModel.ProduitMenu" StoreEntitySet="ProduitMenu">

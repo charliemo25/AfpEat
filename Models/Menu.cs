@@ -17,22 +17,20 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Menu()
         {
+            this.MenuCategories = new HashSet<MenuCategorie>();
             this.Commandes = new HashSet<Commande>();
-            this.Categories = new HashSet<Categorie>();
             this.CommandeProduits = new HashSet<CommandeProduit>();
         }
     
         public int IdMenu { get; set; }
-        public int IdRestaurant { get; set; }
         public string Nom { get; set; }
         public bool Statut { get; set; }
         public decimal Prix { get; set; }
     
-        public virtual Restaurant Restaurant { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MenuCategorie> MenuCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Commande> Commandes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Categorie> Categories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommandeProduit> CommandeProduits { get; set; }
     }

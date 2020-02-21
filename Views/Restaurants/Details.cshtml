@@ -38,7 +38,7 @@
     <div id="Commande" class="row">
         <div class="col-12">
             <!-- Collapse Categorie -->
-            <div class="accordion" id="accordionExample">
+            <div class="accordion" id="accordionCategorie">
                 <!-- Categorie -->
                 <div class="card">
                     <!-- Nom de la categorie -->
@@ -56,9 +56,11 @@
                         </div>
                     </div>
                 </div>
+                @foreach (var produit in Model.Produits)
+                {
 
+                }
             </div>
-
         </div>
     </div>
 </section>

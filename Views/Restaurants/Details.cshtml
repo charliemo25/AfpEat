@@ -56,9 +56,38 @@
                         </div>
                     </div>
                 </div>
-                @foreach (var produit in Model.Produits)
+                <!-- Faire l'affichage des menus -->
+                <!-- Affichage des Categories de produits -->
+                @{
+                    int p = 0;
+                    string categorieProduit = "CategorieProduit";
+                    string collapseProduit = "CollapseProduit";
+                }
+                @foreach (var categorie in Model.ProduitCategories)
                 {
+                    string idCategorieProduit = categorieProduit + p;
+                    string idCollapseProduit = collapseProduit + p;
 
+                    <!-- Categorie -->
+                    <div class="card">
+                        <!-- Nom de la categorie -->
+                        <div class="card-header" id="@idCategorieProduit">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
+                                    Collapsible Group Item #1
+                                </button>
+                            </h2>
+                        </div>
+                        <!-- Contenu -->
+                        <div id="@idCollapseProduit" class="collapse show" aria-labelledby="@idCategorieProduit" data-parent="#accordionCategorie">
+                            <div class="card-body">
+                                <!-- Afficher une liste des produits -->
+                                @categorie.Produit.Nom
+                            </div>
+                        </div>
+                    </div>
+
+                    p++;
                 }
             </div>
         </div>

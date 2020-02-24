@@ -2,8 +2,6 @@
 
 @{
     ViewBag.Title = "Details";
-    List<AfpEat.Models.MenuCategorie> menuCategories = ViewBag.menuCategorie;
-    List<AfpEat.Models.ProduitCategorie> produitCategories = ViewBag.produitCategorie;
 }
 <!-- DetailsRestaurants -->
 <section id="DetailsRestaurant" class="container mt-3">
@@ -14,7 +12,7 @@
             {
 
                 <div class="carousel-item @(i == 0 ? "active" : "") ">
-                    <img src="/Images/@Model.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400px" height="400px" alt="...">
+                    <img src="/Images/@Model.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400" height="400" alt="...">
                 </div>
 
             }

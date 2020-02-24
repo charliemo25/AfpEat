@@ -8,8 +8,8 @@ namespace AfpEat.Controllers
 {
     public class SwController : Controller
     {
-        [HttpGet]
-        public JsonResult AddProduit(int idProduit, string idSession)
+        [HttpPost]
+        public JsonResult AddProduit(int idProduit = 0, string idSession="")
         {
             List<int> panier = new List<int>();
             panier.Add(idProduit);

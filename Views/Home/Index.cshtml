@@ -61,36 +61,9 @@
                     </text>
                 }
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <button id="btn" class="btn btn-primary">Ajouter au panier</button>
-                </div>
-            </div>
         </section>
     </div>
 </div>
 
-section Scripts{
-<script type="text/javascript">
-        $(document).ready(function () {
 
-            $("#btn").click(function(){
-                   $.ajax({
-                        url: "@Url.Action("AddProduit", "Sw")",
-                        type: "GET",
-                        dataType: "JSON",
-                        error: function (result) {
-                            console.log('erreur')
-                        },
-                        success: function (result)
-                        {
-                            console.log(result);
-                        }
-                    });
-            });
-        });
-</script>
-
-
-}
 

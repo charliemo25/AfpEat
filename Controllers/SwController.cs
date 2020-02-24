@@ -11,21 +11,68 @@ namespace AfpEat.Controllers
     {
         private AfpEatEntities db = new AfpEatEntities();
 
-        [HttpPost]
-        public JsonResult AddProduit(int idProduit = 0, string idSession = "")
+        public JsonResult AddProduit(int idProduit, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+            List<ProduitPanier> produitPaniers = null;
 
             if (sessionUtilisateur != null)
             {
 
-                List<int> panier = new List<int>();
-                panier.Add(idProduit);
-                HttpContext.Application[idSession] = panier;
+                if(HttpContext.Application[idSession] != null)
+                {
+                    produitPaniers = (List<ProduitPanier>)HttpContext.Application[idSession];
+                }
+                else
+                {
+                    produitPaniers = new List<ProduitPanier>();
+                }
+
+                Produit produit = db.Produits.Find(idProduit);
+
+                ProduitPanier produitPanier = new ProduitPanier()
+                {
+                    IdProduit = produit.IdProduit,
+                    Nom = produit.Nom,
+                    Description = produit.Description,
+                    Prix = produit.Prix,
+                    Quantite = 1,
+                    Photo = produit.Photos.First().Nom
+                };
+
+                produitPaniers.Add(produitPanier);
+                HttpContext.Application[idSession] = produitPaniers;
 
             }
-            return Json("toto", JsonRequestBehavior.AllowGet);
+            return Json(produitPaniers.Count, JsonRequestBehavior.AllowGet);
 
         }
+
+        public JsonResult GetProduits(string idSession)
+        {
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+            List<Produit> produits = null;
+
+            if (sessionUtilisateur != null)
+            {
+                if (HttpContext.Application[idSession] != null)
+                {
+                    List<int> panier = (List<int>)HttpContext.Application[idSession];
+
+                    if(panier != null && panier.Count > 0)
+                    {
+                        var monPanier = db.Produits.Where(p => panier.Contains(p.IdProduit));
+                        produits = monPanier.Select(p => new Produit
+                        {
+                            IdProduit = p.IdProduit,
+
+                        }).ToList();
+                    }
+                }
+            }
+            return Json(produits, JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

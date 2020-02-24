@@ -34,6 +34,20 @@ namespace AfpEat.Controllers
                 return HttpNotFound();
             }
 
+            List<RestaurantProduits> listRestaurantProduits = new List<RestaurantProduits>();
+
+            foreach(var idCategorie in restaurant.ProduitCategories.GroupBy(x => x.IdCategorie))
+            {
+                List<Produit> test = new List<Produit>();
+
+                foreach (var categorie in idCategorie)
+                {
+                    test.Add(categorie.Produit);
+                }
+
+            }
+
+            ViewBag.RestaurantProduits = listRestaurantProduits;
 
             return View(restaurant);
         }

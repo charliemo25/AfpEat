@@ -39,6 +39,29 @@
     <!-- Commande -->
     <div id="Commande" class="row">
         <div class="col-12">
+
+            @{
+                int p = 1;
+                string categorieProduit = "CategorieProduit";
+                string collapseProduit = "CollapseProduit";
+            }
+
+            @foreach (var categorie in Model.ProduitCategories.GroupBy(x => x.IdCategorie))
+            {
+                <p>@categorie.Key.ToString()</p>
+
+                foreach (var produit in Model.ProduitCategories)
+                {
+
+
+                    if (produit.IdCategorie == categorie.Key)
+                    {
+                        <p>@produit.Produit.Nom</p>
+                    }
+                }
+
+            }
+
             <!-- Collapse Categorie -->
             <div class="accordion" id="accordionCategorie">
                 <!-- Categorie -->
@@ -60,12 +83,8 @@
                 </div>
                 <!-- Faire l'affichage des menus -->
                 <!-- Affichage des Categories de produits -->
-                @{
-                    int p = 0;
-                    string categorieProduit = "CategorieProduit";
-                    string collapseProduit = "CollapseProduit";
-                }
-                @foreach (var categorie in Model.ProduitCategories)
+
+                @foreach (var produit in Model.ProduitCategories)
                 {
                     string idCategorieProduit = categorieProduit + p;
                     string idCollapseProduit = collapseProduit + p;
@@ -76,7 +95,7 @@
                         <div class="card-header" id="@idCategorieProduit">
                             <h2 class="mb-0">
                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
-                                    @categorie.Categorie.Nom
+                                    @produit.Categorie.Nom
                                 </button>
                             </h2>
                         </div>
@@ -84,7 +103,7 @@
                         <div id="@idCollapseProduit" class="collapse show" aria-labelledby="@idCategorieProduit" data-parent="#accordionCategorie">
                             <div class="card-body">
                                 <!-- Afficher une liste des produits -->
-                                @categorie.Produit.Nom
+                                @produit.Produit.Nom
                             </div>
                         </div>
                     </div>

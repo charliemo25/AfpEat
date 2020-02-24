@@ -34,6 +34,8 @@ namespace AfpEat.Controllers
                 return HttpNotFound();
             }
 
+            var test = restaurant.ProduitCategories.GroupBy(p => p.IdCategorie).ToList();
+
             return View(restaurant);
         }
 

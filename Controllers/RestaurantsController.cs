@@ -38,13 +38,16 @@ namespace AfpEat.Controllers
 
             foreach(var idCategorie in restaurant.ProduitCategories.GroupBy(x => x.IdCategorie))
             {
-                List<Produit> test = new List<Produit>();
+                RestaurantProduits restaurantProduits = new RestaurantProduits();
+                
+                restaurantProduits.NomCategorie = idCategorie.First().Categorie.Nom;
 
-                foreach (var categorie in idCategorie)
-                {
-                    test.Add(categorie.Produit);
-                }
+                //foreach (var categorie in idCategorie)
+                //{
+                //    restaurantProduits.Produits.Add(categorie.Produit);
+                //}
 
+                listRestaurantProduits.Add(restaurantProduits);
             }
 
             ViewBag.RestaurantProduits = listRestaurantProduits;

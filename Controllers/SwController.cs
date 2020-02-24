@@ -37,7 +37,7 @@ namespace AfpEat.Controllers
                     Description = produit.Description,
                     Prix = produit.Prix,
                     Quantite = 1,
-                    Photo = produit.Photos.First().Nom
+                    Photo = "Boulangerie.jpg"
                 };
 
                 produitPaniers.Add(produitPanier);
@@ -51,26 +51,16 @@ namespace AfpEat.Controllers
         public JsonResult GetProduits(string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<Produit> produits = null;
+            List<ProduitPanier> panier = null;
 
             if (sessionUtilisateur != null)
             {
                 if (HttpContext.Application[idSession] != null)
                 {
-                    List<int> panier = (List<int>)HttpContext.Application[idSession];
-
-                    if(panier != null && panier.Count > 0)
-                    {
-                        var monPanier = db.Produits.Where(p => panier.Contains(p.IdProduit));
-                        produits = monPanier.Select(p => new Produit
-                        {
-                            IdProduit = p.IdProduit,
-
-                        }).ToList();
-                    }
+                    panier = (List<ProduitPanier>)HttpContext.Application[idSession];
                 }
             }
-            return Json(produits, JsonRequestBehavior.AllowGet);
+            return Json(panier, JsonRequestBehavior.AllowGet);
 
         }
 

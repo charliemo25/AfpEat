@@ -19,5 +19,12 @@ namespace AfpEat.Controllers
             return View(db.TypeCuisines.ToList());
         }
 
+        public ActionResult Panier()
+        {
+            List<ProduitPanier> panier = (List<ProduitPanier>)HttpContext.Application[Session.SessionID];
+
+            return View(panier);
+        }
+
     }
 }

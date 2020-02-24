@@ -46,6 +46,7 @@
 
             @foreach (var categorie in Model.ProduitCategories.GroupBy(x => x.IdCategorie))
             {
+                
                 <p>@categorie.Key.ToString()</p>
 
                 foreach (var produit in Model.ProduitCategories)

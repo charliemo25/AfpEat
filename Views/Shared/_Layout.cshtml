@@ -54,25 +54,32 @@
                     </text>
                 }
                 <a href="@Url.Action("Panier", "Home")" class="text-reset "><i class="fas  fa-shopping-cart"></i></a>
-            </div>
-    </div>
-</nav>
-<div class="container-fluid body-content">
-    @RenderBody()
-
-</div>
-<hr />
-<footer class="mt-auto">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <p>&copy; @DateTime.Now.Year - AfpEat</p>
+                
             </div>
         </div>
+    </nav>
+    <div class="container-fluid body-content">
+        @RenderBody()
+
     </div>
-</footer>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+    <hr />
+    <footer class="mt-auto">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <p>&copy; @DateTime.Now.Year - AfpEat</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    @section Scripts{
+        <script type="text/javascript">
+
+        </script>
+    }
 </body>
 </html>

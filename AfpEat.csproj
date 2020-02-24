@@ -436,6 +436,7 @@
     <Content Include="Views\Produits\Edit.cshtml" />
     <Content Include="Views\Produits\Index.cshtml" />
     <Content Include="Views\Home\Panier.cshtml" />
+    <Content Include="Views\Home\PanierAjax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

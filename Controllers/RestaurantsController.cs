@@ -42,10 +42,10 @@ namespace AfpEat.Controllers
                 
                 restaurantProduits.NomCategorie = idCategorie.First().Categorie.Nom;
 
-                //foreach (var categorie in idCategorie)
-                //{
-                //    restaurantProduits.Produits.Add(categorie.Produit);
-                //}
+                foreach (var categorie in idCategorie)
+                {
+                    restaurantProduits.Produits.Add(categorie.Produit);
+                }
 
                 listRestaurantProduits.Add(restaurantProduits);
             }

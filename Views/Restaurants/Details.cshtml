@@ -45,18 +45,14 @@
 
             }
 
-            @foreach (var idCategorie in Model.Restaurant.ProduitCategories.GroupBy(x => x.IdCategorie))
+            @foreach (var categorie in Model.RestaurantProduits)
             {
-                var categorie = Model.Restaurant.ProduitCategories.First(x=> x.IdCategorie == idCategorie.Key);
-                <h2>@categorie.Categorie.Nom</h2>
 
-                foreach (var produit in Model.Restaurant.ProduitCategories)
+                <h2>@categorie.NomCategorie</h2>
+
+                foreach(var produit in categorie.Produits)
                 {
-
-                    if (produit.IdCategorie == idCategorie.Key)
-                    {
-                        <p>@produit.Produit.Nom</p>
-                    }
+                    <p>@produit.Nom</p>
                 }
 
             }

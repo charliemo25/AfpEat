@@ -146,6 +146,13 @@
           <Property Name="IdRestaurant" Type="int" Nullable="false" />
           <Property Name="IdPhoto" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SessionUtilisateur">
+          <Key>
+            <PropertyRef Name="IdSession" />
+          </Key>
+          <Property Name="IdSession" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateSession" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -183,6 +190,7 @@
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Statut" Type="bit" Nullable="false" />
           <Property Name="Solde" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="IdSession" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Commande_EtatCommande">
           <End Role="EtatCommande" Type="Self.EtatCommande" Multiplicity="1" />
@@ -476,6 +484,7 @@
           <EntitySet Name="ProduitPhoto" EntityType="Self.ProduitPhoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RestaurantPhoto" EntityType="Self.RestaurantPhoto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SessionUtilisateur" EntityType="Self.SessionUtilisateur" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeCuisine" EntityType="Self.TypeCuisine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeVersement" EntityType="Self.TypeVersement" Schema="dbo" store:Type="Tables" />
@@ -720,6 +729,13 @@
           <NavigationProperty Name="TypeCuisine" Relationship="Self.FK_Restaurant_TypeCuisine" FromRole="Restaurant" ToRole="TypeCuisine" />
           <NavigationProperty Name="Photos" Relationship="Self.RestaurantPhoto" FromRole="Restaurant" ToRole="Photo" />
         </EntityType>
+        <EntityType Name="SessionUtilisateur">
+          <Key>
+            <PropertyRef Name="IdSession" />
+          </Key>
+          <Property Name="IdSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateSession" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -760,6 +776,7 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Statut" Type="Boolean" Nullable="false" />
           <Property Name="Solde" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="IdSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Commandes" Relationship="Self.FK_Commande_Utilisateur" FromRole="Utilisateur" ToRole="Commande" />
           <NavigationProperty Name="Operations" Relationship="Self.FK_Operation_Utilisateur" FromRole="Utilisateur" ToRole="Operation" />
         </EntityType>
@@ -971,6 +988,7 @@
           <EntitySet Name="Produits" EntityType="Self.Produit" />
           <EntitySet Name="ProduitCategories" EntityType="Self.ProduitCategorie" />
           <EntitySet Name="Restaurants" EntityType="Self.Restaurant" />
+          <EntitySet Name="SessionUtilisateurs" EntityType="Self.SessionUtilisateur" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TypeCuisines" EntityType="Self.TypeCuisine" />
           <EntitySet Name="TypeVersements" EntityType="Self.TypeVersement" />
@@ -1174,6 +1192,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SessionUtilisateurs">
+            <EntityTypeMapping TypeName="AfpEatModel.SessionUtilisateur">
+              <MappingFragment StoreEntitySet="SessionUtilisateur">
+                <ScalarProperty Name="IdSession" ColumnName="IdSession" />
+                <ScalarProperty Name="DateSession" ColumnName="DateSession" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="AfpEatModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -1213,6 +1239,7 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Statut" ColumnName="Statut" />
                 <ScalarProperty Name="Solde" ColumnName="Solde" />
+                <ScalarProperty Name="IdSession" ColumnName="IdSession" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,4 +1,4 @@
-﻿@model AfpEat.Models.Restaurant
+﻿@model AfpEat.Models.RestaurantsDetailsModel
 
 @{
     ViewBag.Title = "Details";
@@ -8,7 +8,7 @@
     <!-- Carousel -->
     <div id="carouselDetails" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
-            @for (var i = 0; i < Model.Photos.Count(); i++)
+            @for (var i = 0; i < Model.Restaurant.Photos.Count(); i++)
             {
 
                 <div class="carousel-item @(i == 0 ? "active" : "") ">
@@ -30,8 +30,8 @@
     <!-- Details -->
     <div class="row" id="Details">
         <div class="col-12">
-            <h2>@Model.Nom</h2>
-            <p>@Model.Description)</p>
+            <h2>@Model.Restaurant.Nom</h2>
+            <p>@Model.Restaurant.Description)</p>
         </div>
     </div>
     <!-- Commande -->
@@ -45,12 +45,12 @@
 
             }
 
-            @foreach (var idCategorie in Model.ProduitCategories.GroupBy(x => x.IdCategorie))
+            @foreach (var idCategorie in Model.Restaurant.ProduitCategories.GroupBy(x => x.IdCategorie))
             {
-                var categorie = Model.ProduitCategories.First(x=> x.IdCategorie == idCategorie.Key);
+                var categorie = Model.Restaurant.ProduitCategories.First(x=> x.IdCategorie == idCategorie.Key);
                 <h2>@categorie.Categorie.Nom</h2>
 
-                foreach (var produit in Model.ProduitCategories)
+                foreach (var produit in Model.Restaurant.ProduitCategories)
                 {
 
                     if (produit.IdCategorie == idCategorie.Key)
@@ -65,7 +65,7 @@
             <!-- Faire l'affichage des menus -->
             <!-- Affichage des Categories de produits -->
 
-            @foreach (var produit in Model.ProduitCategories)
+            @foreach (var produit in Model.Restaurant.ProduitCategories)
             {
                 string idCategorieProduit = categorieProduit + p;
                 string idCollapseProduit = collapseProduit + p;

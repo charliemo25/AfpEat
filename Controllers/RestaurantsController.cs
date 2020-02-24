@@ -66,9 +66,15 @@ namespace AfpEat.Controllers
                 listRestaurantMenus.Add(restaurantMenus);
             }
 
-            ViewBag.RestaurantProduits = listRestaurantProduits;
-            ViewBag.RestaurantMenus = listRestaurantMenus;
-            return View(restaurant);
+            //Class à envoyer a la vue
+            RestaurantsDetailsModel restaurantsDetailsModel = new RestaurantsDetailsModel()
+            {
+                Restaurant = restaurant,
+                RestaurantProduits = listRestaurantProduits,
+                RestaurantMenus = listRestaurantMenus
+            };
+
+            return View(restaurantsDetailsModel);
         }
 
         // GET: Restaurants/Create

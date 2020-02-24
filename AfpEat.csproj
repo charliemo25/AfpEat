@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="Models\RestaurantMenus.cs" />
     <Compile Include="Models\RestaurantProduits.cs" />
+    <Compile Include="Models\RestaurantsDetailsModel.cs" />
     <Compile Include="Models\SessionUtilisateur.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

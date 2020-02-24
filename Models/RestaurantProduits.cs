@@ -9,5 +9,10 @@ namespace AfpEat.Models
     {
         public string NomCategorie { get; set; }
         public List<Produit> Produits { get; set; }
+
+        public RestaurantProduits()
+        {
+            Produits = new List<Produit>();
+        }
     }
 }

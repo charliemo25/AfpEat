@@ -41,7 +41,6 @@ namespace AfpEat.Controllers
                 RestaurantProduits restaurantProduits = new RestaurantProduits();
                 
                 restaurantProduits.NomCategorie = idCategorie.First().Categorie.Nom;
-
                 foreach (var categorie in idCategorie)
                 {
                     restaurantProduits.Produits.Add(categorie.Produit);

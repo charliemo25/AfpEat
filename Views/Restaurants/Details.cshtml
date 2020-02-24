@@ -2,9 +2,11 @@
 
 @{
     ViewBag.Title = "Details";
+    List<AfpEat.Models.MenuCategorie> menuCategories = ViewBag.menuCategorie;
+    List<AfpEat.Models.ProduitCategorie> produitCategories = ViewBag.produitCategorie;
 }
 <!-- DetailsRestaurants -->
-<section id="DetailsRestaurant" class="container">
+<section id="DetailsRestaurant" class="container mt-3">
     <!-- Carousel -->
     <div id="carouselDetails" class="carousel slide carousel-fade" data-ride="carousel">
         <div class="carousel-inner">
@@ -12,7 +14,7 @@
             {
 
                 <div class="carousel-item @(i == 0 ? "active" : "") ">
-                    <img src="/Images/@Model.Photos.ElementAt(i).Nom" class="d-block w-100" alt="...">
+                    <img src="/Images/@Model.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400px" height="400px" alt="...">
                 </div>
 
             }
@@ -74,7 +76,7 @@
                         <div class="card-header" id="@idCategorieProduit">
                             <h2 class="mb-0">
                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
-                                    Collapsible Group Item #1
+                                    @categorie.Categorie.Nom
                                 </button>
                             </h2>
                         </div>

@@ -34,20 +34,6 @@ namespace AfpEat.Controllers
                 return HttpNotFound();
             }
 
-            MenuRestaurant menusRestaurant = new MenuRestaurant()
-            {
-
-                Nom = "toto"
-
-            };
-
-            RestaurantCategorie restaurantCategorie = new RestaurantCategorie()
-            {
-
-                Restaurant = restaurant
-
-            };
-
             return View(restaurant);
         }
 

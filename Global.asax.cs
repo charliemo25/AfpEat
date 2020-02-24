@@ -17,6 +17,13 @@ namespace AfpEat
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            AfpEatEntities db = new AfpEatEntities();
+            List<SessionUtilisateur> sessionUtilisateurs = db.SessionUtilisateurs.ToList();
+
+            db.SessionUtilisateurs.RemoveRange(sessionUtilisateurs);
+            db.SaveChanges();
+
         }
 
         protected void Application_End()
@@ -28,10 +35,11 @@ namespace AfpEat
         {
             AfpEatEntities db = new AfpEatEntities();
             SessionUtilisateur sessionUtilisateur = new SessionUtilisateur();
-
+           
             sessionUtilisateur.IdSession = Session.SessionID;
             sessionUtilisateur.DateSession = DateTime.Now;
 
+            
             db.SessionUtilisateurs.Add(sessionUtilisateur);
             db.SaveChanges();
         }

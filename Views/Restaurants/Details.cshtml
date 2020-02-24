@@ -12,7 +12,7 @@
             {
 
                 <div class="carousel-item @(i == 0 ? "active" : "") ">
-                    <img src="/Images/@Model.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400" height="400" alt="...">
+                    @*<img src="/Images/@Model.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400" height="400" alt="...">*@
                 </div>
 
             }
@@ -42,18 +42,18 @@
                 int p = 1;
                 string categorieProduit = "CategorieProduit";
                 string collapseProduit = "CollapseProduit";
+
             }
 
-            @foreach (var categorie in Model.ProduitCategories.GroupBy(x => x.IdCategorie))
+            @foreach (var idCategorie in Model.ProduitCategories.GroupBy(x => x.IdCategorie))
             {
-                
-                <p>@categorie.Key.ToString()</p>
+                var categorie = Model.ProduitCategories.First(x=> x.IdCategorie == idCategorie.Key);
+                <h2>@categorie.Categorie.Nom</h2>
 
                 foreach (var produit in Model.ProduitCategories)
                 {
 
-
-                    if (produit.IdCategorie == categorie.Key)
+                    if (produit.IdCategorie == idCategorie.Key)
                     {
                         <p>@produit.Produit.Nom</p>
                     }
@@ -61,55 +61,36 @@
 
             }
 
-            <!-- Collapse Categorie -->
-            <div class="accordion" id="accordionCategorie">
+
+            <!-- Faire l'affichage des menus -->
+            <!-- Affichage des Categories de produits -->
+
+            @foreach (var produit in Model.ProduitCategories)
+            {
+                string idCategorieProduit = categorieProduit + p;
+                string idCollapseProduit = collapseProduit + p;
+
                 <!-- Categorie -->
                 <div class="card">
                     <!-- Nom de la categorie -->
-                    <div class="card-header" id="headingOne">
+                    <div class="card-header" id="@idCategorieProduit">
                         <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Collapsible Group Item #1
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
+                                @produit.Categorie.Nom
                             </button>
                         </h2>
                     </div>
                     <!-- Contenu -->
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div id="@idCollapseProduit" class="collapse show" aria-labelledby="@idCategorieProduit" data-parent="#accordionCategorie">
                         <div class="card-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                            <!-- Afficher une liste des produits -->
+                            @produit.Produit.Nom
                         </div>
                     </div>
                 </div>
-                <!-- Faire l'affichage des menus -->
-                <!-- Affichage des Categories de produits -->
 
-                @foreach (var produit in Model.ProduitCategories)
-                {
-                    string idCategorieProduit = categorieProduit + p;
-                    string idCollapseProduit = collapseProduit + p;
-
-                    <!-- Categorie -->
-                    <div class="card">
-                        <!-- Nom de la categorie -->
-                        <div class="card-header" id="@idCategorieProduit">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
-                                    @produit.Categorie.Nom
-                                </button>
-                            </h2>
-                        </div>
-                        <!-- Contenu -->
-                        <div id="@idCollapseProduit" class="collapse show" aria-labelledby="@idCategorieProduit" data-parent="#accordionCategorie">
-                            <div class="card-body">
-                                <!-- Afficher une liste des produits -->
-                                @produit.Produit.Nom
-                            </div>
-                        </div>
-                    </div>
-
-                    p++;
-                }
-            </div>
+                p++;
+            }
         </div>
     </div>
 </section>

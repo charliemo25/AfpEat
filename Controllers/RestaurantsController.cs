@@ -34,6 +34,7 @@ namespace AfpEat.Controllers
                 return HttpNotFound();
             }
 
+            // Liste de produits par categorie
             List<RestaurantProduits> listRestaurantProduits = new List<RestaurantProduits>();
 
             foreach(var idCategorie in restaurant.ProduitCategories.GroupBy(x => x.IdCategorie))
@@ -49,8 +50,24 @@ namespace AfpEat.Controllers
                 listRestaurantProduits.Add(restaurantProduits);
             }
 
-            ViewBag.RestaurantProduits = listRestaurantProduits;
+            // Liste de menus par categorie
+            List<RestaurantMenus> listRestaurantMenus = new List<RestaurantMenus>();
 
+            foreach (var idCategorie in restaurant.MenuCategories.GroupBy(x => x.IdCategorie))
+            {
+                RestaurantMenus restaurantMenus = new RestaurantMenus();
+
+                restaurantMenus.NomCategorie = idCategorie.First().Categorie.Nom;
+                foreach (var categorie in idCategorie)
+                {
+                    restaurantMenus.Menus.Add(categorie.Menu);
+                }
+
+                listRestaurantMenus.Add(restaurantMenus);
+            }
+
+            ViewBag.RestaurantProduits = listRestaurantProduits;
+            ViewBag.RestaurantMenus = listRestaurantMenus;
             return View(restaurant);
         }
 

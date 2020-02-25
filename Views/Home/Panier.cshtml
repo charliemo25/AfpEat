@@ -53,4 +53,32 @@
 
 </table>
 
-<button class="btn btn-outline-danger">Passer la commande</button>
+<button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
+
+@section Scripts{
+<script type="text/javascript">
+$(document).ready(function () {
+
+    var data = { 'idProduit':'@Model.IdProduit', 'idSession':'@Session.SessionID'};
+    console.log(data);
+
+    $("#btnAddProduit").click(function(){
+        $.ajax({
+            url: "@Url.Action("AddProduit", "Sw")",
+            type: "Post",
+            contentType: "application/json; charset=utf-8",
+            dataType: "JSON",
+            data: JSON.stringify(data),
+            error: function (result) {
+                console.log('erreur')
+            },
+            success: function (result)
+            {
+                console.log("ça marche");
+                $('#AddPanier').modal('show');
+            }
+        });
+    });
+});
+</script>
+}

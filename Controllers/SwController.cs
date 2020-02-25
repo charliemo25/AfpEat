@@ -33,6 +33,7 @@ namespace AfpEat.Controllers
                 ProduitPanier produitPanier = new ProduitPanier()
                 {
                     IdProduit = produit.IdProduit,
+                    IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
                     Nom = produit.Nom,
                     Description = produit.Description,
                     Prix = produit.Prix,
@@ -66,6 +67,8 @@ namespace AfpEat.Controllers
 
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
             List<ProduitPanier> panier = null;
+            idRestaurant = 0;
+            string message = "La commande à échouée";
 
             if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)
             {
@@ -115,13 +118,20 @@ namespace AfpEat.Controllers
                         //Ajout dans CommandeProduit
                         commande.CommandeProduits.Add(commandeProduit);
                     }
+
                     //Sauvegarde la de commande dans la bdd
                     db.Commandes.Add(commande);
                     db.SaveChanges();
+
+                    message = "Votre commande est bien passé";
+                }
+                else
+                {
+                    message += "Votre solde est insufisant.";
                 }
             }
 
-            return Json(panier, JsonRequestBehavior.AllowGet);
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
 
     }

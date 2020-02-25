@@ -12,7 +12,7 @@
             {
 
                 <div class="carousel-item @(i == 0 ? "active" : "") ">
-                    @*<img src="/Images/@Model.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400" height="400" alt="...">*@
+                    @*<img src="/Images/@Model.Restaurant.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400" height="400" alt="...">*@
                 </div>
 
             }
@@ -37,55 +37,36 @@
     <!-- Commande -->
     <div id="Commande" class="row">
         <div class="col-12">
-
-            @{
-                int p = 1;
-                string categorieProduit = "CategorieProduit";
-                string collapseProduit = "CollapseProduit";
-
-            }
-
+            
             @foreach (var categorie in Model.RestaurantProduits)
             {
-
-                <h2>@categorie.NomCategorie</h2>
-
-                foreach(var produit in categorie.Produits)
-                {
-                    <p>@produit.Nom</p>
-                }
-
-            }
-
-
-            <!-- Faire l'affichage des menus -->
-            <!-- Affichage des Categories de produits -->
-
-            @foreach (var produit in Model.Restaurant.ProduitCategories)
-            {
-                string idCategorieProduit = categorieProduit + p;
-                string idCollapseProduit = collapseProduit + p;
+                string idCategorieProduit = "Categorie" + categorie.NomCategorie;
+                string idCollapseProduit = "CollapseProduit" + categorie.NomCategorie;
 
                 <!-- Categorie -->
                 <div class="card">
                     <!-- Nom de la categorie -->
-                    <div class="card-header" id="@idCategorieProduit">
+                    <div class="card-header" id="accordionCategorie">
                         <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
-                                @produit.Categorie.Nom
+                                @categorie.NomCategorie
                             </button>
                         </h2>
                     </div>
                     <!-- Contenu -->
-                    <div id="@idCollapseProduit" class="collapse show" aria-labelledby="@idCategorieProduit" data-parent="#accordionCategorie">
+                    <div id="@idCollapseProduit" class="collapse show" aria-labelledby="idCategorieProduit" data-parent="#accordionCategorie">
                         <div class="card-body">
                             <!-- Afficher une liste des produits -->
-                            @produit.Produit.Nom
+                            <ul>
+                                @foreach (var produit in categorie.Produits)
+                                {
+                                    <li>@produit.Quantite @produit.Nom @produit.Prix€</li>
+                                }
+                            </ul>
+                            
                         </div>
                     </div>
                 </div>
-
-                p++;
             }
         </div>
     </div>

@@ -63,7 +63,7 @@ namespace AfpEat.Controllers
 
         public JsonResult SaveCommande(string idSession, int idRestaurant)
         {
-            
+
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
             List<ProduitPanier> panier = null;
 
@@ -74,7 +74,7 @@ namespace AfpEat.Controllers
 
             Utilisateur utilisateur = db.Utilisateurs.First(p => p.IdSession == idSession);
 
-            if(utilisateur != null && utilisateur.Solde > 0 && panier != null && panier.Count() > 0)
+            if (utilisateur != null && utilisateur.Solde > 0 && panier != null && panier.Count() > 0)
             {
                 //On calcule le prix total des produits
                 decimal prixTotal = 0;
@@ -85,10 +85,11 @@ namespace AfpEat.Controllers
                 }
 
                 //Verification du solde de l'utilisateur
-                if(prixTotal <= utilisateur.Solde)
+                if (prixTotal <= utilisateur.Solde)
                 {
                     //Création de la commande
-                    Commande commande = new Commande() {
+                    Commande commande = new Commande()
+                    {
                         IdUtilisateur = utilisateur.IdUtilisateur,
                         IdRestaurant = idRestaurant,
                         Date = DateTime.Now,
@@ -98,19 +99,25 @@ namespace AfpEat.Controllers
 
                     //Ajout de la commande
                     db.Commandes.Add(commande);
-                    db.SaveChanges();
-                    
+                    //db.SaveChanges();
+
                     // Ajout des produits dans commandeProduit
-                    foreach(ProduitPanier produitPanier in panier)
+                    foreach (ProduitPanier produitPanier in panier)
                     {
                         CommandeProduit commandeProduit = new CommandeProduit()
                         {
-                            IdCommande = commande.IdCommande,
+                            //IdCommande = commande.IdCommande,
                             IdProduit = produitPanier.IdProduit,
                             Prix = produitPanier.Prix,
                             Quantite = produitPanier.Quantite
                         };
+
+                        //Ajout dans CommandeProduit
+                        commande.CommandeProduits.Add(commandeProduit);
                     }
+                    //Sauvegarde la de commande dans la bdd
+                    db.Commandes.Add(commande);
+                    db.SaveChanges();
                 }
             }
 

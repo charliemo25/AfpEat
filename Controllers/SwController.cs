@@ -145,7 +145,7 @@ namespace AfpEat.Controllers
                 utilisateur.IdSession = idSession;
                 db.SaveChanges();
 
-                return Json(new { error = 0, message = idSession }, JsonRequestBehavior.AllowGet);
+                return Json(new { error = 0, message = utilisateur.Solde }, JsonRequestBehavior.AllowGet);
 
             }
             return Json(new { error = 1, message = "La connexion a echoué." }, JsonRequestBehavior.AllowGet);

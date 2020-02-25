@@ -80,8 +80,6 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -106,9 +104,41 @@
             success: function (result)
             {
                 console.log(result);
+                document.location.href='@Url.Action("Details", "Utilisateur")'+'/'+ data.utilisateur; 
                 
             }
         });
+    }
+
+    function SeConnecter() {
+
+        var matricule = $('#Matricule').val();
+        var password = $('#Password').val();
+
+        var data = { 'matricule': matricule, 'password': password, 'idSession': '@Session.SessionID' };
+
+        if (matricule && password) {
+            $.ajax({
+                url: "@Url.Action("LoginUtilisateur", "Sw")",
+                type: "Post",
+                contentType: "application/json; charset=utf-8",
+                dataType: "JSON",
+                data: JSON.stringify(data),
+                error: function (result) {
+                    console.log('erreur');
+                },
+                success: function (result)
+                {
+                    if (result.error) {
+                        console.log(error)
+                    } else {
+                        $("#ConnexionModal").modal("hide");
+                    }
+                
+                }
+            });
+        }
+
     }
 
     $(document).ready(function () {
@@ -118,9 +148,14 @@
             if (@isConnected) {
                 PasserCommande();
             } else {
-                $("#ConnexionModal").modal("toggle");
+                $("#ConnexionModal").modal("show");
             }
         });
+
+        $("#btnConnexion").click(function () {
+
+        });
+
     });
 </script>
 }

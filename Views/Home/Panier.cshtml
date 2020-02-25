@@ -2,8 +2,8 @@
 
 @{
     ViewBag.Title = "Panier";
-    bool isConnected = (Session["Utilisateur"] != null);
-
+    string isConnected = (Session["Utilisateur"] != null) ? "true" : "false";
+    
 }
 
 <h2>Panier</h2>
@@ -57,6 +57,36 @@
 
 <button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
 
+<div id="ConnexionModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Matricule">Matricule</label>
+                        <input type="email" class="form-control" id="Matricule">
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Mot de passe</label>
+                        <input type="password" class="form-control" id="Password">
+                    </div>
+                    <button id="btnConnexion" class="btn btn-primary">Envoyer</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
 <script type="text/javascript">
 
@@ -83,12 +113,12 @@
 
     $(document).ready(function () {
 
-        $("#btnCommannde").click(function () {
+        $("#btnCommande").click(function () {
 
             if (@isConnected) {
-
+                PasserCommande();
             } else {
-
+                $("#ConnexionModal").modal("toggle");
             }
         });
     });

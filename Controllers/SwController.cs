@@ -134,5 +134,22 @@ namespace AfpEat.Controllers
             return Json(message, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult LoginUtilisateur(string idSession, string matricule, string password)
+        {
+            Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(u => u.Matricule == matricule && u.Password == password);
+           
+
+            if(utilisateur != null)
+            {
+                utilisateur.IdSession = idSession;
+                db.SaveChanges();
+
+                return Json(new { error = 1, message = "La connexion a réussi." }, JsonRequestBehavior.AllowGet);
+
+            }
+            return Json( new { error = 0, message = "La connexion a echoué." } , JsonRequestBehavior.AllowGet);
+
+        }
+
     }
 }

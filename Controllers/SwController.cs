@@ -19,7 +19,7 @@ namespace AfpEat.Controllers
             if (sessionUtilisateur != null)
             {
 
-                if(HttpContext.Application[idSession] != null)
+                if (HttpContext.Application[idSession] != null)
                 {
                     produitPaniers = (List<ProduitPanier>)HttpContext.Application[idSession];
                 }
@@ -53,15 +53,36 @@ namespace AfpEat.Controllers
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
             List<ProduitPanier> panier = null;
 
-            if (sessionUtilisateur != null)
+            if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)
             {
-                if (HttpContext.Application[idSession] != null)
-                {
-                    panier = (List<ProduitPanier>)HttpContext.Application[idSession];
-                }
+                panier = (List<ProduitPanier>)HttpContext.Application[idSession];
             }
             return Json(panier, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public JsonResult SaveCommande(string idSession, int idRestaurant)
+        {
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+            List<ProduitPanier> panier = null;
+
+            if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)
+            {
+                panier = (List<ProduitPanier>)HttpContext.Application[idSession];
+            }
+
+            Utilisateur utilisateur = db.Utilisateurs.First(p => p.IdSession == idSession);
+
+            if(utilisateur != null && utilisateur.Solde > 0 && panier != null && panier.Count() > 0)
+            {
+                decimal prixTotal = 0;
+                foreach (ProduitPanier produitPanier in panier)
+                {
+                    prixTotal += produitPanier.Prix * produitPanier.Quantite;
+                }
+            }
+
+            return Json(panier, JsonRequestBehavior.AllowGet);
         }
 
     }

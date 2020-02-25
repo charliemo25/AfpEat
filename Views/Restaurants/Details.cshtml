@@ -95,6 +95,7 @@
                                     <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
                                     <button type="button" class="btnMoins btn btn-outline-danger"><i class="fas fa-minus"></i></button>
                                     <span class="quantite">0</span>
+                                    <input type="hidden" class="produit" value="@produit.IdProduit" />
                                 </li>
                                 }
                             </ul>
@@ -110,7 +111,10 @@
 @section Scripts{
     <script type="text/javascript">
 
-        function EditCommande() {
+        function AddProduit(idProduit) {
+
+            var data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
+        
             $.ajax({
                     url: "@Url.Action("AddProduit", "Sw")",
                     type: "Post",
@@ -122,8 +126,8 @@
                     },
                     success: function (result)
                     {
-                        console.log("ça marche");
-                        $('#AddPanier').modal('show');
+                        //Remplacer par une alert
+                        console.log("Le produit a bien été ajouté");
                     }
                 });
         }
@@ -132,43 +136,30 @@
 
             $(".list-group-item .btnPlus").click(function () {
                  
-                var quantite = $(this).nextUntil(2, '.quantite').text();
+                var quantite = $(this).nextAll('.quantite').text();
                 quantite++;
 
-                $(this).nextUntil(2, '.quantite').text(quantite);
-                //Appel ajax pour mettre a jour la quantité  dans la commande a faire
+                $(this).nextAll('.quantite').text(quantite);
+
+                //Appel ajax pour ajouter un produit
+                AddProduit($(this).nextAll('.produit').val());
 
             });
 
             $(".list-group-item .btnMoins").click(function () {
                  
-                var quantite = $(this).next('.quantite').text();
+                var quantite = $(this).nextAll('.quantite').text();
                 quantite--;
 
                 if (quantite <= 0) {
-                    $(this).next('.quantite').text(0);
+                    $(this).nextAll('.quantite').text(0);
                 }
                 else {
-                    $(this).next('.quantite').text(quantite);
+                    $(this).nextAll('.quantite').text(quantite);
                 }
                 //Appel ajax pour mettre a jour la quantité  dans la commande a faire
             });
-
-                //$.ajax({
-                //    url: "@Url.Action("AddProduit", "Sw")",
-                //    type: "Post",
-                //    contentType: "application/json; charset=utf-8",
-                //    dataType: "JSON",
-                //    data: JSON.stringify(data),
-                //    error: function (result) {
-                //        console.log('erreur')
-                //    },
-                //    success: function (result)
-                //    {
-                //        console.log("ça marche");
-                //        $('#AddPanier').modal('show');
-                //    }
-                //});
+            
         });
     </script>
 }

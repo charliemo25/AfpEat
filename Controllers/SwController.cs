@@ -64,82 +64,76 @@ namespace AfpEat.Controllers
 
         public JsonResult SaveCommande(string idSession)
         {
-
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<ProduitPanier> panier = null;
+            List<ProduitPanier> panier = (List<ProduitPanier>)HttpContext.Application[idSession];
             int idRestaurant = 0;
-            string message = "La commande à échouée";
 
-            if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)
+            Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
+            if (utilisateur == null)
             {
-                panier = (List<ProduitPanier>)HttpContext.Application[idSession];
+                return Json("Vous devez être connecté.", JsonRequestBehavior.AllowGet);
             }
 
-            Utilisateur utilisateur = db.Utilisateurs.First(p => p.IdSession == idSession);
-
-            if (utilisateur != null && utilisateur.Solde > 0 && panier != null && panier.Count() > 0)
+            if (panier.Count() == 0)
             {
-                //On calcule le prix total des produits
-                decimal prixTotal = 0;
-                foreach (ProduitPanier produitPanier in panier)
-                {
-                    prixTotal += produitPanier.Prix * produitPanier.Quantite;
-                    idRestaurant = produitPanier.IdRestaurant;
-                }
-
-                //Verification du solde de l'utilisateur
-                if (prixTotal <= utilisateur.Solde)
-                {
-                    //Création de la commande
-                    Commande commande = new Commande()
-                    {
-                        IdUtilisateur = utilisateur.IdUtilisateur,
-                        IdRestaurant = idRestaurant,
-                        Date = DateTime.Now,
-                        Prix = prixTotal,
-                        IdEtatCommande = 1,
-                    };
-
-                    //Ajout de la commande
-                    db.Commandes.Add(commande);
-                    //db.SaveChanges();
-
-                    // Ajout des produits dans commandeProduit
-                    foreach (ProduitPanier produitPanier in panier)
-                    {
-                        CommandeProduit commandeProduit = new CommandeProduit()
-                        {
-                            //IdCommande = commande.IdCommande,
-                            IdProduit = produitPanier.IdProduit,
-                            Prix = produitPanier.Prix,
-                            Quantite = produitPanier.Quantite
-                        };
-
-                        //Ajout dans CommandeProduit
-                        commande.CommandeProduits.Add(commandeProduit);
-                    }
-
-                    //Sauvegarde la de commande dans la bdd
-                    db.Commandes.Add(commande);
-                    db.SaveChanges();
-
-                    message = "Votre commande est bien passé";
-                }
-                else
-                {
-                    message += "Votre solde est insufisant.";
-                }
+                return Json("Votre panier est vide.", JsonRequestBehavior.AllowGet);
             }
 
-            return Json(message, JsonRequestBehavior.AllowGet);
+            //On calcule le prix total des produits
+            decimal prixTotal = 0;
+            foreach (ProduitPanier produitPanier in panier)
+            {
+                prixTotal += produitPanier.Prix * produitPanier.Quantite;
+                idRestaurant = produitPanier.IdRestaurant;
+            }
+
+            if (prixTotal > utilisateur.Solde)
+            {
+                return Json("Votre solde est insuffisant.", JsonRequestBehavior.AllowGet);
+            }
+
+            //Création de la commande
+            Commande commande = new Commande()
+            {
+                IdUtilisateur = utilisateur.IdUtilisateur,
+                IdRestaurant = idRestaurant,
+                Date = DateTime.Now,
+                Prix = prixTotal,
+                IdEtatCommande = 1,
+            };
+
+            //Ajout de la commande
+            db.Commandes.Add(commande);
+            //db.SaveChanges();
+
+            // Ajout des produits dans commandeProduit
+            foreach (ProduitPanier produitPanier in panier)
+            {
+                CommandeProduit commandeProduit = new CommandeProduit()
+                {
+                    //IdCommande = commande.IdCommande,
+                    IdProduit = produitPanier.IdProduit,
+                    Prix = produitPanier.Prix,
+                    Quantite = produitPanier.Quantite
+                };
+
+                //Ajout dans CommandeProduit
+                commande.CommandeProduits.Add(commandeProduit);
+            }
+
+            //Sauvegarde la de commande dans la bdd
+            db.Commandes.Add(commande);
+            db.SaveChanges();
+
+            return Json("Votre commande a été effectuer.", JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoginUtilisateur(string idSession, string matricule, string password)
         {
             Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(u => u.Matricule == matricule && u.Password == password);
-           
 
-            if(utilisateur != null)
+
+            if (utilisateur != null)
             {
                 utilisateur.IdSession = idSession;
                 db.SaveChanges();
@@ -147,7 +141,7 @@ namespace AfpEat.Controllers
                 return Json(new { error = 1, message = "La connexion a réussi." }, JsonRequestBehavior.AllowGet);
 
             }
-            return Json( new { error = 0, message = "La connexion a echoué." } , JsonRequestBehavior.AllowGet);
+            return Json(new { error = 0, message = "La connexion a echoué." }, JsonRequestBehavior.AllowGet);
 
         }
 

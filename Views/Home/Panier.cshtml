@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Panier";
+    bool isConnected = (Session["Utilisateur"] != null);
+
 }
 
 <h2>Panier</h2>
@@ -57,12 +59,11 @@
 
 @section Scripts{
 <script type="text/javascript">
-$(document).ready(function () {
 
-    var data = { 'idProduit':'@Model.IdProduit', 'idSession':'@Session.SessionID'};
-    console.log(data);
+    function PasserCommande() {
 
-    $("#btnAddProduit").click(function(){
+        var data = { 'idProduit':'@Model.IdProduit', 'idSession':'@Session.SessionID'};
+
         $.ajax({
             url: "@Url.Action("AddProduit", "Sw")",
             type: "Post",
@@ -78,7 +79,18 @@ $(document).ready(function () {
                 $('#AddPanier').modal('show');
             }
         });
+    }
+
+    $(document).ready(function () {
+
+        $("#btnCommannde").click(function () {
+
+            if (@isConnected) {
+
+            } else {
+
+            }
+        });
     });
-});
 </script>
 }

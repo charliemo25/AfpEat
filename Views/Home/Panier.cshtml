@@ -62,21 +62,21 @@
 
     function PasserCommande() {
 
-        var data = { 'idProduit':'@Model.IdProduit', 'idSession':'@Session.SessionID'};
+        var data = { 'idSession':'@Session.SessionID'};
 
         $.ajax({
-            url: "@Url.Action("AddProduit", "Sw")",
+            url: "@Url.Action("SaveCommande", "Sw")",
             type: "Post",
             contentType: "application/json; charset=utf-8",
             dataType: "JSON",
             data: JSON.stringify(data),
             error: function (result) {
-                console.log('erreur')
+                console.log('erreur');
             },
             success: function (result)
             {
-                console.log("ça marche");
-                $('#AddPanier').modal('show');
+                console.log(result);
+                
             }
         });
     }

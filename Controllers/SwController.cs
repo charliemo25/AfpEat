@@ -62,12 +62,12 @@ namespace AfpEat.Controllers
 
         }
 
-        public JsonResult SaveCommande(string idSession, int idRestaurant)
+        public JsonResult SaveCommande(string idSession)
         {
 
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
             List<ProduitPanier> panier = null;
-            idRestaurant = 0;
+            int idRestaurant = 0;
             string message = "La commande à échouée";
 
             if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)

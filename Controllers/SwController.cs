@@ -132,7 +132,7 @@ namespace AfpEat.Controllers
             db.Commandes.Add(commande);
             db.SaveChanges();
 
-            return Json("Votre commande a été effectuer.", JsonRequestBehavior.AllowGet);
+            return Json(new { idUtilisateur = utilisateur.IdUtilisateur, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoginUtilisateur(string idSession, string matricule, string password)

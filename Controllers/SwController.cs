@@ -89,7 +89,7 @@ namespace AfpEat.Controllers
 
                 if(monProduit.Quantite <= 0)
                 {
-                    produitPaniers.Remove(produitPanier);
+                    produitPaniers.Remove(monProduit);
                 }
 
                 db.SaveChanges();

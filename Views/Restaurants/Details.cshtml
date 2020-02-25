@@ -82,10 +82,27 @@
         $(document).ready(function () {
 
             $(".list-group-item .btnPlus").click(function () {
-                //Appel ajax pour mettre a jour la quantité 
-                var quantite = $(this).nextUntil(2, '.quantite');
+                 
+                var quantite = $(this).nextUntil(2, '.quantite').text();
+                quantite++;
+
+                $(this).nextUntil(2, '.quantite').text(quantite);
+                //Appel ajax pour mettre a jour la quantité  dans la commande a faire
             });
 
+            $(".list-group-item .btnMoins").click(function () {
+                 
+                var quantite = $(this).next('.quantite').text();
+                quantite--;
+
+                if (quantite <= 0) {
+                    $(this).next('.quantite').text(0);
+                }
+                else {
+                    $(this).next('.quantite').text(quantite);
+                }
+                //Appel ajax pour mettre a jour la quantité  dans la commande a faire
+            });
 
                 //$.ajax({
                 //    url: "@Url.Action("AddProduit", "Sw")",

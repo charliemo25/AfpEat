@@ -75,10 +75,21 @@ namespace AfpEat.Controllers
 
             if(utilisateur != null && utilisateur.Solde > 0 && panier != null && panier.Count() > 0)
             {
+                //On calcule le prix total des produits
                 decimal prixTotal = 0;
                 foreach (ProduitPanier produitPanier in panier)
                 {
                     prixTotal += produitPanier.Prix * produitPanier.Quantite;
+                }
+
+                //Verification du solde de l'utilisateur
+                if(prixTotal <= utilisateur.Solde)
+                {
+                    Commande commande = new Commande() { 
+                        IdUtilisateur = utilisateur.IdUtilisateur,
+                        IdRestaurant = idRestaurant,
+
+                    };
                 }
             }
 

@@ -8,6 +8,7 @@ namespace AfpEat.Models
     public class ProduitPanier
     {
         public int IdProduit { get; set; }
+        public int IdRestaurant { get; set; }
         public string Nom { get; set; }
         public decimal Prix { get; set; }
         public string Description { get; set; }

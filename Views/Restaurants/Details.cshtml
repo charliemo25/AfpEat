@@ -79,6 +79,25 @@
 
 @section Scripts{
     <script type="text/javascript">
+
+        function EditCommande() {
+            $.ajax({
+                    url: "@Url.Action("AddProduit", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        console.log("ça marche");
+                        $('#AddPanier').modal('show');
+                    }
+                });
+        }
+
         $(document).ready(function () {
 
             $(".list-group-item .btnPlus").click(function () {
@@ -88,6 +107,7 @@
 
                 $(this).nextUntil(2, '.quantite').text(quantite);
                 //Appel ajax pour mettre a jour la quantité  dans la commande a faire
+
             });
 
             $(".list-group-item .btnMoins").click(function () {

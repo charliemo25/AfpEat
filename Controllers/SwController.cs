@@ -11,40 +11,47 @@ namespace AfpEat.Controllers
     {
         private AfpEatEntities db = new AfpEatEntities();
 
+
         public JsonResult AddProduit(int idProduit, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<ProduitPanier> produitPaniers = null;
+            List<ProduitPanier> produitPaniers = (List<ProduitPanier>)HttpContext.Application[idSession]?? new List<ProduitPanier>();
 
-            if (sessionUtilisateur != null)
+            if (sessionUtilisateur == null)
             {
-
-                if (HttpContext.Application[idSession] != null)
-                {
-                    produitPaniers = (List<ProduitPanier>)HttpContext.Application[idSession];
-                }
-                else
-                {
-                    produitPaniers = new List<ProduitPanier>();
-                }
-
-                Produit produit = db.Produits.Find(idProduit);
-
-                ProduitPanier produitPanier = new ProduitPanier()
-                {
-                    IdProduit = produit.IdProduit,
-                    IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
-                    Nom = produit.Nom,
-                    Description = produit.Description,
-                    Prix = produit.Prix,
-                    Quantite = 1,
-                    Photo = "Boulangerie.jpg"
-                };
-
-                produitPaniers.Add(produitPanier);
-                HttpContext.Application[idSession] = produitPaniers;
-
+                return Json(0, JsonRequestBehavior.AllowGet);
             }
+            
+            //Récupere le produit
+            Produit produit = db.Produits.Find(idProduit);
+
+            //Ajout de produit dans produitPanier
+            ProduitPanier produitPanier = new ProduitPanier()
+            {
+                IdProduit = produit.IdProduit,
+                IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
+                Nom = produit.Nom,
+                Description = produit.Description,
+                Prix = produit.Prix,
+                Quantite = 1,
+                Photo = "Boulangerie.jpg"
+            };
+
+            //Verifier si le produit existe deja dans le panier
+            if (produitPaniers.Where(p => p.IdProduit == idProduit).Count() > 0)
+            {
+                ProduitPanier monProduit = produitPaniers.Where(p => p.IdProduit == idProduit).First();
+                monProduit.Quantite++;
+                db.SaveChanges();
+            }
+            else
+            {
+                produitPaniers.Add(produitPanier);
+            }
+            
+            //Mise a jour de l'application
+            HttpContext.Application[idSession] = produitPaniers;
+
             return Json(produitPaniers.Count, JsonRequestBehavior.AllowGet);
 
         }
@@ -138,10 +145,10 @@ namespace AfpEat.Controllers
                 utilisateur.IdSession = idSession;
                 db.SaveChanges();
 
-                return Json(new { error = 1, message = "La connexion a réussi." }, JsonRequestBehavior.AllowGet);
+                return Json(new { error = 0, message = idSession }, JsonRequestBehavior.AllowGet);
 
             }
-            return Json(new { error = 0, message = "La connexion a echoué." }, JsonRequestBehavior.AllowGet);
+            return Json(new { error = 1, message = "La connexion a echoué." }, JsonRequestBehavior.AllowGet);
 
         }
 

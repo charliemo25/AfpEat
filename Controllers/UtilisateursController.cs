@@ -33,6 +33,8 @@ namespace AfpEat.Controllers
                 if (utilisateurs != null && utilisateurs.Count() == 1)
                 {
                     utilisateur = utilisateurs.First();
+                    utilisateur.IdSession = Session.SessionID;
+                    db.SaveChanges();
 
                     HttpContext.Session.Add("Utilisateur", utilisateur);
 

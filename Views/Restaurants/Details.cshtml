@@ -60,11 +60,12 @@
                             <ul class="list-group-flush">
                                 @foreach (var produit in categorie.Produits)
                                 {
-                                <li class="list-group-item">
-                                    @produit.Quantite @produit.Nom @produit.Prix€
-                                    <button type="button" class="btn btn-outline-success"><i class="fas fa-plus"></i></button>
-                                    <button type="button" class="btn btn-outline-danger"><i class="fas fa-minus"></i></button>
-                                </li>
+                                    <li class="list-group-item">
+                                        @produit.Quantite @produit.Nom @produit.Prix€
+                                        <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                        <button type="button" class="btnMoins btn btn-outline-danger"><i class="fas fa-minus"></i></button>
+                                        <span class="quantite">0</span>
+                                    </li>
                                 }
                             </ul>
 
@@ -75,5 +76,34 @@
         </div>
     </div>
 </section>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".list-group-item .btnPlus").click(function () {
+                //Appel ajax pour mettre a jour la quantité 
+                var quantite = $(this).nextUntil(2, '.quantite');
+            });
+
+
+                //$.ajax({
+                //    url: "@Url.Action("AddProduit", "Sw")",
+                //    type: "Post",
+                //    contentType: "application/json; charset=utf-8",
+                //    dataType: "JSON",
+                //    data: JSON.stringify(data),
+                //    error: function (result) {
+                //        console.log('erreur')
+                //    },
+                //    success: function (result)
+                //    {
+                //        console.log("ça marche");
+                //        $('#AddPanier').modal('show');
+                //    }
+                //});
+        });
+    </script>
+}
 
 

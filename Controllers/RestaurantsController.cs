@@ -14,11 +14,32 @@ namespace AfpEat.Controllers
     {
         private AfpEatEntities db = new AfpEatEntities();
 
+
         // GET: Restaurants
         public ActionResult Index()
         {
             var restaurants = db.Restaurants.Include(r => r.TypeCuisine);
             return View(restaurants.ToList());
+        }
+
+        public List<RestaurantProduits> RestaurantProduits(Restaurant restaurant)
+        {
+            List<RestaurantProduits> listRestaurantProduits = new List<RestaurantProduits>();
+
+            foreach (var idCategorie in restaurant.ProduitCategories.GroupBy(x => x.IdCategorie))
+            {
+                RestaurantProduits restaurantProduits = new RestaurantProduits();
+
+                restaurantProduits.NomCategorie = idCategorie.First().Categorie.Nom;
+                foreach (var categorie in idCategorie)
+                {
+                    restaurantProduits.Produits.Add(categorie.Produit);
+                }
+
+                listRestaurantProduits.Add(restaurantProduits);
+            }
+
+            return listRestaurantProduits;
         }
 
         // GET: Restaurants/Details/5
@@ -35,23 +56,12 @@ namespace AfpEat.Controllers
             }
 
             // Liste de produits par categorie
-            List<RestaurantProduits> listRestaurantProduits = new List<RestaurantProduits>();
+            List<RestaurantProduits> listRestaurantProduits = RestaurantProduits(restaurant);
 
-            foreach(var idCategorie in restaurant.ProduitCategories.GroupBy(x => x.IdCategorie))
-            {
-                RestaurantProduits restaurantProduits = new RestaurantProduits();
-                
-                restaurantProduits.NomCategorie = idCategorie.First().Categorie.Nom;
-                foreach (var categorie in idCategorie)
-                {
-                    restaurantProduits.Produits.Add(categorie.Produit);
-                }
-
-                listRestaurantProduits.Add(restaurantProduits);
-            }
+            // Liste des Menus du restaurant
+            List<RestaurantMenus> listRestaurantMenus = new List<RestaurantMenus>();
 
             // Liste des Menus
-            List<RestaurantMenus> listRestaurantMenus = new List<RestaurantMenus>();
             List<Menu> menus = new List<Menu>();
 
             foreach (var menu in restaurant.MenuCategories)
@@ -63,12 +73,33 @@ namespace AfpEat.Controllers
                 }
             }
 
+            //Parcours des menu par categorie
+            foreach (var idCategorie in restaurant.MenuCategories.GroupBy(m => m.IdCategorie))
+            {
+                // initialise un restaurantMenus
+                RestaurantMenus restaurantMenus = new RestaurantMenus();
+
+                foreach (var menu in idCategorie)
+                {
+                    
+                    restaurantMenus.Menu = menu.Menu;
+                    
+                }
+                //Verifier si le menu existe dans RestaurantMenus
+                if (!listRestaurantMenus.Contains(restaurantMenus))
+                {
+                    //Ajout dans la liste de RestaurantMenus
+                    listRestaurantMenus.Add(restaurantMenus);
+
+                    //Ajout de la liste de Produits
+                }
+            }
             //Class à envoyer a la vue
             RestaurantsDetailsModel restaurantsDetailsModel = new RestaurantsDetailsModel()
             {
                 Restaurant = restaurant,
                 RestaurantProduits = listRestaurantProduits,
-                restaurantMenus = listRestaurantMenus
+                Menus = menus
             };
 
             return View(restaurantsDetailsModel);

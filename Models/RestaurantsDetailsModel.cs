@@ -9,11 +9,11 @@ namespace AfpEat.Models
     {
         public Restaurant Restaurant { get; set; }
         public List<RestaurantProduits> RestaurantProduits { get; set; }
-        public List<RestaurantMenus> restaurantMenus { get; set; }
+        public List<Menu> Menus { get; set; }
         public RestaurantsDetailsModel()
         {
             RestaurantProduits = new List<RestaurantProduits>();
-            restaurantMenus= new List<RestaurantMenus>();
+            Menus = new List<Menu>();
         }
     }
 }

@@ -37,7 +37,7 @@
     <!-- Commande -->
     <div id="Commande" class="row">
         <div class="col-12">
-            
+
             @foreach (var categorie in Model.RestaurantProduits)
             {
                 string idCategorieProduit = "Categorie" + categorie.NomCategorie;
@@ -57,13 +57,17 @@
                     <div id="@idCollapseProduit" class="collapse show" aria-labelledby="idCategorieProduit" data-parent="#accordionCategorie">
                         <div class="card-body">
                             <!-- Afficher une liste des produits -->
-                            <ul>
+                            <ul class="list-group-flush">
                                 @foreach (var produit in categorie.Produits)
                                 {
-                                    <li>@produit.Quantite @produit.Nom @produit.Prix€</li>
+                                <li class="list-group-item">
+                                    @produit.Quantite @produit.Nom @produit.Prix€
+                                    <button type="button" class="btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                    <button type="button" class="btn btn-outline-danger"><i class="fas fa-minus"></i></button>
+                                </li>
                                 }
                             </ul>
-                            
+
                         </div>
                     </div>
                 </div>

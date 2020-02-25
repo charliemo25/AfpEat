@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Panier";
     string isConnected = (Session["Utilisateur"] != null) ? "true" : "false";
-    
+
 }
 
 <h2>Panier</h2>
@@ -30,29 +30,32 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdProduit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Prix)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantite)
-        </td>
-        <td>
-            <img src="/Images/@item.Photo" alt="" />
-        </td>
-    </tr>
-}
-
+    @if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProduit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prix)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantite)
+                </td>
+                <td>
+                    <img src="/Images/@item.Photo" alt="" />
+                </td>
+            </tr>
+        }
+    }
 </table>
 
 <button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
@@ -86,7 +89,7 @@
 </div>
 
 @section Scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
 
     function PasserCommande() {
 
@@ -104,8 +107,7 @@
             success: function (result)
             {
                 console.log(result);
-                document.location.href='@Url.Action("Details", "Utilisateurs")'+'/'+ result.idUtilisateur; 
-                
+                document.location.href='@Url.Action("Index", "Home")';
             }
         });
     }
@@ -134,7 +136,7 @@
                     } else {
                         $("#ConnexionModal").modal("hide");
                     }
-                
+
                 }
             });
         }
@@ -157,5 +159,5 @@
         });
 
     });
-</script>
+    </script>
 }

@@ -53,6 +53,19 @@ namespace AfpEat.Controllers
             return View(db.Utilisateurs.ToList());
         }
 
+        public ActionResult ValidationCommande(int? id)
+        {
+            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            Session["utilisateur"] = utilisateur;
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult RecapitulatifCommande(int? id)
+        {
+            return View();
+        }
+
         // GET: Utilisateurs/Details/5
         public ActionResult Details(int? id)
         {

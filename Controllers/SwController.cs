@@ -63,6 +63,7 @@ namespace AfpEat.Controllers
 
         public JsonResult SaveCommande(string idSession, int idRestaurant)
         {
+            
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
             List<ProduitPanier> panier = null;
 
@@ -80,16 +81,36 @@ namespace AfpEat.Controllers
                 foreach (ProduitPanier produitPanier in panier)
                 {
                     prixTotal += produitPanier.Prix * produitPanier.Quantite;
+                    idRestaurant = produitPanier.IdRestaurant;
                 }
 
                 //Verification du solde de l'utilisateur
                 if(prixTotal <= utilisateur.Solde)
                 {
-                    Commande commande = new Commande() { 
+                    //Création de la commande
+                    Commande commande = new Commande() {
                         IdUtilisateur = utilisateur.IdUtilisateur,
                         IdRestaurant = idRestaurant,
-
+                        Date = DateTime.Now,
+                        Prix = prixTotal,
+                        IdEtatCommande = 1,
                     };
+
+                    //Ajout de la commande
+                    db.Commandes.Add(commande);
+                    db.SaveChanges();
+                    
+                    // Ajout des produits dans commandeProduit
+                    foreach(ProduitPanier produitPanier in panier)
+                    {
+                        CommandeProduit commandeProduit = new CommandeProduit()
+                        {
+                            IdCommande = commande.IdCommande,
+                            IdProduit = produitPanier.IdProduit,
+                            Prix = produitPanier.Prix,
+                            Quantite = produitPanier.Quantite
+                        };
+                    }
                 }
             }
 

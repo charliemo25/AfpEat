@@ -50,20 +50,16 @@ namespace AfpEat.Controllers
                 listRestaurantProduits.Add(restaurantProduits);
             }
 
-            // Liste de menus par categorie
-            List<RestaurantMenus> listRestaurantMenus = new List<RestaurantMenus>();
+            // Liste des Menus
+            List<Menu> menus = new List<Menu>();
 
-            foreach (var idCategorie in restaurant.MenuCategories.GroupBy(x => x.IdCategorie))
+            foreach (var menu in restaurant.MenuCategories)
             {
-                RestaurantMenus restaurantMenus = new RestaurantMenus();
-
-                restaurantMenus.NomCategorie = idCategorie.First().Categorie.Nom;
-                foreach (var categorie in idCategorie)
+                //Ajoute un menu si il n'est pas présent dans la liste
+                if (!menus.Contains(menu.Menu))
                 {
-                    restaurantMenus.Menus.Add(categorie.Menu);
+                    menus.Add(menu.Menu);
                 }
-
-                listRestaurantMenus.Add(restaurantMenus);
             }
 
             //Class à envoyer a la vue
@@ -71,7 +67,7 @@ namespace AfpEat.Controllers
             {
                 Restaurant = restaurant,
                 RestaurantProduits = listRestaurantProduits,
-                RestaurantMenus = listRestaurantMenus
+                Menus = menus
             };
 
             return View(restaurantsDetailsModel);

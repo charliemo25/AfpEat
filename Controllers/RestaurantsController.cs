@@ -51,6 +51,7 @@ namespace AfpEat.Controllers
             }
 
             // Liste des Menus
+            List<RestaurantMenus> listRestaurantMenus = new List<RestaurantMenus>();
             List<Menu> menus = new List<Menu>();
 
             foreach (var menu in restaurant.MenuCategories)
@@ -67,7 +68,7 @@ namespace AfpEat.Controllers
             {
                 Restaurant = restaurant,
                 RestaurantProduits = listRestaurantProduits,
-                Menus = menus
+                restaurantMenus = listRestaurantMenus
             };
 
             return View(restaurantsDetailsModel);

@@ -37,7 +37,6 @@
     <!-- Commande -->
     <div id="Commande" class="row">
         <div class="col-12">
-
             <!-- Categorie -->
             <div class="card">
                 <!-- Nom de la categorie -->
@@ -57,9 +56,21 @@
                             {
                                 <li class="list-group-item">
                                     <p>@menu.Nom @menu.Prix€</p>
-                                    <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
-                                    <button type="button" class="btnMoins btn btn-outline-danger"><i class="fas fa-minus"></i></button>
-                                    <span class="quantite">0</span>
+                                    <!-- Etend le menu -->
+                                    <button type="button" class="btnPlusMenu btn btn-outline-success" data-toggle="collapse" href="#categorie" role="button" aria-expanded="false" aria-controls="categorie"><i class="fas fa-plus"></i></button>
+                                    <!-- Affichage des produits par categorie contenu dans le menu -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="collapse multi-collapse" id="categorie">
+                                                <div class="card card-body">
+                                                    @foreach(var categorie in menu.MenuCategories)
+                                                    {
+                                                        foreach
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </li>
                             }
                         </ul>
@@ -90,13 +101,13 @@
                             <ul class="list-group-flush">
                                 @foreach (var produit in categorie.Produits)
                                 {
-                                <li class="list-group-item">
-                                    <p>@produit.Quantite @produit.Nom @produit.Prix€</p>
-                                    <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
-                                    <button type="button" class="btnMoins btn btn-outline-danger"><i class="fas fa-minus"></i></button>
-                                    <span class="quantite">0</span>
-                                    <input type="hidden" class="produit" value="@produit.IdProduit" />
-                                </li>
+                                    <li class="list-group-item">
+                                        <p>@produit.Quantite @produit.Nom @produit.Prix€</p>
+                                        <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                        <button type="button" class="btnMoins btn btn-outline-danger"><i class="fas fa-minus"></i></button>
+                                        <span class="quantite">0</span>
+                                        <input type="hidden" class="produit" value="@produit.IdProduit" />
+                                    </li>
                                 }
                             </ul>
 
@@ -114,7 +125,7 @@
         function AddProduit(idProduit) {
 
             var data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
-        
+
             $.ajax({
                     url: "@Url.Action("AddProduit", "Sw")",
                     type: "Post",
@@ -135,7 +146,7 @@
         function RemoveProduit(idProduit) {
 
             var data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
-        
+
             $.ajax({
                     url: "@Url.Action("RemoveProduit", "Sw")",
                     type: "Post",
@@ -156,7 +167,7 @@
         $(document).ready(function () {
 
             $(".list-group-item .btnPlus").click(function () {
-                 
+
                 var quantite = $(this).nextAll('.quantite').text();
                 quantite++;
 
@@ -168,7 +179,7 @@
             });
 
             $(".list-group-item .btnMoins").click(function () {
-                 
+
                 var quantite = $(this).nextAll('.quantite').text();
                 quantite--;
 
@@ -181,7 +192,7 @@
                 //Appel ajax pour mettre a jour la quantité  dans la commande a faire
                 RemoveProduit($(this).nextAll('.produit').val());
             });
-            
+
         });
     </script>
 }

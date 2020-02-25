@@ -7,12 +7,12 @@ namespace AfpEat.Models
 {
     public class RestaurantMenus
     {
-        public string NomCategorie { get; set; }
-        public List<Menu> Menus { get; set; }
+        public string NomMenu { get; set; }
+        public List<RestaurantProduits> restaurantProduits { get; set; }
 
         public RestaurantMenus()
         {
-            Menus = new List<Menu>();
+            restaurantProduits = new List<RestaurantProduits>();
         }
     }
 }

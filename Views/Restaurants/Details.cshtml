@@ -132,6 +132,27 @@
                 });
         }
 
+        function RemoveProduit(idProduit) {
+
+            var data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
+        
+            $.ajax({
+                    url: "@Url.Action("RemoveProduit", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        //Remplacer par une alert
+                        console.log("Le produit a bien été supprimé");
+                    }
+                });
+        }
+
         $(document).ready(function () {
 
             $(".list-group-item .btnPlus").click(function () {
@@ -158,6 +179,7 @@
                     $(this).nextAll('.quantite').text(quantite);
                 }
                 //Appel ajax pour mettre a jour la quantité  dans la commande a faire
+                RemoveProduit($(this).nextAll('.produit').val());
             });
             
         });

@@ -56,6 +56,52 @@ namespace AfpEat.Controllers
 
         }
 
+        public JsonResult RemoveProduit(int idProduit, string idSession)
+        {
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+            List<ProduitPanier> produitPaniers = (List<ProduitPanier>)HttpContext.Application[idSession] ?? new List<ProduitPanier>();
+
+            if (sessionUtilisateur == null)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+            //Récupere le produit
+            Produit produit = db.Produits.Find(idProduit);
+
+            //Ajout de produit dans produitPanier
+            ProduitPanier produitPanier = new ProduitPanier()
+            {
+                IdProduit = produit.IdProduit,
+                IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
+                Nom = produit.Nom,
+                Description = produit.Description,
+                Prix = produit.Prix,
+                Quantite = 1,
+                Photo = "Boulangerie.jpg"
+            };
+
+            //Verifier si le produit existe deja dans le panier
+            if (produitPaniers.Where(p => p.IdProduit == idProduit).Count() > 0)
+            {
+                ProduitPanier monProduit = produitPaniers.Where(p => p.IdProduit == idProduit).First();
+                monProduit.Quantite--;
+
+                if(monProduit.Quantite <= 0)
+                {
+                    produitPaniers.Remove(produitPanier);
+                }
+
+                db.SaveChanges();
+            }
+
+            //Mise a jour de l'application
+            HttpContext.Application[idSession] = produitPaniers;
+
+            return Json(produitPaniers.Count, JsonRequestBehavior.AllowGet);
+
+        }
+
         public JsonResult GetProduits(string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);

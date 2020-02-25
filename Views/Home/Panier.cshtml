@@ -104,7 +104,7 @@
             success: function (result)
             {
                 console.log(result);
-                document.location.href='@Url.Action("Details", "Utilisateur")'+'/'+ data.utilisateur; 
+                document.location.href='@Url.Action("Details", "Utilisateurs")'+'/'+ result.idUtilisateur; 
                 
             }
         });

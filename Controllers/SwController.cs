@@ -130,6 +130,10 @@ namespace AfpEat.Controllers
 
             //Sauvegarde la de commande dans la bdd
             db.Commandes.Add(commande);
+
+            //Changer le solde de l'utilisateur
+            utilisateur.Solde -= prixTotal;
+
             db.SaveChanges();
 
             return Json(new { idUtilisateur = utilisateur.IdUtilisateur, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);

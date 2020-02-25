@@ -58,6 +58,8 @@ namespace AfpEat.Controllers
         // GET: Utilisateurs/Details/5
         public ActionResult Details(int? id)
         {
+            var user = (Utilisateur)Session["Utilisateur"];
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

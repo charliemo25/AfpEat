@@ -25,7 +25,7 @@ namespace AfpEat.Controllers
             //Récupere le menu
             Menu menu = db.Menus.Find(idMenu);
 
-            //Ajout de produit dans produitPanier
+            //Ajout de menu dans menuPanier
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
@@ -36,7 +36,7 @@ namespace AfpEat.Controllers
                 Photo = menu.Photo.Nom
             };
 
-            //Verifier si le produit existe deja dans le panier
+            //Verifier si le menu existe deja dans le panier
             if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
             {
                 MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
@@ -48,6 +48,52 @@ namespace AfpEat.Controllers
                 menuPaniers.Add(menuPanier);
             }
             panierViewModel.menuPaniers = menuPaniers; 
+            //Mise a jour de l'application
+            HttpContext.Application[idSession] = panierViewModel;
+
+            return Json(menuPaniers.Count, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public JsonResult RemoveMenu(int idMenu, List<int> idProduits, string idSession)
+        {
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+            List<MenuPanier> menuPaniers = (List<MenuPanier>)HttpContext.Application[idSession] ?? new List<MenuPanier>();
+
+            if (sessionUtilisateur == null)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+            //Récupere le menu
+            Menu menu = db.Menus.Find(idMenu);
+
+            //Ajout de menu dans menuPanier
+            MenuPanier menuPanier = new MenuPanier()
+            {
+                IdMenu = menu.IdMenu,
+                IdRestaurant = menu.MenuCategories.First().IdRestaurant,
+                Nom = menu.Nom,
+                Prix = menu.Prix,
+                Quantite = 1,
+                Photo = menu.Photo.Nom
+            };
+
+            //Verifier si le menu existe dans le panier
+            if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
+            {
+                MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
+                monMenu.Quantite--;
+
+                if (monMenu.Quantite <= 0)
+                {
+                    menuPaniers.Remove(monMenu);
+                }
+
+                db.SaveChanges();
+            }
+
+            panierViewModel.menuPaniers = menuPaniers;
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;
 

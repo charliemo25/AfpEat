@@ -61,45 +61,40 @@ namespace AfpEat.Controllers
             // Liste des Menus du restaurant
             List<RestaurantMenus> listRestaurantMenus = new List<RestaurantMenus>();
 
-            // Liste des Menus
-            List<Menu> menus = new List<Menu>();
-
-            foreach (var menu in restaurant.MenuCategories)
+            //Parcours des menus
+            foreach (var menu in db.Menus)
             {
-                //Ajoute un menu si il n'est pas présent dans la liste
-                if (!menus.Contains(menu.Menu))
-                {
-                    menus.Add(menu.Menu);
-                }
-            }
-
-            //Parcours des menu par categorie
-            foreach (var idCategorie in restaurant.MenuCategories.GroupBy(m => m.IdCategorie))
-            {
-                // initialise un restaurantMenus
                 RestaurantMenus restaurantMenus = new RestaurantMenus();
-
-                foreach (var menu in idCategorie)
+                //On ajoute le menu a restaurantMenus
+                if (menu.MenuCategories.First().IdRestaurant == restaurant.IdRestaurant)
                 {
-                    
-                    restaurantMenus.Menu = menu.Menu;
-                    
-                }
-                //Verifier si le menu existe dans RestaurantMenus
-                if (!listRestaurantMenus.Contains(restaurantMenus))
-                {
-                    //Ajout dans la liste de RestaurantMenus
-                    listRestaurantMenus.Add(restaurantMenus);
+                    restaurantMenus.Menu = menu;
 
-                    //Ajout de la liste de Produits
+                    //Assigne la liste de RestaurantProduits à restaurantMenus
+                    foreach (RestaurantProduits restaurantProduits in listRestaurantProduits)
+                    {
+                        //Test si la categorie du produit est contenu dans le menu
+                        foreach(var idCategorieMenu in menu.MenuCategories.GroupBy(m => m.IdCategorie))
+                        {
+                            if (idCategorieMenu.Key == restaurantProduits.Produits.)
+                            {
+                                restaurantMenus.RestaurantProduits.Add(restaurantProduits);
+                            }
+                        }
+                    }
                 }
+
+                //Ajout dans la liste de RestaurantMenus
+                listRestaurantMenus.Add(restaurantMenus);
             }
-            //Class à envoyer a la vue
+
+
+            //Les données à envoyer a la vue 
             RestaurantsDetailsModel restaurantsDetailsModel = new RestaurantsDetailsModel()
             {
                 Restaurant = restaurant,
                 RestaurantProduits = listRestaurantProduits,
-                Menus = menus
+                RestaurantMenus = listRestaurantMenus
             };
 
             return View(restaurantsDetailsModel);

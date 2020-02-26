@@ -7,6 +7,7 @@ namespace AfpEat.Models
 {
     public class RestaurantProduits
     {
+        public int idCategorie { get; set; }
         public string NomCategorie { get; set; }
         public List<Produit> Produits { get; set; }
 

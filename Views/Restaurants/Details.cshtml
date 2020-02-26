@@ -52,10 +52,10 @@
                     <div class="card-body">
                         <!-- Afficher une liste des produits -->
                         <ul class="list-group-flush">
-                            @foreach (var menu in Model.Menus)
+                            @foreach (var menu in Model.RestaurantMenus)
                             {
                                 <li class="list-group-item">
-                                    <p>@menu.Nom @menu.Prix€</p>
+                                    <p>@menu.Menu.Nom @menu.Menu.Prix€</p>
                                     <!-- Etend le menu -->
                                     <button type="button" class="btnPlusMenu btn btn-outline-success" data-toggle="collapse" href="#categorie" role="button" aria-expanded="false" aria-controls="categorie"><i class="fas fa-plus"></i></button>
                                     <!-- Affichage des produits par categorie contenu dans le menu -->
@@ -63,7 +63,7 @@
                                         <div class="col-12">
                                             <div class="collapse multi-collapse" id="categorie">
                                                 <div class="card card-body">
-                                                    @foreach(var categorie in menu.MenuCategories)
+                                                    @foreach(var categorie in menu.Menu.MenuCategories)
                                                     {
                                                         @: <p>@categorie.IdCategorie</p>
                                                     }

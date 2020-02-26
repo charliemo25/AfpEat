@@ -10,7 +10,50 @@ namespace AfpEat.Controllers
     public class SwController : Controller
     {
         private AfpEatEntities db = new AfpEatEntities();
+        public 
 
+        public JsonResult AddMenu(int idMenu, List<int> idProduits, string idSession)
+        {
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+            List<MenuPanier> menuPaniers = (List<MenuPanier>)HttpContext.Application[idSession] ?? new List<MenuPanier>();
+
+            if (sessionUtilisateur == null)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+            //Récupere le menu
+            Menu menu = db.Menus.Find(idMenu);
+
+            //Ajout de produit dans produitPanier
+            MenuPanier menuPanier = new MenuPanier()
+            {
+                IdMenu = menu.IdMenu,
+                IdRestaurant = menu.MenuCategories.First().IdRestaurant,
+                Nom = menu.Nom,
+                Prix = menu.Prix,
+                Quantite = 1,
+                Photo = menu.Photo.Nom
+            };
+
+            //Verifier si le produit existe deja dans le panier
+            if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
+            {
+                MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
+                monMenu.Quantite++;
+                db.SaveChanges();
+            }
+            else
+            {
+                menuPaniers.Add(menuPanier);
+            }
+
+            //Mise a jour de l'application
+            HttpContext.Application[idSession] = produitPaniers;
+
+            return Json(produitPaniers.Count, JsonRequestBehavior.AllowGet);
+
+        }
 
         public JsonResult AddProduit(int idProduit, string idSession)
         {

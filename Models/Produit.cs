@@ -23,6 +23,7 @@ namespace AfpEat.Models
         }
     
         public int IdProduit { get; set; }
+        public int IdPhoto { get; set; }
         public string Nom { get; set; }
         public decimal Prix { get; set; }
         public string Description { get; set; }
@@ -31,6 +32,7 @@ namespace AfpEat.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommandeProduit> CommandeProduits { get; set; }
+        public virtual Photo Photo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProduitCategorie> ProduitCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

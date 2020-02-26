@@ -34,7 +34,7 @@ namespace AfpEat.Controllers
                 Description = produit.Description,
                 Prix = produit.Prix,
                 Quantite = 1,
-                Photo = "Boulangerie.jpg"
+                Photo = produit.Photo.Nom
             };
 
             //Verifier si le produit existe deja dans le panier

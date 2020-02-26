@@ -23,10 +23,12 @@ namespace AfpEat.Models
         }
     
         public int IdMenu { get; set; }
+        public int IdPhoto { get; set; }
         public string Nom { get; set; }
         public bool Statut { get; set; }
         public decimal Prix { get; set; }
     
+        public virtual Photo Photo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MenuCategorie> MenuCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -80,8 +80,9 @@
                                                                     </select>
                                                                 </div>
                                                             }
+                                                            <input type="hidden" class="menu" value="@menu.Menu.IdMenu" />
                                                             <div class="col-12">
-                                                                <button type="button" id="btnValidMenu" class="btn btn-outline-success btn-lg btn-block">Ajouter au panier</button>
+                                                                <button type="submit" class="btn btn-outline-success btn-lg btn-block">Ajouter au panier</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -184,6 +185,18 @@
 
 
         $(document).ready(function () {
+
+            //Ajout d'un menu au panier
+            $("form").submit(function (e) {
+                //Empeche de submit le form
+                e.preventDefault();
+
+                //Initialisation de la liste des idProduit
+                var arrayIdProduit = [];
+                $.each($(this).find('select'), function (k, v) {
+                    console.log($(v).val());
+                });
+            });
 
             //Ajout d'un produit au panier
             $(".list-group-item .btnPlus").click(function () {

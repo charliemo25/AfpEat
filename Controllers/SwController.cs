@@ -10,7 +10,7 @@ namespace AfpEat.Controllers
     public class SwController : Controller
     {
         private AfpEatEntities db = new AfpEatEntities();
-        public 
+        private PanierViewModel panierViewModel = new PanierViewModel();
 
         public JsonResult AddMenu(int idMenu, List<int> idProduits, string idSession)
         {
@@ -47,11 +47,11 @@ namespace AfpEat.Controllers
             {
                 menuPaniers.Add(menuPanier);
             }
-
+            panierViewModel.menuPaniers = menuPaniers; 
             //Mise a jour de l'application
-            HttpContext.Application[idSession] = produitPaniers;
+            HttpContext.Application[idSession] = panierViewModel;
 
-            return Json(produitPaniers.Count, JsonRequestBehavior.AllowGet);
+            return Json(menuPaniers.Count, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -91,9 +91,11 @@ namespace AfpEat.Controllers
             {
                 produitPaniers.Add(produitPanier);
             }
-            
+
+            panierViewModel.produitPaniers = produitPaniers;
+
             //Mise a jour de l'application
-            HttpContext.Application[idSession] = produitPaniers;
+            HttpContext.Application[idSession] = panierViewModel;
 
             return Json(produitPaniers.Count, JsonRequestBehavior.AllowGet);
 
@@ -138,26 +140,29 @@ namespace AfpEat.Controllers
                 db.SaveChanges();
             }
 
+            panierViewModel.produitPaniers = produitPaniers;
+
             //Mise a jour de l'application
-            HttpContext.Application[idSession] = produitPaniers;
+            HttpContext.Application[idSession] = panierViewModel;
 
             return Json(produitPaniers.Count, JsonRequestBehavior.AllowGet);
 
         }
 
-        public JsonResult GetProduits(string idSession)
+        public JsonResult GetPanier(string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<ProduitPanier> panier = null;
+            PanierViewModel panier = null;
 
             if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)
             {
-                panier = (List<ProduitPanier>)HttpContext.Application[idSession];
+                panier = (PanierViewModel)HttpContext.Application[idSession];
             }
             return Json(panier, JsonRequestBehavior.AllowGet);
 
         }
 
+        //Modifier la sauvegarde de commande
         public JsonResult SaveCommande(string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);

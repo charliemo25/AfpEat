@@ -47,6 +47,7 @@
                         </button>
                     </h2>
                 </div>
+
                 <!-- Contenu -->
                 <div id="CollapseMenu" class="collapse show" aria-labelledby="idCategorieMenu" data-parent="#accordionCategorie">
                     <div class="card-body">
@@ -57,16 +58,33 @@
                                 <li class="list-group-item">
                                     <p>@menu.Menu.Nom @menu.Menu.Prix€</p>
                                     <!-- Etend le menu -->
-                                    <button type="button" class="btnPlusMenu btn btn-outline-success" data-toggle="collapse" href="#categorie" role="button" aria-expanded="false" aria-controls="categorie"><i class="fas fa-plus"></i></button>
+                                    <button type="button" class="mb-3 btnPlusMenu btn btn-outline-success" data-toggle="collapse" href="#@menu.Menu.Nom.Replace(" ", "")" role="button" aria-expanded="false" aria-controls="@menu.Menu.Nom.Replace(" ", "")"><i class="fas fa-plus"></i></button>
                                     <!-- Affichage des produits par categorie contenu dans le menu -->
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="collapse multi-collapse" id="categorie">
+                                            <div class="collapse multi-collapse" id="@menu.Menu.Nom.Replace(" ", "")">
                                                 <div class="card card-body">
-                                                    @foreach(var categorie in menu.Menu.MenuCategories)
-                                                    {
-                                                        @: <p>@categorie.IdCategorie</p>
-                                                    }
+                                                    <!-- Select par categorie de produit -->
+                                                    <form >
+                                                        <div class="form-row">
+                                                            @foreach (var categorie in menu.RestaurantProduits)
+                                                            {
+                                                            <div class="form-group col-12 col-sm-6">
+                                                                <label for="@categorie.NomCategorie">@categorie.NomCategorie :</label>
+                                                                <select class="form-control" id="@categorie.NomCategorie">
+                                                                    <option selected>@categorie.NomCategorie</option>
+                                                                    @foreach (var produit in categorie.Produits)
+                                                                    {
+                                                                        @:<option value="@produit.IdProduit">@produit.Nom</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                            }
+                                                            <div class="col-12">
+                                                                <button type="button" id="btnValidMenu" class="btn btn-outline-success btn-lg btn-block">Ajouter au panier</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +92,6 @@
                                 </li>
                             }
                         </ul>
-
                     </div>
                 </div>
             </div>

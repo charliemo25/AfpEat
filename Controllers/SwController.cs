@@ -211,8 +211,11 @@ namespace AfpEat.Controllers
         //Modifier la sauvegarde de commande
         public JsonResult SaveCommande(string idSession)
         {
+            //Récupere la session de l'utilisateur
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<ProduitPanier> panier = (List<ProduitPanier>)HttpContext.Application[idSession];
+            //Récupere le panier
+            PanierViewModel panier = (PanierViewModel)HttpContext.Application[idSession];
+            
             int idRestaurant = 0;
 
             Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
@@ -221,17 +224,30 @@ namespace AfpEat.Controllers
                 return Json("Vous devez être connecté.", JsonRequestBehavior.AllowGet);
             }
 
-            if (panier.Count() == 0)
+            if (panier.menuPaniers.Count() == 0 && panier.produitPaniers.Count() == 0)
             {
                 return Json("Votre panier est vide.", JsonRequestBehavior.AllowGet);
             }
 
-            //On calcule le prix total des produits
             decimal prixTotal = 0;
-            foreach (ProduitPanier produitPanier in panier)
+
+            //On calcule le prix total des produits
+            foreach (ProduitPanier produitPanier in panier.produitPaniers)
             {
                 prixTotal += produitPanier.Prix * produitPanier.Quantite;
                 idRestaurant = produitPanier.IdRestaurant;
+            }
+
+            if (prixTotal > utilisateur.Solde)
+            {
+                return Json("Votre solde est insuffisant.", JsonRequestBehavior.AllowGet);
+            }
+
+            //On calcule le prix total des menus
+            foreach (MenuPanier menuPanier in panier.menuPaniers)
+            {
+                prixTotal += menuPanier.Prix * menuPanier.Quantite;
+                idRestaurant = menuPanier.IdRestaurant;
             }
 
             if (prixTotal > utilisateur.Solde)
@@ -251,24 +267,39 @@ namespace AfpEat.Controllers
 
             //Ajout de la commande
             db.Commandes.Add(commande);
-            //db.SaveChanges();
 
             // Ajout des produits dans commandeProduit
-            foreach (ProduitPanier produitPanier in panier)
+            foreach (ProduitPanier produitPanier in panier.produitPaniers)
             {
                 CommandeProduit commandeProduit = new CommandeProduit()
                 {
                     //IdCommande = commande.IdCommande,
                     IdProduit = produitPanier.IdProduit,
                     Prix = produitPanier.Prix,
-                    Quantite = produitPanier.Quantite
+                    Quantite = produitPanier.Quantite,
                 };
 
                 //Ajout dans CommandeProduit
                 commande.CommandeProduits.Add(commandeProduit);
             }
+            //Ajout des menus
+            foreach (Menu menu in db.Menus)
+            {
+                CommandeProduit commandeMenu = new CommandeProduit();
 
-            //Sauvegarde la de commande dans la bdd
+                foreach (MenuPanier menuPanier in panier.menuPaniers)
+                {
+                    if(menu.IdMenu == menuPanier.IdMenu)
+                    {
+                        commandeMenu.Menus.Add(menu);
+                    }
+                }
+                //Ajout dans CommandeProduit
+                commande.CommandeProduits.Add(commandeMenu);
+            }
+
+
+            //Sauvegarde de la commande dans la bdd
             db.Commandes.Add(commande);
 
             //Changer le solde de l'utilisateur

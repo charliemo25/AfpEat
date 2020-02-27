@@ -29,11 +29,19 @@ namespace AfpEat.Controllers
             //Récupere le menu
             Menu menu = db.Menus.Find(idMenu);
 
+            //Récupere les produits sélectionnés
+            List<Produit> produits = new List<Produit>();
+            
+            foreach(var idProduit in idProduits)
+            {
+                produits.Add(db.Produits.Find(idProduit));
+            }
+
             //Ajout de menu dans menuPanier
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
-                IdProduits = idProduits,
+                Produits = produits,
                 IdRestaurant = menu.IdRestaurant,
                 Nom = menu.Nom,
                 Prix = menu.Prix,
@@ -76,11 +84,19 @@ namespace AfpEat.Controllers
             //Récupere le menu
             Menu menu = db.Menus.Find(idMenu);
 
+            //Récupere les produits sélectionnés
+            List<Produit> produits = new List<Produit>();
+
+            foreach (var idProduit in idProduits)
+            {
+                produits.Add(db.Produits.Find(idProduit));
+            }
+
             //Ajout de menu dans menuPanier
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
-                IdProduits = idProduits,
+                Produits = produits,
                 IdRestaurant = menu.IdRestaurant,
                 Nom = menu.Nom,
                 Prix = menu.Prix,

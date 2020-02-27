@@ -437,7 +437,6 @@
     <Content Include="Views\Produits\Details.cshtml" />
     <Content Include="Views\Produits\Edit.cshtml" />
     <Content Include="Views\Produits\Index.cshtml" />
-    <Content Include="Views\Home\Panier_bu.cshtml" />
     <Content Include="Views\Home\PanierAjax.cshtml" />
     <Content Include="Views\Home\Panier.cshtml" />
   </ItemGroup>

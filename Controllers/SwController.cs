@@ -31,7 +31,7 @@ namespace AfpEat.Controllers
 
             //Récupere les produits sélectionnés
             List<Produit> produits = new List<Produit>();
-            foreach(var idProduit in idProduits)
+            foreach (var idProduit in idProduits)
             {
                 produits.Add(db.Produits.Find(idProduit));
             }
@@ -48,40 +48,35 @@ namespace AfpEat.Controllers
                 Photo = menu.Photo.Nom
             };
 
-            //Verifier si le panier a un menu
+
+            //Verifier si le menu existe deja dans le panier
             if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
             {
-                //Parcours des menuPanier déja présent
-                for (int i = 0; i < menuPaniers.Count() ;i++)
+                MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
+
+                //Comparer en tant que liste sans entity
+                List<int> idProduitsPanier = new List<int>();
+                foreach (var mp in menuPaniers.Where(p => p.IdMenu == idMenu))
                 {
-                    if (menuPaniers[i].Produits == produits)
+                    foreach (var item in mp.Produits)
                     {
-                        menuPaniers[i].Quantite++;
-                    }
-                    else
-                    {
-                        menuPaniers.Add(menuPanier);
+                        idProduitsPanier.Add(item.IdProduit);
                     }
                 }
+
+                //Utiliser equals pour comparer avec les objets produits ?
+                if (Enumerable.SequenceEqual(idProduits.OrderBy(t => t), idProduits.OrderBy(t => t)))
+                {
+                    monMenu.Quantite++;
+                }
+                
             }
             else
             {
                 menuPaniers.Add(menuPanier);
             }
 
-            //Verifier si le menu existe deja dans le panier
-            //if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
-            //{
-            //    MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
-            //    monMenu.Quantite++;
-
-            //}
-            //else
-            //{
-            //    menuPaniers.Add(menuPanier);
-            //}
-
-            panierViewModel.menuPaniers = menuPaniers.ToList(); 
+            panierViewModel.menuPaniers = menuPaniers.ToList();
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;
 
@@ -149,7 +144,7 @@ namespace AfpEat.Controllers
         public JsonResult AddProduit(int idProduit, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            
+
             //On récupère le panier
             panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
             //On récupère les menus dans le panier
@@ -159,7 +154,7 @@ namespace AfpEat.Controllers
             {
                 return Json(0, JsonRequestBehavior.AllowGet);
             }
-            
+
             //Récupere le produit
             Produit produit = db.Produits.Find(idProduit);
 
@@ -198,7 +193,7 @@ namespace AfpEat.Controllers
         public JsonResult RemoveProduit(int idProduit, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            
+
             //On récupère le panier
             panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
             //On récupère les menus dans le panier
@@ -230,7 +225,7 @@ namespace AfpEat.Controllers
                 ProduitPanier monProduit = produitPaniers.Where(p => p.IdProduit == idProduit).First();
                 monProduit.Quantite--;
 
-                if(monProduit.Quantite <= 0)
+                if (monProduit.Quantite <= 0)
                 {
                     produitPaniers.Remove(monProduit);
                 }
@@ -262,18 +257,18 @@ namespace AfpEat.Controllers
         //Modifier la sauvegarde de commande
         public JsonResult SaveCommande(string idSession)
         {
-           
+
             //Récupere la session de l'utilisateur
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
             //Récupere le panier
             PanierViewModel panier = (PanierViewModel)HttpContext.Application[idSession];
-            
+
             int idRestaurant = 0;
 
             Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
             if (utilisateur == null)
             {
-                
+
                 return Json(new { statut = 0, message = "Vous devez être connecté pour passer une commande" }, JsonRequestBehavior.AllowGet);
             }
 
@@ -300,7 +295,7 @@ namespace AfpEat.Controllers
 
             if (prixTotal > utilisateur.Solde)
             {
-                return Json( new { statut = 0 , message = "Votre solde est insuffisant." }, JsonRequestBehavior.AllowGet);
+                return Json(new { statut = 0, message = "Votre solde est insuffisant." }, JsonRequestBehavior.AllowGet);
             }
 
             //Création de la commande
@@ -337,7 +332,7 @@ namespace AfpEat.Controllers
 
                 foreach (MenuPanier menuPanier in panier.menuPaniers)
                 {
-                    if(menu.IdMenu == menuPanier.IdMenu)
+                    if (menu.IdMenu == menuPanier.IdMenu)
                     {
                         //commandeMenu.Menus.Add(menu);
                         commande.Menus.Add(menu);
@@ -354,7 +349,7 @@ namespace AfpEat.Controllers
 
             db.SaveChanges();
 
-            return Json(new { statut = 1, message = "Votre commande a été effectuer." } , JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoginUtilisateur(string idSession, string matricule, string password)

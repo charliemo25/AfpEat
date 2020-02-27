@@ -33,6 +33,7 @@ namespace AfpEat.Controllers
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
+                IdProduits = idProduits,
                 IdRestaurant = menu.MenuCategories.First().IdRestaurant,
                 Nom = menu.Nom,
                 Prix = menu.Prix,
@@ -76,6 +77,7 @@ namespace AfpEat.Controllers
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
+                IdProduits = idProduits,
                 IdRestaurant = menu.MenuCategories.First().IdRestaurant,
                 Nom = menu.Nom,
                 Prix = menu.Prix,

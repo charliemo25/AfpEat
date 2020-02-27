@@ -1,50 +1,26 @@
-﻿@model AfpEat.Models.PanierViewModel >
+﻿@model IEnumerable<AfpEat.Models.PanierViewModel>
 
 @{
     ViewBag.Title = "Panier";
+    List<AfpEat.Models.MenuPanier> menuPaniers = ViewBag.menuPaniers;
     string isConnected = (Session["Utilisateur"] != null) ? "true" : "false";
+
 }
 
 <h2>Panier</h2>
 
-<ul>
-    @foreach (var menu in Model.menuPaniers)
+    @if (Model != null && Model.Count() > 0)
     {
+        foreach (var item in Model)
+        {
 
-        <li>
-            @menu.Nom @menu.Prix @menu.Quantite
-        </li>
+            foreach (var menu in item.menuPaniers)
+            {
+                <p>@menu.Nom @menu.Prix @menu.Quantite</p>
+            }
+        }
     }
-</ul>
-<button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
 
-<div id="ConnexionModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="Matricule">Matricule</label>
-                        <input type="text" class="form-control" id="Matricule">
-                    </div>
-                    <div class="form-group">
-                        <label for="Password">Mot de passe</label>
-                        <input type="password" class="form-control" id="Password">
-                    </div>
-                    <button id="btnConnexion" class="btn btn-primary">Envoyer</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
 
 @section Scripts{
     <script type="text/javascript">

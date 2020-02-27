@@ -142,7 +142,7 @@
 
         function AddProduit(idProduit) {
 
-            var data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
+            let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
 
             $.ajax({
                     url: "@Url.Action("AddProduit", "Sw")",
@@ -163,7 +163,7 @@
 
         function RemoveProduit(idProduit) {
 
-            var data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
+            let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
 
             $.ajax({
                     url: "@Url.Action("RemoveProduit", "Sw")",
@@ -182,26 +182,49 @@
                 });
         }
 
+        function AddMenu(idMenu, arrayIdProduit) {
+            let data = { 'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
+            console.log(data);
 
+            $.ajax({
+                    url: "@Url.Action("AddMenu", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        //Remplacer par une alert
+                        console.log("Le menu à bien été ajouté.");
+                    }
+            });
+        }
 
         $(document).ready(function () {
 
             //Ajout d'un menu au panier
             $("form").submit(function (e) {
+
                 //Empeche de submit le form
                 e.preventDefault();
-
                 //Initialisation de la liste des idProduit
-                var arrayIdProduit = [];
+                let idProduits = [];
+
                 $.each($(this).find('select'), function (k, v) {
-                    console.log($(v).val());
+                    idProduits.push($(v).val());
                 });
+
+                let idMenu = $(this).find('.menu').val();
+                AddMenu(idMenu, idProduits);
             });
 
             //Ajout d'un produit au panier
             $(".list-group-item .btnPlus").click(function () {
 
-                var quantite = $(this).nextAll('.quantite').text();
+                let quantite = $(this).nextAll('.quantite').text();
                 quantite++;
 
                 $(this).nextAll('.quantite').text(quantite);
@@ -214,7 +237,7 @@
             //Suppression d'un produit du panier
             $(".list-group-item .btnMoins").click(function () {
 
-                var quantite = $(this).nextAll('.quantite').text();
+                let quantite = $(this).nextAll('.quantite').text();
                 quantite--;
 
                 if (quantite <= 0) {

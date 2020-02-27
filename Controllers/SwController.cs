@@ -228,6 +228,7 @@ namespace AfpEat.Controllers
         //Modifier la sauvegarde de commande
         public JsonResult SaveCommande(string idSession)
         {
+           
             //Récupere la session de l'utilisateur
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
             //Récupere le panier
@@ -238,12 +239,13 @@ namespace AfpEat.Controllers
             Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
             if (utilisateur == null)
             {
-                return Json("Vous devez être connecté.", JsonRequestBehavior.AllowGet);
+                
+                return Json(new { statut = 0, message = "Vous devez être connecté pour passer une commande" }, JsonRequestBehavior.AllowGet);
             }
 
             if (panier.menuPaniers.Count() == 0 && panier.produitPaniers.Count() == 0)
             {
-                return Json("Votre panier est vide.", JsonRequestBehavior.AllowGet);
+                return Json(new { statut = 0, message = "Votre panier est vide." }, JsonRequestBehavior.AllowGet);
             }
 
             decimal prixTotal = 0;
@@ -264,7 +266,7 @@ namespace AfpEat.Controllers
 
             if (prixTotal > utilisateur.Solde)
             {
-                return Json("Votre solde est insuffisant.", JsonRequestBehavior.AllowGet);
+                return Json( new { statut = 0 , message = "Votre solde est insuffisant." }, JsonRequestBehavior.AllowGet);
             }
 
             //Création de la commande
@@ -307,8 +309,6 @@ namespace AfpEat.Controllers
                         commande.Menus.Add(menu);
                     }
                 }
-                //Ajout dans CommandeProduit
-                //commande.CommandeProduits.Add(commandeMenu);
             }
 
 
@@ -320,7 +320,7 @@ namespace AfpEat.Controllers
 
             db.SaveChanges();
 
-            return Json(new { idUtilisateur = utilisateur.IdUtilisateur, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message = "Votre commande a été effectuer." } , JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoginUtilisateur(string idSession, string matricule, string password)

@@ -81,8 +81,13 @@
             },
             success: function (result)
             {
-                console.log(result);
-                document.location.href='@Url.Action("Index", "Home")';
+                if (result.statut) {
+                    //Changer la redirection pour un récapitulatif de la commande
+                    document.location.href = '@Url.Action("Index", "Home")';
+                }
+                else {
+                    console.log(result.message);
+                }
             }
         });
     }

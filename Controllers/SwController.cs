@@ -31,13 +31,12 @@ namespace AfpEat.Controllers
 
             //Récupere les produits sélectionnés
             List<Produit> produits = new List<Produit>();
-            
             foreach(var idProduit in idProduits)
             {
                 produits.Add(db.Produits.Find(idProduit));
             }
 
-            //Ajout de menu dans menuPanier
+            //Ajout du menu dans menuPanier
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
@@ -49,17 +48,39 @@ namespace AfpEat.Controllers
                 Photo = menu.Photo.Nom
             };
 
-            //Verifier si le menu existe deja dans le panier
+            //Verifier si le panier a un menu
             if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
             {
-                MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
-                monMenu.Quantite++;
-                db.SaveChanges();
+                //Parcours des menuPanier déja présent
+                for (int i = 0; i < menuPaniers.Count() ;i++)
+                {
+                    if (menuPaniers[i].Produits == produits)
+                    {
+                        menuPaniers[i].Quantite++;
+                    }
+                    else
+                    {
+                        menuPaniers.Add(menuPanier);
+                    }
+                }
             }
             else
             {
                 menuPaniers.Add(menuPanier);
             }
+
+            //Verifier si le menu existe deja dans le panier
+            //if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
+            //{
+            //    MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
+            //    monMenu.Quantite++;
+
+            //}
+            //else
+            //{
+            //    menuPaniers.Add(menuPanier);
+            //}
+
             panierViewModel.menuPaniers = menuPaniers.ToList(); 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;
@@ -115,7 +136,6 @@ namespace AfpEat.Controllers
                     menuPaniers.Remove(monMenu);
                 }
 
-                db.SaveChanges();
             }
 
             panierViewModel.menuPaniers = menuPaniers.ToList();
@@ -160,7 +180,6 @@ namespace AfpEat.Controllers
             {
                 ProduitPanier monProduit = produitPaniers.Where(p => p.IdProduit == idProduit).First();
                 monProduit.Quantite++;
-                db.SaveChanges();
             }
             else
             {
@@ -216,7 +235,6 @@ namespace AfpEat.Controllers
                     produitPaniers.Remove(monProduit);
                 }
 
-                db.SaveChanges();
             }
 
             panierViewModel.produitPaniers = produitPaniers.ToList();

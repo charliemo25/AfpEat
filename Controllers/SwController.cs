@@ -63,7 +63,10 @@ namespace AfpEat.Controllers
         public JsonResult RemoveMenu(int idMenu, List<int> idProduits, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<MenuPanier> menuPaniers = (List<MenuPanier>)HttpContext.Application[idSession] ?? new List<MenuPanier>();
+            //On récupère le panier
+            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
+            //On récupère les menus dans le panier
+            List<MenuPanier> menuPaniers = panierViewModel.menuPaniers ?? new List<MenuPanier>();
 
             if (sessionUtilisateur == null)
             {
@@ -110,7 +113,11 @@ namespace AfpEat.Controllers
         public JsonResult AddProduit(int idProduit, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<ProduitPanier> produitPaniers = (List<ProduitPanier>)HttpContext.Application[idSession]?? new List<ProduitPanier>();
+            
+            //On récupère le panier
+            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
+            //On récupère les menus dans le panier
+            List<ProduitPanier> produitPaniers = panierViewModel.produitPaniers ?? new List<ProduitPanier>();
 
             if (sessionUtilisateur == null)
             {
@@ -156,7 +163,11 @@ namespace AfpEat.Controllers
         public JsonResult RemoveProduit(int idProduit, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<ProduitPanier> produitPaniers = (List<ProduitPanier>)HttpContext.Application[idSession] ?? new List<ProduitPanier>();
+            
+            //On récupère le panier
+            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
+            //On récupère les menus dans le panier
+            List<ProduitPanier> produitPaniers = panierViewModel.produitPaniers ?? new List<ProduitPanier>();
 
             if (sessionUtilisateur == null)
             {

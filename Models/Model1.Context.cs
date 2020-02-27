@@ -30,7 +30,6 @@ namespace AfpEat.Models
         public virtual DbSet<CommandeProduit> CommandeProduits { get; set; }
         public virtual DbSet<EtatCommande> EtatCommandes { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
-        public virtual DbSet<MenuCategorie> MenuCategories { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
         public virtual DbSet<Photo> Photos { get; set; }
         public virtual DbSet<Produit> Produits { get; set; }

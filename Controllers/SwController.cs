@@ -52,7 +52,7 @@ namespace AfpEat.Controllers
             {
                 menuPaniers.Add(menuPanier);
             }
-            panierViewModel.menuPaniers = menuPaniers; 
+            panierViewModel.menuPaniers = menuPaniers.ToList(); 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;
 
@@ -102,7 +102,7 @@ namespace AfpEat.Controllers
                 db.SaveChanges();
             }
 
-            panierViewModel.menuPaniers = menuPaniers;
+            panierViewModel.menuPaniers = menuPaniers.ToList();
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;
 
@@ -151,7 +151,7 @@ namespace AfpEat.Controllers
                 produitPaniers.Add(produitPanier);
             }
 
-            panierViewModel.produitPaniers = produitPaniers;
+            panierViewModel.produitPaniers = produitPaniers.ToList();
 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;
@@ -203,7 +203,7 @@ namespace AfpEat.Controllers
                 db.SaveChanges();
             }
 
-            panierViewModel.produitPaniers = produitPaniers;
+            panierViewModel.produitPaniers = produitPaniers.ToList();
 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;

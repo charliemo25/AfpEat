@@ -11,7 +11,7 @@
 @if (Model.menuPaniers != null && Model.menuPaniers.Count() > 0)
 {
     <ul>
-        @foreach (var menu in Model.menuPaniers.ToList())
+        @foreach (var menu in Model.menuPaniers)
         {
             
             <li>@menu.Nom @menu.Prix€ X @menu.Quantite <img src="/Images/@menu.Photo" width="150" height="150" alt="" /> </li>
@@ -23,7 +23,7 @@
 @if (Model.produitPaniers != null && Model.produitPaniers.Count() > 0)
 {
     <ul>
-        @foreach (var produit in Model.produitPaniers.ToList())
+        @foreach (var produit in Model.produitPaniers)
         {
             
             <li>@produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" /> </li>

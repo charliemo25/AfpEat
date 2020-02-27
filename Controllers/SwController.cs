@@ -303,11 +303,12 @@ namespace AfpEat.Controllers
                 {
                     if(menu.IdMenu == menuPanier.IdMenu)
                     {
-                        commandeMenu.Menus.Add(menu);
+                        //commandeMenu.Menus.Add(menu);
+                        commande.Menus.Add(menu);
                     }
                 }
                 //Ajout dans CommandeProduit
-                commande.CommandeProduits.Add(commandeMenu);
+                //commande.CommandeProduits.Add(commandeMenu);
             }
 
 

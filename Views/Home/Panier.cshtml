@@ -11,11 +11,18 @@
 @if (Model.menuPaniers != null && Model.menuPaniers.Count() > 0)
 {
     <ul>
-        @foreach (var menu in Model.menuPaniers)
+        @foreach (var menuPanier in Model.menuPaniers)
         {
-
-            <li>@menu.Nom @menu.Prix€ X @menu.Quantite <img src="/Images/@menu.Photo" width="150" height="150" alt="" /> </li>
-
+            <li>
+                @menuPanier.Nom @menuPanier.Prix€ X @menuPanier.Quantite <img src="/Images/@menuPanier.Photo" width="150" height="150" alt="" />
+                <ul>
+                    <!-- Affichage des produits selectionnés -->
+                    @foreach (var produit in menuPanier.Produits)
+                    {
+                        <li>@produit.Nom</li>
+                    }
+                </ul>
+            </li>
         }
     </ul>
 }

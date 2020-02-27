@@ -1,34 +1,22 @@
-﻿@model IEnumerable<AfpEat.Models.PanierViewModel>
+﻿@model AfpEat.Models.PanierViewModel
 
 @{
     ViewBag.Title = "Panier";
-    List<AfpEat.Models.MenuPanier> menuPaniers = ViewBag.menuPaniers;
     string isConnected = (Session["Utilisateur"] != null) ? "true" : "false";
 
 }
 
 <h2>Panier</h2>
-
-@if (Model != null && Model.Count() > 0)
-{
-    //Pour parcourir les menus et les produits
-    foreach (var item in Model)
+<ul>
+    @foreach (var menu in Model.menuPaniers.ToList())
     {
         //Parcours des menus
-        <ul>
-            @foreach (var menu in item.menuPaniers)
-            {
-                <li>@menu.Nom @menu.Prix€ X @menu.Quantite <img src="/Images/@menu.Photo" width="150" height="150" alt="" /> </li>
-            }
-        </ul>
 
-        //Parcours des produits
-        <ul>
+        <li>@menu.Nom @menu.Prix€ X @menu.Quantite <img src="/Images/@menu.Photo" width="150" height="150" alt="" /> </li>
 
-        </ul>
+
     }
-}
-
+</ul>
 
 @section Scripts{
     <script type="text/javascript">

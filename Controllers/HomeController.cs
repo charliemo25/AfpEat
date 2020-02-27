@@ -22,14 +22,8 @@ namespace AfpEat.Controllers
         public ActionResult Panier()
         {
             PanierViewModel panier = (PanierViewModel)HttpContext.Application[Session.SessionID];
-            List<PanierViewModel> paniers = new List<PanierViewModel>();
-            paniers.Add(panier);
-            List<MenuPanier> menuPaniers = panier.menuPaniers;
-            List<ProduitPanier> produitPaniers = panier.produitPaniers;
 
-            ViewBag.menuPaniers = menuPaniers;
-
-            return View(paniers.ToList());
+            return View(panier);
         }
 
         public ActionResult PanierAjax()

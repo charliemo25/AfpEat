@@ -7,12 +7,24 @@
 }
 
 <h2>Panier</h2>
+
 <ul>
     @foreach (var menu in Model.menuPaniers.ToList())
     {
         //Parcours des menus
 
         <li>@menu.Nom @menu.Prix€ X @menu.Quantite <img src="/Images/@menu.Photo" width="150" height="150" alt="" /> </li>
+
+
+    }
+</ul>
+
+<ul>
+    @foreach (var produit in Model.produitPaniers.ToList())
+    {
+        //Parcours des menus
+
+        <li>@produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" /> </li>
 
 
     }

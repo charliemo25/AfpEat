@@ -8,7 +8,7 @@
 
 <h2>Panier</h2>
 
-@if (Model.menuPaniers.Count() > 0 && Model.menuPaniers != null)
+@if (Model.menuPaniers != null && Model.menuPaniers.Count() > 0)
 {
     <ul>
         @foreach (var menu in Model.menuPaniers.ToList())
@@ -20,7 +20,7 @@
     </ul>
 }
 
-@if (Model.produitPaniers.Count() > 0 && Model.produitPaniers != null)
+@if (Model.produitPaniers != null && Model.produitPaniers.Count() > 0)
 {
     <ul>
         @foreach (var produit in Model.produitPaniers.ToList())

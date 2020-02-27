@@ -255,11 +255,6 @@ namespace AfpEat.Controllers
                 idRestaurant = produitPanier.IdRestaurant;
             }
 
-            if (prixTotal > utilisateur.Solde)
-            {
-                return Json("Votre solde est insuffisant.", JsonRequestBehavior.AllowGet);
-            }
-
             //On calcule le prix total des menus
             foreach (MenuPanier menuPanier in panier.menuPaniers)
             {

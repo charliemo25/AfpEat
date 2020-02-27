@@ -40,7 +40,7 @@ namespace AfpEat.Models
 
         public bool Equals(Produit other)
         {
-            return IdProduit == other.IdProduit;
+            return this.IdProduit == other.IdProduit;
         }
     }
 }

@@ -64,12 +64,15 @@ namespace AfpEat.Controllers
                     }
                 }
 
-                //Utiliser equals pour comparer avec les objets produits ?
-                if (Enumerable.SequenceEqual(idProduits.OrderBy(t => t), idProduits.OrderBy(t => t)))
+                if (produits.Equals(monMenu.Produits))
                 {
                     monMenu.Quantite++;
                 }
-                
+                else
+                {
+
+                }
+
             }
             else
             {

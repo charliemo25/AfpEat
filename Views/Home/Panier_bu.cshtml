@@ -1,21 +1,63 @@
-﻿@model AfpEat.Models.PanierViewModel >
+﻿@model IEnumerable<AfpEat.Models.ProduitPanier>
 
 @{
     ViewBag.Title = "Panier";
     string isConnected = (Session["Utilisateur"] != null) ? "true" : "false";
+
 }
 
 <h2>Panier</h2>
 
-<ul>
-    @foreach (var menu in Model.menuPaniers)
-    {
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdProduit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prix)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo)
+        </th>
+    </tr>
 
-        <li>
-            @menu.Nom @menu.Prix @menu.Quantite
-        </li>
+    @if (Model != null && Model.Count() > 0)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdProduit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prix)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantite)
+                </td>
+                <td>
+                    <img width="200" height="200" src="/Images/@item.Photo" alt="" />
+                </td>
+            </tr>
+        }
     }
-</ul>
+</table>
+
 <button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
 
 <div id="ConnexionModal" class="modal" tabindex="-1" role="dialog">

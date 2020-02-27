@@ -14,8 +14,12 @@ namespace AfpEat.Controllers
 
         public JsonResult AddMenu(int idMenu, List<int> idProduits, string idSession)
         {
+            //Récupère l'utilisateur à partir de son id de session
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            List<MenuPanier> menuPaniers = (List<MenuPanier>)HttpContext.Application[idSession] ?? new List<MenuPanier>();
+            //On récupère le panier
+            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
+            //On récupère les menus dans le panier
+            List<MenuPanier> menuPaniers = panierViewModel.menuPaniers ?? new List<MenuPanier>();
 
             if (sessionUtilisateur == null)
             {

@@ -23,7 +23,7 @@ namespace AfpEat.Controllers
         {
             PanierViewModel panier = (PanierViewModel)HttpContext.Application[Session.SessionID];
             List<PanierViewModel> paniers = new List<PanierViewModel>();
-            
+            paniers.Add(panier);
             List<MenuPanier> menuPaniers = panier.menuPaniers;
             List<ProduitPanier> produitPaniers = panier.produitPaniers;
 

@@ -9,17 +9,25 @@
 
 <h2>Panier</h2>
 
-    @if (Model != null && Model.Count() > 0)
+@if (Model != null && Model.Count() > 0)
+{
+    //Pour parcourir les menus et les produits
+    foreach (var item in Model)
     {
-        foreach (var item in Model)
-        {
-
-            foreach (var menu in item.menuPaniers)
+        //Parcours des menus
+        <ul>
+            @foreach (var menu in item.menuPaniers)
             {
-                <p>@menu.Nom @menu.Prix @menu.Quantite</p>
+                <li>@menu.Nom @menu.Prix€ X @menu.Quantite <img src="/Images/@menu.Photo" width="150" height="150" alt="" /> </li>
             }
-        }
+        </ul>
+
+        //Parcours des produits
+        <ul>
+
+        </ul>
     }
+}
 
 
 @section Scripts{

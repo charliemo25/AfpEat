@@ -32,7 +32,7 @@ namespace AfpEat.Controllers
 
                 restaurantProduits.idCategorie = idCategorie.Key;
                 restaurantProduits.NomCategorie = idCategorie.First().Categorie.Nom;
-                
+
                 foreach (var categorie in idCategorie)
                 {
                     restaurantProduits.Produits.Add(categorie.Produit);
@@ -68,7 +68,7 @@ namespace AfpEat.Controllers
             {
                 RestaurantMenus restaurantMenus = new RestaurantMenus();
                 //On ajoute le menu a restaurantMenus
-                if (menu.MenuCategories.First().IdRestaurant == restaurant.IdRestaurant)
+                if (menu.IdRestaurant == restaurant.IdRestaurant)
                 {
                     restaurantMenus.Menu = menu;
 
@@ -76,9 +76,9 @@ namespace AfpEat.Controllers
                     foreach (RestaurantProduits restaurantProduits in listRestaurantProduits)
                     {
                         //Test si la categorie du produit est contenu dans le menu
-                        foreach(var idCategorieMenu in menu.MenuCategories.GroupBy(m => m.IdCategorie))
+                        foreach (var categorie in menu.Categories)
                         {
-                            if (idCategorieMenu.Key == restaurantProduits.idCategorie)
+                            if (categorie.IdCategorie == restaurantProduits.idCategorie)
                             {
                                 restaurantMenus.RestaurantProduits.Add(restaurantProduits);
                             }

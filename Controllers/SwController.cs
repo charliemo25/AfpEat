@@ -34,7 +34,7 @@ namespace AfpEat.Controllers
             {
                 IdMenu = menu.IdMenu,
                 IdProduits = idProduits,
-                IdRestaurant = menu.MenuCategories.First().IdRestaurant,
+                IdRestaurant = menu.IdRestaurant,
                 Nom = menu.Nom,
                 Prix = menu.Prix,
                 Quantite = 1,
@@ -81,7 +81,7 @@ namespace AfpEat.Controllers
             {
                 IdMenu = menu.IdMenu,
                 IdProduits = idProduits,
-                IdRestaurant = menu.MenuCategories.First().IdRestaurant,
+                IdRestaurant = menu.IdRestaurant,
                 Nom = menu.Nom,
                 Prix = menu.Prix,
                 Quantite = 1,

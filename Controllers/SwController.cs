@@ -52,10 +52,6 @@ namespace AfpEat.Controllers
             //Verifier si le menu existe deja dans le panier
             if (menuPaniers.Count() > 0)
             {
-                //Menu panier ajouté
-                List<MenuPanier> monMenu = new List<MenuPanier>();
-                monMenu.Add(menuPanier);
-
                 bool addMenu = false;
 
                 //Parcours des menuPanier

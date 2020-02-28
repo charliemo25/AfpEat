@@ -268,8 +268,6 @@ namespace AfpEat.Controllers
             //Récupere le panier
             PanierViewModel panier = (PanierViewModel)HttpContext.Application[idSession];
 
-            int idRestaurant = 0;
-
             decimal prixTotal = 0;
 
             Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
@@ -284,6 +282,9 @@ namespace AfpEat.Controllers
                 return Json(new { statut = 0, message = "Votre panier est vide." }, JsonRequestBehavior.AllowGet);
             }
 
+            //idRestaurant si le menu ou le produit panier contient une entrée
+            int idRestaurant = panier.menuPaniers.Count() > 0 ? panier.menuPaniers.First().IdRestaurant : idRestaurant = panier.produitPaniers.First().IdRestaurant;
+            
             //Création de la commande
             Commande commande = new Commande()
             {
@@ -294,13 +295,12 @@ namespace AfpEat.Controllers
                 IdEtatCommande = 1,
             };
 
-            if (panier.produitPaniers.Count() > 0)
+            if (panier.produitPaniers != null && panier.produitPaniers.Count() > 0)
             {
                 //On calcule le prix total des produits
                 foreach (ProduitPanier produitPanier in panier.produitPaniers)
                 {
                     prixTotal += produitPanier.Prix * produitPanier.Quantite;
-                    idRestaurant = produitPanier.IdRestaurant;
                 }
 
                 // Ajout des produits dans commandeProduit
@@ -321,13 +321,12 @@ namespace AfpEat.Controllers
 
             }
             
-            if(panier.menuPaniers.Count() > 0)
+            if(panier.menuPaniers != null && panier.menuPaniers.Count() > 0)
             {
                 //On calcule le prix total des menus
                 foreach (MenuPanier menuPanier in panier.menuPaniers)
                 {
                     prixTotal += menuPanier.Prix * menuPanier.Quantite;
-                    idRestaurant = menuPanier.IdRestaurant;
                 }
 
                 //Ajout des menus

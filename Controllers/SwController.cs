@@ -56,19 +56,27 @@ namespace AfpEat.Controllers
                 List<MenuPanier> monMenu = new List<MenuPanier>();
                 monMenu.Add(menuPanier);
 
-                menuPaniers.First(m => m.Produits.SequenceEqual(produits)).Quantite++;
+                bool addMenu = false;
 
-                ////Compare 2 listes de produits dans les listes de MenuPanier
-                //if (menuPaniers.SequenceEqual(monMenu))
-                //{
-                //    //Pouvoir ajouter au menuPanier selectionné
-                //    menuPaniers.First(m => m.Produits.SequenceEqual(produits)).Quantite++;
-                //}
-                //else
-                //{
-                //    //Si le menuPanier à la même id mais différent produits
-                //    menuPaniers.Add(menuPanier);
-                //}
+                //Parcours des menuPanier
+                for(int i = 0; i<menuPaniers.Count(); i++)
+                {
+                    //Compare les produits dans 2 menuPanier
+                    if(menuPaniers[i].Equals(menuPanier))
+                    {
+                        menuPaniers[i].Quantite++;
+                    }
+                    else
+                    {
+                        addMenu = true;
+                    }
+                }
+
+                //Permet d'ajouter le menu si il n'est pas contenu dans le panier avec les mêmes produits
+                if (addMenu && menuPaniers.Where(m => m.Equals(menuPanier)).Count() == 0)
+                {
+                    menuPaniers.Add(menuPanier);
+                }
 
             }
             else

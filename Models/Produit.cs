@@ -42,5 +42,6 @@ namespace AfpEat.Models
         {
             return this.IdProduit == other.IdProduit;
         }
+
     }
 }

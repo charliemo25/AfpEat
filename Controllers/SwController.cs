@@ -52,25 +52,17 @@ namespace AfpEat.Controllers
             //Verifier si le menu existe deja dans le panier
             if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
             {
+                //Pouvoir comparer avec tout les menu Paniers
                 MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
 
-                //Comparer en tant que liste sans entity
-                List<int> idProduitsPanier = new List<int>();
-                foreach (var mp in menuPaniers.Where(p => p.IdMenu == idMenu))
-                {
-                    foreach (var item in mp.Produits)
-                    {
-                        idProduitsPanier.Add(item.IdProduit);
-                    }
-                }
-
-                if (produits.Equals(monMenu.Produits))
+                //Compare 2 produits 
+                if (produits.SequenceEqual(monMenu.Produits))
                 {
                     monMenu.Quantite++;
                 }
                 else
                 {
-
+                    menuPaniers.Add(menuPanier);
                 }
 
             }

@@ -20,7 +20,7 @@
                     <!-- Affichage des produits selectionnés -->
                     @foreach (var produit in menuPanier.Produits)
                     {
-                        <li>@produit.Nom</li>
+                        <li class="produitMenu" data-idProduit="@produit.IdProduit" >@produit.Nom</li>
                     }
                 </ul>
             </li>
@@ -79,7 +79,7 @@
 
     function PasserCommande() {
 
-        var data = { 'idSession':'@Session.SessionID'};
+        let data = { 'idSession':'@Session.SessionID'};
 
         $.ajax({
             url: "@Url.Action("SaveCommande", "Sw")",
@@ -105,10 +105,10 @@
 
     function SeConnecter() {
 
-        var matricule = $('#Matricule').val();
-        var password = $('#Password').val();
+        let matricule = $('#Matricule').val();
+        let password = $('#Password').val();
 
-        var data = { 'matricule': matricule, 'password': password, 'idSession': '@Session.SessionID' };
+        let data = { 'matricule': matricule, 'password': password, 'idSession': '@Session.SessionID' };
 
         if (matricule && password) {
             $.ajax({
@@ -134,9 +134,60 @@
 
     }
 
+function RemoveProduit(idProduit) {
 
+            let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
+
+            $.ajax({
+                    url: "@Url.Action("RemoveProduit", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        //Remplacer par une alert
+                        console.log("Le produit a bien été supprimé");
+                    }
+                });
+    }
+
+    function RemoveMenu(idMenu, arrayIdProduit) {
+            let data = { 'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
+            console.log(data);
+
+            $.ajax({
+                    url: "@Url.Action("AddMenu", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        //Remplacer par une alert
+                        console.log("Le menu à bien été supprimé.");
+                    }
+            });
+    }
 
     $(document).ready(function () {
+
+        $(".btnSupprMenu").click(function () {
+            let idMenu = $(this).attr('data-idMenu');
+            let idProduits = [];
+
+        });
+
+        $(".btnSupprProduit").click(function () {
+            let Produit = $(this).attr('data-idProduit');
+            //RemoveProduit(Produit);
+        });
 
         $("#btnCommande").click(function () {
 
@@ -151,15 +202,6 @@
 
         });
 
-        $(".btnSupprMenu").click(function () {
-            let idMenu = $(this).attr('data-idMenu');
-            console.log(idMenu);
-        });
-
-        $(".btnSupprProduit").click(function () {
-            let idProduit = $(this).attr('data-idProduit');
-            console.log(idProduit);
-        });
     });
     </script>
 }

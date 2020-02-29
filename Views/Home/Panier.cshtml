@@ -15,6 +15,7 @@
         {
             <li>
                 @menuPanier.Nom @menuPanier.Prix€ X @menuPanier.Quantite <img src="/Images/@menuPanier.Photo" width="150" height="150" alt="" />
+                <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-times"></i></button>
                 <ul>
                     <!-- Affichage des produits selectionnés -->
                     @foreach (var produit in menuPanier.Produits)
@@ -33,7 +34,10 @@
         @foreach (var produit in Model.produitPaniers)
         {
 
-            <li>@produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" /> </li>
+            <li>
+                @produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" /> 
+                <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-times"></i></button>
+            </li>
 
         }
     </ul>
@@ -130,6 +134,8 @@
 
     }
 
+
+
     $(document).ready(function () {
 
         $("#btnCommande").click(function () {
@@ -145,6 +151,15 @@
 
         });
 
+        $(".btnSupprMenu").click(function () {
+            let idMenu = $(this).attr('data-idMenu');
+            console.log(idMenu);
+        });
+
+        $(".btnSupprProduit").click(function () {
+            let idProduit = $(this).attr('data-idProduit');
+            console.log(idProduit);
+        });
     });
     </script>
 }

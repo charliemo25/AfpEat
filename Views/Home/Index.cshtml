@@ -4,66 +4,66 @@
     List<AfpEat.Models.Restaurant> restaurants = ViewBag.Restaurants;
 }
 
-<ul class="nav nav-pills" id="myTab" role="tablist">
-    <li class="nav-item">
-        <a class="nav-link active" id="typeCuisine-tab" data-toggle="tab" href="#typeCuisine" role="tab" aria-controls="typeCuisine" aria-selected="true">Cuisines</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="restaurant-tab" data-toggle="tab" href="#restaurant" role="tab" aria-controls="restaurant" aria-selected="false">Restaurants</a>
-    </li>
-</ul>
+<section id="home" class="container">
+    <ul class="nav nav-pills pb-3" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="typeCuisine-tab" data-toggle="tab" href="#typeCuisine" role="tab" aria-controls="typeCuisine" aria-selected="true">Cuisines</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="restaurant-tab" data-toggle="tab" href="#restaurant" role="tab" aria-controls="restaurant" aria-selected="false">Restaurants</a>
+        </li>
+    </ul>
 
-<div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="typeCuisine" role="tabpanel" aria-labelledby="typeCuisine-tab">
-        <!-- TypeCuisines -->
-        <section class="container" id="TypeCuisine">
-            <div class="row">
-                @foreach (var typeCuisine in Model)
-                {
-                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
-                        <div class="card" style="width: 18rem;">
-                            <a href="#"><img src="/Images/@typeCuisine.Photo.Nom" class="card-img-top" alt="@typeCuisine.Nom"></a>
-                            <div class="card-body">
-                                <h3>@typeCuisine.Nom</h3>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="typeCuisine" role="tabpanel" aria-labelledby="typeCuisine-tab">
+            <!-- TypeCuisines -->
+            <section class="container" id="TypeCuisine">
+                <div class="row">
+                    @foreach (var typeCuisine in Model)
+                    {
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
+                            <div class="card" style="width: 18rem;">
+                                <a href="#"><img src="/Images/@typeCuisine.Photo.Nom" width="200px" height="200px" class="card-img-top" alt="@typeCuisine.Nom"></a>
+                                <div class="card-body">
+                                    <h3>@typeCuisine.Nom</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
-        </section>
-    </div>
-    <div class="tab-pane fade" id="restaurant" role="tabpanel" aria-labelledby="restaurant-tab">
-        <!-- Restaurants -->
-        <section id="Restaurant" class="container">
-            <div class="row">
-                @foreach (var restaurant in restaurants)
-                {
-                    <text>
-                        <div class="card mb-3 shadow border rounded">
-                            <div class="row no-gutters">
-                                <div class="col-md-4">
-                                    <img src="/Images/@restaurant.Photos.First().Nom" class="card-img img-fluid p-1" alt="..." />
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@restaurant.Nom</h5>
-                                        <p class="card-text">@restaurant.Description</p>
-                                        <p class="card-text">Prix Moyen d'un repas</p>
-                                        <p class="card-text">Affichage des avis </p>
-                                        <p class="card-text">@restaurant.Adresse</p>
-                                        <p class="card-text">@restaurant.CodePostal @restaurant.Ville</p>
-                                        <p class="card-text">Télephone: @restaurant.Tel</p>
-                                        <p class="card-text text-right"><a href="@Url.Action("Details/"+restaurant.IdRestaurant , "Restaurants")" class="btn btn-primary">Passez Commande</a></p>
+                    }
+                </div>
+            </section>
+        </div>
+        <div class="tab-pane fade" id="restaurant" role="tabpanel" aria-labelledby="restaurant-tab">
+            <!-- Restaurants -->
+            <section id="Restaurant" class="container">
+                <div class="row">
+                    @foreach (var restaurant in restaurants)
+                    {
+                        <text>
+                            <div class="card mb-3 shadow border rounded">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="/Images/@restaurant.Photos.First().Nom" class="card-img img-fluid p-1" alt="..." />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@restaurant.Nom</h5>
+                                            <p class="card-text">@restaurant.Description</p>
+                                            <p class="card-text">Prix Moyen d'un repas</p>
+                                            <p class="card-text">Affichage des avis </p>
+                                            <p class="card-text">@restaurant.Adresse</p>
+                                            <p class="card-text">@restaurant.CodePostal @restaurant.Ville</p>
+                                            <p class="card-text">Télephone: @restaurant.Tel</p>
+                                            <p class="card-text text-right"><a href="@Url.Action("Details/"+restaurant.IdRestaurant , "Restaurants")" class="btn btn-primary">Passez Commande</a></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </text>
-                }
-            </div>
-        </section>
+                        </text>
+                    }
+                </div>
+            </section>
+        </div>
     </div>
-</div>
-
-
+</section>
 

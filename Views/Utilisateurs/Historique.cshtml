@@ -1,0 +1,52 @@
+﻿@model AfpEat.Models.PanierViewModel
+
+@{
+    ViewBag.Title = "Historique";
+    string isConnected = (Session["Utilisateur"] != null) ? "true" : "false";
+
+}
+
+<section id="HistoriqueUtilisateur" class="container mt-5">
+
+
+    <h2>Historique</h2>
+
+    @if (Model != null && Model.menuPaniers != null && Model.menuPaniers.Count() > 0)
+    {
+        <ul>
+            @foreach (var menuPanier in Model.menuPaniers)
+            {
+                <li>
+                    @menuPanier.Nom @menuPanier.Prix€ X @menuPanier.Quantite <img src="/Images/@menuPanier.Photo" width="150" height="150" alt="" />
+                    <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                    <ul>
+                        <!-- Affichage des produits selectionnés -->
+                        @foreach (var produit in menuPanier.Produits)
+                        {
+                            <li class="produitMenu" data-idProduit="@produit.IdProduit">@produit.Nom</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    }
+
+    @if (Model != null && Model.produitPaniers != null && Model.produitPaniers.Count() > 0)
+    {
+        <ul>
+            @foreach (var produit in Model.produitPaniers)
+            {
+
+                <li>
+                    @produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" />
+                    <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                </li>
+
+            }
+        </ul>
+    }
+</section>
+
+@section Scripts{
+
+}

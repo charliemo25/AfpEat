@@ -47,6 +47,14 @@ namespace AfpEat.Controllers
             return View();
         }
 
+        public ActionResult Panier()
+        {
+            //Passez l'hitorique de toutes les commandes d'un utilisateur
+            PanierViewModel panier = (PanierViewModel)HttpContext.Application[Session.SessionID];
+
+            return View(panier);
+        }
+
         // GET: Utilisateurs
         public ActionResult Index()
         {

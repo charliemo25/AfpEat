@@ -4,7 +4,7 @@
     List<AfpEat.Models.Restaurant> restaurants = ViewBag.Restaurants;
 }
 
-<section id="home" class="container">
+<section id="Home" class="container">
     <ul class="nav nav-pills pb-3" id="myTab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="typeCuisine-tab" data-toggle="tab" href="#typeCuisine" role="tab" aria-controls="typeCuisine" aria-selected="true">Cuisines</a>
@@ -23,7 +23,7 @@
                     {
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
                             <div class="card" style="width: 18rem;">
-                                <a href="#"><img src="/Images/@typeCuisine.Photo.Nom" width="200px" height="200px" class="card-img-top" alt="@typeCuisine.Nom"></a>
+                                <a href="#"><img src="/Images/@typeCuisine.Photo.Nom" class="card-img-top img-card" alt="@typeCuisine.Nom"></a>
                                 <div class="card-body">
                                     <h3>@typeCuisine.Nom</h3>
                                 </div>

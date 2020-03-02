@@ -260,7 +260,6 @@ namespace AfpEat.Controllers
 
         }
 
-        //Modifier la sauvegarde de commande
         public JsonResult SaveCommande(string idSession)
         {
 
@@ -272,9 +271,9 @@ namespace AfpEat.Controllers
             decimal prixTotal = 0;
 
             Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
+
             if (utilisateur == null)
             {
-
                 return Json(new { statut = 0, message = "Vous devez être connecté pour passer une commande" }, JsonRequestBehavior.AllowGet);
             }
 
@@ -358,6 +357,25 @@ namespace AfpEat.Controllers
 
             db.SaveChanges();
             return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetHistoriqueUtilisateur(string idSession)
+        {
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+
+
+            if (sessionUtilisateur == null)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+            PanierViewModel historiqueUtilisateur = null;
+            Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
+
+
+            List<Commande> commande = db.Commandes.Where(c => c.IdUtilisateur == utilisateur.IdUtilisateur).ToList();
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult LoginUtilisateur(string idSession, string matricule, string password)

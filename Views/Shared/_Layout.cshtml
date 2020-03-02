@@ -29,6 +29,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="@Url.Action("Index", "Home")">Liste des Restaurants</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "Produits")">Liste des Produits</a>
+                        <a class="dropdown-item" href="@Url.Action("Historique", "Utilisateurs")">Historique de l'utilisateur</a>
+
                     </div>
                 </li>
 
@@ -55,7 +57,7 @@
                     </text>
                 }
                 <a href="@Url.Action("Panier", "Home")" class="text-reset mr-3">
-                    <i class="fas  fa-shopping-cart"></i> Votre Total: 0,00€
+                    <i class="fas  fa-shopping-cart"></i> Votre Total: <span id="PanierTotal">0,00€</span>
                 </a>
 
             </div>

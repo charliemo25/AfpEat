@@ -78,9 +78,9 @@
 </section>
 
 @section Scripts{
-    <script type="text/javascript">
+<script type="text/javascript">
 
-    function PasserCommande() {
+function PasserCommande() {
 
         let data = { 'idSession':'@Session.SessionID'};
 
@@ -106,7 +106,7 @@
         });
     }
 
-    function SeConnecter() {
+function SeConnecter() {
 
         let matricule = $('#Matricule').val();
         let password = $('#Password').val();
@@ -159,7 +159,7 @@ function RemoveProduit(idProduit) {
                 });
     }
 
-    function RemoveMenu(idMenu, arrayIdProduit) {
+function RemoveMenu(idMenu, arrayIdProduit) {
             let data = { 'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
             console.log(data);
 
@@ -180,7 +180,7 @@ function RemoveProduit(idProduit) {
             });
     }
 
-    $(document).ready(function () {
+$(document).ready(function () {
 
         //Suppresion d'un menu
         $(".btnSupprMenu").click(function () {

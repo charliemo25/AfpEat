@@ -182,16 +182,17 @@ function RemoveProduit(idProduit) {
 
     $(document).ready(function () {
 
+        //Suppresion d'un menu
         $(".btnSupprMenu").click(function () {
             let idMenu = $(this).attr('data-idMenu');
             let idProduits = [];
 
         });
 
+        //Suppression d'un produit
         $(".btnSupprProduit").click(function () {
             let produit = $(this).attr('data-idProduit');
-            console.log(produit)
-            RemoveProduit(Produit);
+            RemoveProduit(produit);
         });
 
         $("#btnCommande").click(function () {

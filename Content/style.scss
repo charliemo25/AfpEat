@@ -1,24 +1,19 @@
 ﻿
 #Home {
-    .card {
-        position: relative;
-        width: 50%;
 
-        .card-image {
+    .card {
+        width: 250px;
+        height: 250px;
+    }
+
+    .contain {
+        position: relative;
+
+        .image {
             opacity: 1;
             display: block;
-            width: 100%;
-            height: auto;
             transition: .5s ease;
             backface-visibility: hidden;
-        }
-
-        .card-image:hover .image {
-            opacity: 0.3;
-        }
-
-        .card-image:hover .middle {
-            opacity: 1;
         }
 
         .middle {
@@ -32,11 +27,21 @@
             text-align: center;
         }
 
+
+
         .text {
-            background-color: #4CAF50;
+            background-color: rgba(111, 178, 55, 0.7);
             color: white;
             font-size: 16px;
             padding: 16px 32px;
         }
+    }
+
+    .contain:hover .image {
+        opacity: 0.3;
+    }
+
+    .contain:hover .middle {
+        opacity: 1;
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AfpEat.Models
 {
-    public class ProduitPanier
+    public class ProduitPanier: IEquatable<ProduitPanier>
     {
         public int IdProduit { get; set; }
         public int IdRestaurant { get; set; }
@@ -15,5 +15,10 @@ namespace AfpEat.Models
         public int Quantite { get; set; }
         public string Photo { get; set; }
         public bool isMenu { get; set; }
+
+        public bool Equals(ProduitPanier other)
+        {
+            return this.IdProduit == other.IdProduit;
+        }
     }
 }

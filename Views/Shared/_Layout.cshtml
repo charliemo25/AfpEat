@@ -11,7 +11,7 @@
 </head>
 <body class="d-flex flex-column h-100">
     <!-- Navbar -->
-    <nav class="navbar navbar-dark bg-custom-afpa navbar-expand-sm pl-5 pr-5 mb-5">
+    <nav class="navbar navbar-dark bg-custom-afpa navbar-expand-sm pl-5 pr-5 mb-5 fixed-top">
         <a class="navbar-brand" href="@Url.Action("Index", "Home")">
             <img src="~/Images/logo-afpa.jpg" height="30" alt="logo">
             AfpEat
@@ -61,7 +61,7 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid body-content">
+    <div class="container-fluid body-content mt-5">
         @RenderBody()
 
     </div>

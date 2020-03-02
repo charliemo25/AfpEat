@@ -1,6 +1,36 @@
-#home .card-img {
-  max-width: 250px;
-  max-height: 250px;
+#Home .card {
+  position: relative;
+  width: 50%;
+}
+#Home .card .card-image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+}
+#Home .card .card-image:hover .image {
+  opacity: 0.3;
+}
+#Home .card .card-image:hover .middle {
+  opacity: 1;
+}
+#Home .card .middle {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+#Home .card .text {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
 }
 
 /*# sourceMappingURL=style.css.map */

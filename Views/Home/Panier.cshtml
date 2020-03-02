@@ -6,73 +6,76 @@
 
 }
 
-<h2>Panier</h2>
+<section id="Panier" class="container mt-5">
 
-@if (Model.menuPaniers != null && Model.menuPaniers.Count() > 0)
-{
-    <ul>
-        @foreach (var menuPanier in Model.menuPaniers)
-        {
-            <li>
-                @menuPanier.Nom @menuPanier.Prix€ X @menuPanier.Quantite <img src="/Images/@menuPanier.Photo" width="150" height="150" alt="" />
-                <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-times"></i></button>
-                <ul>
-                    <!-- Affichage des produits selectionnés -->
-                    @foreach (var produit in menuPanier.Produits)
-                    {
-                        <li class="produitMenu" data-idProduit="@produit.IdProduit" >@produit.Nom</li>
-                    }
-                </ul>
-            </li>
-        }
-    </ul>
-}
 
-@if (Model.produitPaniers != null && Model.produitPaniers.Count() > 0)
-{
-    <ul>
-        @foreach (var produit in Model.produitPaniers)
-        {
+    <h2>Panier</h2>
 
-            <li >
-                @produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" /> 
-                <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-times"></i></button>
-            </li>
+    @if (Model != null && Model.menuPaniers != null && Model.menuPaniers.Count() > 0)
+    {
+        <ul>
+            @foreach (var menuPanier in Model.menuPaniers)
+            {
+                <li>
+                    @menuPanier.Nom @menuPanier.Prix€ X @menuPanier.Quantite <img src="/Images/@menuPanier.Photo" width="150" height="150" alt="" />
+                    <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                    <ul>
+                        <!-- Affichage des produits selectionnés -->
+                        @foreach (var produit in menuPanier.Produits)
+                        {
+                            <li class="produitMenu" data-idProduit="@produit.IdProduit">@produit.Nom</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    }
 
-        }
-    </ul>
-}
+    @if (Model != null && Model.produitPaniers != null && Model.produitPaniers.Count() > 0)
+    {
+        <ul>
+            @foreach (var produit in Model.produitPaniers)
+            {
 
-<button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
+                <li>
+                    @produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" />
+                    <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                </li>
 
-<div id="ConnexionModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="Matricule">Matricule</label>
-                        <input type="text" class="form-control" id="Matricule">
-                    </div>
-                    <div class="form-group">
-                        <label for="Password">Mot de passe</label>
-                        <input type="password" class="form-control" id="Password">
-                    </div>
-                    <button id="btnConnexion" class="btn btn-primary">Envoyer</button>
-                </form>
-            </div>
-            <div class="modal-footer">
+            }
+        </ul>
+    }
+
+    <button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
+
+    <div id="ConnexionModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="Matricule">Matricule</label>
+                            <input type="text" class="form-control" id="Matricule">
+                        </div>
+                        <div class="form-group">
+                            <label for="Password">Mot de passe</label>
+                            <input type="password" class="form-control" id="Password">
+                        </div>
+                        <button id="btnConnexion" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</section>
 
 @section Scripts{
     <script type="text/javascript">

@@ -17,12 +17,12 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="typeCuisine" role="tabpanel" aria-labelledby="typeCuisine-tab">
             <!-- TypeCuisines -->
-            <section class="container" id="TypeCuisine">
+            <section class="container-fluid" id="TypeCuisine">
                 <div class="row">
                     @foreach (var typeCuisine in Model)
                     {
                         <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
-                            <div class="contain card">
+                            <div class="contain card card-type">
                                 <img src="/Images/@typeCuisine.Photo.Nom" alt="..." class="card-img-top" width="250" height="250">
                                 <div class="middle">
                                     <div class="text">
@@ -45,7 +45,7 @@
                             <div class="card mb-3 shadow border rounded">
                                 <div class="row no-gutters">
                                     <div class="col-md-4">
-                                        <img src="/Images/@restaurant.Photos.First().Nom" width="200" height="200" class="card-img  p-1" alt="..." />
+                                        <img src="/Images/@restaurant.Photos.First().Nom" class="card-img-top img-fluid p-1" alt="..." />
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">

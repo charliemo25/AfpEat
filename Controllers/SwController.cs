@@ -55,10 +55,10 @@ namespace AfpEat.Controllers
                 bool addMenu = false;
 
                 //Parcours des menuPanier
-                for(int i = 0; i<menuPaniers.Count(); i++)
+                for (int i = 0; i < menuPaniers.Count(); i++)
                 {
                     //Compare les produits dans 2 menuPanier
-                    if(menuPaniers[i].Equals(menuPanier))
+                    if (menuPaniers[i].Equals(menuPanier))
                     {
                         menuPaniers[i].Quantite++;
                     }
@@ -284,7 +284,7 @@ namespace AfpEat.Controllers
 
             //idRestaurant si le menu ou le produit panier contient une entrée
             int idRestaurant = panier.menuPaniers.Count() > 0 ? panier.menuPaniers.First().IdRestaurant : idRestaurant = panier.produitPaniers.First().IdRestaurant;
-            
+
             //Création de la commande
             Commande commande = new Commande()
             {
@@ -311,40 +311,43 @@ namespace AfpEat.Controllers
                         //IdCommande = commande.IdCommande,
                         IdProduit = produitPanier.IdProduit,
                         Prix = produitPanier.Prix,
-                        Quantite = produitPanier.Quantite
+                        Quantite = produitPanier.Quantite,
+
                     };
 
-
+                    //Si le produit fait parti d'un menu
+                    
+                    //Ajoute dans la table commandeProduitMenu
+                    //commandeProduit.Menus.Add(menu);
                     //Ajout dans CommandeProduit
                     commande.CommandeProduits.Add(commandeProduit);
                 }
 
             }
-            
-            if(panier.menuPaniers != null && panier.menuPaniers.Count() > 0)
-            {
-                //On calcule le prix total des menus
-                foreach (MenuPanier menuPanier in panier.menuPaniers)
-                {
-                    prixTotal += menuPanier.Prix * menuPanier.Quantite;
-                }
 
-                //Ajout des menus
-                foreach (Menu menu in db.Menus)
-                {
-                    CommandeProduit commandeMenu = new CommandeProduit();
+            //if (panier.menuPaniers != null && panier.menuPaniers.Count() > 0)
+            //{
+            //    //On calcule le prix total des menus
+            //    foreach (MenuPanier menuPanier in panier.menuPaniers)
+            //    {
+            //        prixTotal += menuPanier.Prix * menuPanier.Quantite;
+            //    }
 
-                    foreach (MenuPanier menuPanier in panier.menuPaniers)
-                    {
-                        if (menu.IdMenu == menuPanier.IdMenu)
-                        {
-                            //commandeMenu.Menus.Add(menu);
-                            commande.Menus.Add(menu);
-                        }
-                    }
-                }
+            //    //Ajout des menus
+            //    foreach (Menu menu in db.Menus)
+            //    {
+            //        CommandeProduit commandeMenu = new CommandeProduit();
 
-            }
+            //        foreach (MenuPanier menuPanier in panier.menuPaniers)
+            //        {
+            //            if (menu.IdMenu == menuPanier.IdMenu)
+            //            {
+            //                commandeMenu.Menus.Add(menu);
+            //            }
+            //        }
+            //    }
+
+            //}
 
             if (prixTotal > utilisateur.Solde)
             {
@@ -358,7 +361,6 @@ namespace AfpEat.Controllers
             utilisateur.Solde -= prixTotal;
 
             db.SaveChanges();
-
             return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
         }
 

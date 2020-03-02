@@ -12,7 +12,7 @@ namespace AfpEat.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Produit : IEquatable<Produit>
+    public partial class Produit
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Produit()
@@ -37,11 +37,5 @@ namespace AfpEat.Models
         public virtual ICollection<ProduitCategorie> ProduitCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Photo> Photos { get; set; }
-
-        public bool Equals(Produit other)
-        {
-            return this.IdProduit == other.IdProduit;
-        }
-
     }
 }

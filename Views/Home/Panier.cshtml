@@ -34,7 +34,7 @@
         @foreach (var produit in Model.produitPaniers)
         {
 
-            <li>
+            <li >
                 @produit.Nom @produit.Prix€ X @produit.Quantite <img src="/Images/@produit.Photo" width="150" height="150" alt="" /> 
                 <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-times"></i></button>
             </li>
@@ -151,6 +151,7 @@ function RemoveProduit(idProduit) {
                     {
                         //Remplacer par une alert
                         console.log("Le produit a bien été supprimé");
+                        console.log($(this));
                     }
                 });
     }
@@ -160,7 +161,7 @@ function RemoveProduit(idProduit) {
             console.log(data);
 
             $.ajax({
-                    url: "@Url.Action("AddMenu", "Sw")",
+                    url: "@Url.Action("RemoveMenu", "Sw")",
                     type: "Post",
                     contentType: "application/json; charset=utf-8",
                     dataType: "JSON",
@@ -185,8 +186,9 @@ function RemoveProduit(idProduit) {
         });
 
         $(".btnSupprProduit").click(function () {
-            let Produit = $(this).attr('data-idProduit');
-            //RemoveProduit(Produit);
+            let produit = $(this).attr('data-idProduit');
+            console.log(produit)
+            RemoveProduit(Produit);
         });
 
         $("#btnCommande").click(function () {

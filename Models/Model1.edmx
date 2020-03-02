@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AfpEAtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AfpEatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categorie">
           <Key>
             <PropertyRef Name="IdCategorie" />
@@ -23,14 +23,6 @@
           <Property Name="Date" Type="date" Nullable="false" />
           <Property Name="Prix" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IdEtatCommande" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CommandeMenu">
-          <Key>
-            <PropertyRef Name="IdCommande" />
-            <PropertyRef Name="IdMenu" />
-          </Key>
-          <Property Name="IdCommande" Type="int" Nullable="false" />
-          <Property Name="IdMenu" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CommandeProduit">
           <Key>
@@ -236,30 +228,6 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </Principal>
             <Dependent Role="Commande">
               <PropertyRef Name="IdUtilisateur" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CommandeMenu_Commande">
-          <End Role="Commande" Type="Self.Commande" Multiplicity="1" />
-          <End Role="CommandeMenu" Type="Self.CommandeMenu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commande">
-              <PropertyRef Name="IdCommande" />
-            </Principal>
-            <Dependent Role="CommandeMenu">
-              <PropertyRef Name="IdCommande" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CommandeMenu_Menu">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="1" />
-          <End Role="CommandeMenu" Type="Self.CommandeMenu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Menu">
-              <PropertyRef Name="IdMenu" />
-            </Principal>
-            <Dependent Role="CommandeMenu">
-              <PropertyRef Name="IdMenu" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -527,10 +495,9 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AfpEAtModelStoreContainer">
+        <EntityContainer Name="AfpEatModelStoreContainer">
           <EntitySet Name="Categorie" EntityType="Self.Categorie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Commande" EntityType="Self.Commande" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CommandeMenu" EntityType="Self.CommandeMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CommandeProduit" EntityType="Self.CommandeProduit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CommandeProduitMenu" EntityType="Self.CommandeProduitMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EtatCommande" EntityType="Self.EtatCommande" Schema="dbo" store:Type="Tables" />
@@ -565,14 +532,6 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
           <AssociationSet Name="FK_Commande_Utilisateur" Association="Self.FK_Commande_Utilisateur">
             <End Role="Utilisateur" EntitySet="Utilisateur" />
             <End Role="Commande" EntitySet="Commande" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CommandeMenu_Commande" Association="Self.FK_CommandeMenu_Commande">
-            <End Role="Commande" EntitySet="Commande" />
-            <End Role="CommandeMenu" EntitySet="CommandeMenu" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CommandeMenu_Menu" Association="Self.FK_CommandeMenu_Menu">
-            <End Role="Menu" EntitySet="Menu" />
-            <End Role="CommandeMenu" EntitySet="CommandeMenu" />
           </AssociationSet>
           <AssociationSet Name="FK_CommandeProduit_Commande" Association="Self.FK_CommandeProduit_Commande">
             <End Role="Commande" EntitySet="Commande" />
@@ -667,7 +626,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="AfpEAtModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="AfpEatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Categorie">
           <Key>
             <PropertyRef Name="IdCategorie" />
@@ -692,7 +651,6 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
           <NavigationProperty Name="Restaurant" Relationship="Self.FK_Commande_Restaurant" FromRole="Commande" ToRole="Restaurant" />
           <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Commande_Utilisateur" FromRole="Commande" ToRole="Utilisateur" />
           <NavigationProperty Name="CommandeProduits" Relationship="Self.FK_CommandeProduit_Commande" FromRole="Commande" ToRole="CommandeProduit" />
-          <NavigationProperty Name="Menus" Relationship="Self.CommandeMenu" FromRole="Commande" ToRole="Menu" />
         </EntityType>
         <EntityType Name="CommandeProduit">
           <Key>
@@ -728,7 +686,6 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
           <Property Name="Prix" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <NavigationProperty Name="Photo" Relationship="Self.FK_Menu_Photo" FromRole="Menu" ToRole="Photo" />
           <NavigationProperty Name="Restaurant" Relationship="Self.FK_Menu_Restaurant" FromRole="Menu" ToRole="Restaurant" />
-          <NavigationProperty Name="Commandes" Relationship="Self.CommandeMenu" FromRole="Menu" ToRole="Commande" />
           <NavigationProperty Name="CommandeProduits" Relationship="Self.CommandeProduitMenu" FromRole="Menu" ToRole="CommandeProduit" />
           <NavigationProperty Name="CommandeProduits1" Relationship="Self.ProduitMenu" FromRole="Menu" ToRole="CommandeProduit" />
           <NavigationProperty Name="Categories" Relationship="Self.MenuCategorie" FromRole="Menu" ToRole="Categorie" />
@@ -1038,10 +995,6 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="CommandeMenu">
-          <End Role="Commande" Type="Self.Commande" Multiplicity="*" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
-        </Association>
         <Association Name="CommandeProduitMenu">
           <End Role="CommandeProduit" Type="Self.CommandeProduit" Multiplicity="*" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
@@ -1138,10 +1091,6 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             <End Role="TypeCuisine" EntitySet="TypeCuisines" />
             <End Role="Restaurant" EntitySet="Restaurants" />
           </AssociationSet>
-          <AssociationSet Name="CommandeMenu" Association="Self.CommandeMenu">
-            <End Role="Commande" EntitySet="Commandes" />
-            <End Role="Menu" EntitySet="Menus" />
-          </AssociationSet>
           <AssociationSet Name="CommandeProduitMenu" Association="Self.CommandeProduitMenu">
             <End Role="CommandeProduit" EntitySet="CommandeProduits" />
             <End Role="Menu" EntitySet="Menus" />
@@ -1168,9 +1117,9 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AfpEAtModelStoreContainer" CdmEntityContainer="AfpEatEntities">
+        <EntityContainerMapping StorageEntityContainer="AfpEatModelStoreContainer" CdmEntityContainer="AfpEatEntities">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="AfpEAtModel.Categorie">
+            <EntityTypeMapping TypeName="AfpEatModel.Categorie">
               <MappingFragment StoreEntitySet="Categorie">
                 <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -1179,7 +1128,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Commandes">
-            <EntityTypeMapping TypeName="AfpEAtModel.Commande">
+            <EntityTypeMapping TypeName="AfpEatModel.Commande">
               <MappingFragment StoreEntitySet="Commande">
                 <ScalarProperty Name="IdCommande" ColumnName="IdCommande" />
                 <ScalarProperty Name="IdUtilisateur" ColumnName="IdUtilisateur" />
@@ -1191,7 +1140,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CommandeProduits">
-            <EntityTypeMapping TypeName="AfpEAtModel.CommandeProduit">
+            <EntityTypeMapping TypeName="AfpEatModel.CommandeProduit">
               <MappingFragment StoreEntitySet="CommandeProduit">
                 <ScalarProperty Name="IdCommandeProduit" ColumnName="IdCommandeProduit" />
                 <ScalarProperty Name="IdCommande" ColumnName="IdCommande" />
@@ -1202,7 +1151,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EtatCommandes">
-            <EntityTypeMapping TypeName="AfpEAtModel.EtatCommande">
+            <EntityTypeMapping TypeName="AfpEatModel.EtatCommande">
               <MappingFragment StoreEntitySet="EtatCommande">
                 <ScalarProperty Name="IdEtatCommande" ColumnName="IdEtatCommande" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -1210,7 +1159,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
-            <EntityTypeMapping TypeName="AfpEAtModel.Menu">
+            <EntityTypeMapping TypeName="AfpEatModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
                 <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
                 <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
@@ -1222,7 +1171,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Operations">
-            <EntityTypeMapping TypeName="AfpEAtModel.Operation">
+            <EntityTypeMapping TypeName="AfpEatModel.Operation">
               <MappingFragment StoreEntitySet="Operation">
                 <ScalarProperty Name="IdOperation" ColumnName="IdOperation" />
                 <ScalarProperty Name="IdUtilisateur" ColumnName="IdUtilisateur" />
@@ -1233,7 +1182,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Photos">
-            <EntityTypeMapping TypeName="AfpEAtModel.Photo">
+            <EntityTypeMapping TypeName="AfpEatModel.Photo">
               <MappingFragment StoreEntitySet="Photo">
                 <ScalarProperty Name="IdPhoto" ColumnName="IdPhoto" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -1241,7 +1190,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Produits">
-            <EntityTypeMapping TypeName="AfpEAtModel.Produit">
+            <EntityTypeMapping TypeName="AfpEatModel.Produit">
               <MappingFragment StoreEntitySet="Produit">
                 <ScalarProperty Name="IdProduit" ColumnName="IdProduit" />
                 <ScalarProperty Name="IdPhoto" ColumnName="IdPhoto" />
@@ -1254,7 +1203,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProduitCategories">
-            <EntityTypeMapping TypeName="AfpEAtModel.ProduitCategorie">
+            <EntityTypeMapping TypeName="AfpEatModel.ProduitCategorie">
               <MappingFragment StoreEntitySet="ProduitCategorie">
                 <ScalarProperty Name="IdProduit" ColumnName="IdProduit" />
                 <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
@@ -1263,7 +1212,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Restaurants">
-            <EntityTypeMapping TypeName="AfpEAtModel.Restaurant">
+            <EntityTypeMapping TypeName="AfpEatModel.Restaurant">
               <MappingFragment StoreEntitySet="Restaurant">
                 <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -1280,7 +1229,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SessionUtilisateurs">
-            <EntityTypeMapping TypeName="AfpEAtModel.SessionUtilisateur">
+            <EntityTypeMapping TypeName="AfpEatModel.SessionUtilisateur">
               <MappingFragment StoreEntitySet="SessionUtilisateur">
                 <ScalarProperty Name="IdSession" ColumnName="IdSession" />
                 <ScalarProperty Name="DateSession" ColumnName="DateSession" />
@@ -1288,7 +1237,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="AfpEAtModel.sysdiagram">
+            <EntityTypeMapping TypeName="AfpEatModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1299,7 +1248,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TypeCuisines">
-            <EntityTypeMapping TypeName="AfpEAtModel.TypeCuisine">
+            <EntityTypeMapping TypeName="AfpEatModel.TypeCuisine">
               <MappingFragment StoreEntitySet="TypeCuisine">
                 <ScalarProperty Name="IdTypeCuisine" ColumnName="IdTypeCuisine" />
                 <ScalarProperty Name="IdPhoto" ColumnName="IdPhoto" />
@@ -1308,7 +1257,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TypeVersements">
-            <EntityTypeMapping TypeName="AfpEAtModel.TypeVersement">
+            <EntityTypeMapping TypeName="AfpEatModel.TypeVersement">
               <MappingFragment StoreEntitySet="TypeVersement">
                 <ScalarProperty Name="IdTypeVersement" ColumnName="IdTypeVersement" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -1317,7 +1266,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Utilisateurs">
-            <EntityTypeMapping TypeName="AfpEAtModel.Utilisateur">
+            <EntityTypeMapping TypeName="AfpEatModel.Utilisateur">
               <MappingFragment StoreEntitySet="Utilisateur">
                 <ScalarProperty Name="IdUtilisateur" ColumnName="IdUtilisateur" />
                 <ScalarProperty Name="Nom" ColumnName="Nom" />
@@ -1330,15 +1279,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="CommandeMenu" TypeName="AfpEAtModel.CommandeMenu" StoreEntitySet="CommandeMenu">
-            <EndProperty Name="Commande">
-              <ScalarProperty Name="IdCommande" ColumnName="IdCommande" />
-            </EndProperty>
-            <EndProperty Name="Menu">
-              <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="CommandeProduitMenu" TypeName="AfpEAtModel.CommandeProduitMenu" StoreEntitySet="CommandeProduitMenu">
+          <AssociationSetMapping Name="CommandeProduitMenu" TypeName="AfpEatModel.CommandeProduitMenu" StoreEntitySet="CommandeProduitMenu">
             <EndProperty Name="CommandeProduit">
               <ScalarProperty Name="IdCommandeProduit" ColumnName="IdCommandeProduit" />
             </EndProperty>
@@ -1346,7 +1287,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
               <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ProduitMenu" TypeName="AfpEAtModel.ProduitMenu" StoreEntitySet="ProduitMenu">
+          <AssociationSetMapping Name="ProduitMenu" TypeName="AfpEatModel.ProduitMenu" StoreEntitySet="ProduitMenu">
             <EndProperty Name="CommandeProduit">
               <ScalarProperty Name="IdCommandeProduit" ColumnName="IdCommandeProduit" />
             </EndProperty>
@@ -1354,7 +1295,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
               <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ProduitPhoto" TypeName="AfpEAtModel.ProduitPhoto" StoreEntitySet="ProduitPhoto">
+          <AssociationSetMapping Name="ProduitPhoto" TypeName="AfpEatModel.ProduitPhoto" StoreEntitySet="ProduitPhoto">
             <EndProperty Name="Photo">
               <ScalarProperty Name="IdPhoto" ColumnName="IdPhoto" />
             </EndProperty>
@@ -1362,7 +1303,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
               <ScalarProperty Name="IdProduit" ColumnName="IdProduit" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="RestaurantPhoto" TypeName="AfpEAtModel.RestaurantPhoto" StoreEntitySet="RestaurantPhoto">
+          <AssociationSetMapping Name="RestaurantPhoto" TypeName="AfpEatModel.RestaurantPhoto" StoreEntitySet="RestaurantPhoto">
             <EndProperty Name="Photo">
               <ScalarProperty Name="IdPhoto" ColumnName="IdPhoto" />
             </EndProperty>
@@ -1370,7 +1311,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
               <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="MenuCategorie" TypeName="AfpEAtModel.MenuCategorie" StoreEntitySet="MenuCategorie">
+          <AssociationSetMapping Name="MenuCategorie" TypeName="AfpEatModel.MenuCategorie" StoreEntitySet="MenuCategorie">
             <EndProperty Name="Categorie">
               <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
             </EndProperty>

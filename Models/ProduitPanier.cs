@@ -14,5 +14,6 @@ namespace AfpEat.Models
         public string Description { get; set; }
         public int Quantite { get; set; }
         public string Photo { get; set; }
+        public bool isMenu { get; set; }
     }
 }

@@ -21,12 +21,9 @@ namespace AfpEat.Models
         }
         public bool Equals(MenuPanier other)
         {
-            bool isEqual = false;
-
             //Pouvoir comparer des listes de produits
-            this.Produits.Equals(other.Produits);
+            return this.Produits.SequenceEqual(other.Produits);
 
-            return isEqual;
         }
     }
 }

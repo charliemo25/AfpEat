@@ -11,16 +11,16 @@
 
     <h2>Panier</h2>
 
-    @*@if (Model != null && Model.MenuPaniers != null && Model.MenuPaniers.Count() > 0)
+    @if (Model != null && Model.Where(m => m.GetIdMenu() > 0).Count() > 0)
     {
-        <ul>
-            @foreach (var menuPanier in Model.MenuPaniers)
+         <ul>
+            @foreach (AfpEat.Models.MenuPanier menuPanier in Model.Where(m => m.GetIdMenu() > 0))
             {
                 <li>
                     @menuPanier.Nom @menuPanier.Prix€ X @menuPanier.Quantite <img src="/Images/@menuPanier.Photo" width="150" height="150" alt="" />
-                    <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                    <button data-idMenu="@menuPanier.GetIdMenu()" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-times"></i></button>
                     <ul>
-                         Affichage des produits selectionnés 
+                        <!-- Affichage des produits séléctionnées -->
                         @foreach (var produit in menuPanier.Produits)
                         {
                             <li class="produitMenu" data-idProduit="@produit.IdProduit">@produit.Nom</li>
@@ -29,7 +29,7 @@
                 </li>
             }
         </ul>
-    }*@
+    }
 
     @if (Model != null && Model.Where(m => m.GetIdProduit() > 0).Count() > 0)
     {

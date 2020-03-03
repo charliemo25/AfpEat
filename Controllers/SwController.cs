@@ -10,16 +10,14 @@ namespace AfpEat.Controllers
     public class SwController : Controller
     {
         private AfpEatEntities db = new AfpEatEntities();
-        private PanierViewModel panierViewModel = new PanierViewModel();
 
         public JsonResult AddMenu(int idMenu, List<int> idProduits, string idSession)
         {
             //Récupère l'utilisateur à partir de son id de session
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            //On récupère le panier
-            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
-            //On récupère les menus dans le panier
-            List<MenuPanier> menuPaniers = panierViewModel.menuPaniers ?? new List<MenuPanier>();
+            
+            //On récupère les produits dans le panier
+            PanierModel panier = (PanierModel)HttpContext.Application[idSession] ?? new PanierModel();
 
             if (sessionUtilisateur == null)
             {
@@ -30,18 +28,28 @@ namespace AfpEat.Controllers
             Menu menu = db.Menus.Find(idMenu);
 
             //Récupere les produits sélectionnés
-            List<Produit> produits = new List<Produit>();
+            List<ProduitPanier> produitPaniers = new List<ProduitPanier>();
 
             foreach (var idProduit in idProduits)
             {
-                produits.Add(db.Produits.Find(idProduit));
+                Produit monProduit = db.Produits.Find(idProduit);
+                ProduitPanier produitPanier = new ProduitPanier()
+                {
+                    IdProduit = monProduit.IdProduit,
+                    Description = monProduit.Description,
+                    Nom = monProduit.Nom,
+                    Prix = monProduit.Prix,
+                    Photo = monProduit.Photo.Nom,
+                    Quantite = monProduit.Quantite
+                };
+                produitPaniers.Add(produitPanier);
             }
 
             //Ajout du menu dans menuPanier
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
-                Produits = produits,
+                Produits = produitPaniers,
                 IdRestaurant = menu.IdRestaurant,
                 Nom = menu.Nom,
                 Prix = menu.Prix,
@@ -49,11 +57,16 @@ namespace AfpEat.Controllers
                 Photo = menu.Photo.Nom
             };
 
+            //Liste de tout les menus existants
+            List<MenuPanier> menuPaniers = new List<MenuPanier>();
+            menuPaniers = menuPaniers.Where(m => m.GetIdMenu() > 0).ToList();
 
             //Verifier si le menu existe deja dans le panier
             if (menuPaniers.Count() > 0)
             {
                 bool addMenu = false;
+
+                
 
                 //Parcours des menuPanier
                 for (int i = 0; i < menuPaniers.Count(); i++)
@@ -70,91 +83,87 @@ namespace AfpEat.Controllers
                 }
 
                 //Permet d'ajouter le menu si il n'est pas contenu dans le panier avec les mêmes produits
-                if (addMenu && menuPaniers.Where(m => m.Equals(menuPanier)).Count() == 0)
+                if (addMenu && panier.Where(m => m.Equals(menuPanier)).Count() == 0)
                 {
-                    menuPaniers.Add(menuPanier);
+                    panier.Add(menuPanier);
                 }
 
             }
             else
             {
                 //Si le menu panier n'existe pas
-                menuPaniers.Add(menuPanier);
+                panier.Add(menuPanier);
             }
 
-            panierViewModel.menuPaniers = menuPaniers.ToList();
             //Mise a jour de l'application
-            HttpContext.Application[idSession] = panierViewModel;
+            HttpContext.Application[idSession] = panier;
 
             return Json(menuPaniers.Count, JsonRequestBehavior.AllowGet);
 
         }
 
-        public JsonResult RemoveMenu(int idMenu, List<int> idProduits, string idSession)
-        {
-            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            //On récupère le panier
-            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
-            //On récupère les menus dans le panier
-            List<MenuPanier> menuPaniers = panierViewModel.menuPaniers ?? new List<MenuPanier>();
+        //public JsonResult RemoveMenu(int idMenu, List<int> idProduits, string idSession)
+        //{
+        //    SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
 
-            if (sessionUtilisateur == null)
-            {
-                return Json(0, JsonRequestBehavior.AllowGet);
-            }
+        //    //On récupère les produits dans le panier
+        //    PanierModel panier = (PanierModel)HttpContext.Application[idSession] ?? new PanierModel();
 
-            //Récupere le menu
-            Menu menu = db.Menus.Find(idMenu);
+        //    if (sessionUtilisateur == null)
+        //    {
+        //        return Json(0, JsonRequestBehavior.AllowGet);
+        //    }
 
-            //Récupere les produits sélectionnés
-            List<Produit> produits = new List<Produit>();
+        //    //Récupere le menu
+        //    Menu menu = db.Menus.Find(idMenu);
 
-            foreach (var idProduit in idProduits)
-            {
-                produits.Add(db.Produits.Find(idProduit));
-            }
+        //    //Récupere les produits sélectionnés
+        //    List<Produit> produits = new List<Produit>();
 
-            //Ajout de menu dans menuPanier
-            MenuPanier menuPanier = new MenuPanier()
-            {
-                IdMenu = menu.IdMenu,
-                Produits = produits,
-                IdRestaurant = menu.IdRestaurant,
-                Nom = menu.Nom,
-                Prix = menu.Prix,
-                Quantite = 1,
-                Photo = menu.Photo.Nom
-            };
+        //    foreach (var idProduit in idProduits)
+        //    {
+        //        produits.Add(db.Produits.Find(idProduit));
+        //    }
 
-            //Verifier si le menu existe dans le panier
-            if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
-            {
-                MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
-                monMenu.Quantite--;
+        //    //Ajout de menu dans menuPanier
+        //    MenuPanier menuPanier = new MenuPanier()
+        //    {
+        //        IdMenu = menu.IdMenu,
+        //        Produits = produits,
+        //        IdRestaurant = menu.IdRestaurant,
+        //        Nom = menu.Nom,
+        //        Prix = menu.Prix,
+        //        Quantite = 1,
+        //        Photo = menu.Photo.Nom
+        //    };
 
-                if (monMenu.Quantite <= 0)
-                {
-                    menuPaniers.Remove(monMenu);
-                }
+        //    //Verifier si le menu existe dans le panier
+        //    if (menuPaniers.Where(p => p.IdMenu == idMenu).Count() > 0)
+        //    {
+        //        MenuPanier monMenu = menuPaniers.Where(p => p.IdMenu == idMenu).First();
+        //        monMenu.Quantite--;
 
-            }
+        //        if (monMenu.Quantite <= 0)
+        //        {
+        //            menuPaniers.Remove(monMenu);
+        //        }
 
-            panierViewModel.menuPaniers = menuPaniers.ToList();
-            //Mise a jour de l'application
-            HttpContext.Application[idSession] = panierViewModel;
+        //    }
 
-            return Json(menuPaniers.Count, JsonRequestBehavior.AllowGet);
+        //    panierViewModel.menuPaniers = menuPaniers.ToList();
+        //    //Mise a jour de l'application
+        //    HttpContext.Application[idSession] = panierViewModel;
 
-        }
+        //    return Json(menuPaniers.Count, JsonRequestBehavior.AllowGet);
+
+        //}
 
         public JsonResult AddProduit(int idProduit, string idSession)
         {
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
 
-            //On récupère le panier
-            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
             //On récupère les produits dans le panier
-            PanierModel panier = panierViewModel.produitPaniers ?? new PanierModel();
+            PanierModel panier = (PanierModel)HttpContext.Application[idSession] ?? new PanierModel();
 
             if (sessionUtilisateur == null)
             {
@@ -189,65 +198,64 @@ namespace AfpEat.Controllers
 
             panier.GetQuantite();
             panier.GetMontant();
-            panierViewModel.produitPaniers = panier;
-
+            
             //Mise a jour de l'application
-            HttpContext.Application[idSession] = panierViewModel;
+            HttpContext.Application[idSession] = panier;
 
             return Json(new { statut = 1, message ="Le produit a bien été ajouté." ,idProduit = idProduit}, JsonRequestBehavior.AllowGet);
 
         }
 
-        public JsonResult RemoveProduit(int idProduit, string idSession)
-        {
-            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+        //public JsonResult RemoveProduit(int idProduit, string idSession)
+        //{
+        //    SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
 
-            //On récupère le panier
-            panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
-            //On récupère les produits dans le panier
-            PanierModel panier = panierViewModel.produitPaniers ?? new PanierModel();
+        //    //On récupère le panier
+        //    panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
+        //    //On récupère les produits dans le panier
+        //    PanierModel panier = panierViewModel.produitPaniers ?? new PanierModel();
 
-            if (sessionUtilisateur == null)
-            {
-                return Json(0, JsonRequestBehavior.AllowGet);
-            }
+        //    if (sessionUtilisateur == null)
+        //    {
+        //        return Json(0, JsonRequestBehavior.AllowGet);
+        //    }
 
-            //Récupere le produit
-            Produit produit = db.Produits.Find(idProduit);
+        //    //Récupere le produit
+        //    Produit produit = db.Produits.Find(idProduit);
 
-            //Ajout de produit dans produitPanier
-            ProduitPanier produitPanier = new ProduitPanier()
-            {
-                IdProduit = produit.IdProduit,
-                IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
-                Nom = produit.Nom,
-                Description = produit.Description,
-                Prix = produit.Prix,
-                Quantite = 1,
-                Photo = "Boulangerie.jpg"
-            };
+        //    //Ajout de produit dans produitPanier
+        //    ProduitPanier produitPanier = new ProduitPanier()
+        //    {
+        //        IdProduit = produit.IdProduit,
+        //        IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
+        //        Nom = produit.Nom,
+        //        Description = produit.Description,
+        //        Prix = produit.Prix,
+        //        Quantite = 1,
+        //        Photo = "Boulangerie.jpg"
+        //    };
 
-            //Verifier si le produit existe deja dans le panier
-            if (panier.Where(p => p.GetIdProduit() == idProduit).Count() > 0)
-            {
-                ItemPanier monProduit = panier.Where(p => p.GetIdProduit() == idProduit).First();
-                monProduit.Quantite--;
+        //    //Verifier si le produit existe deja dans le panier
+        //    if (panier.Where(p => p.GetIdProduit() == idProduit).Count() > 0)
+        //    {
+        //        ItemPanier monProduit = panier.Where(p => p.GetIdProduit() == idProduit).First();
+        //        monProduit.Quantite--;
 
-                if (monProduit.Quantite <= 0)
-                {
-                    panier.Remove(monProduit);
-                }
+        //        if (monProduit.Quantite <= 0)
+        //        {
+        //            panier.Remove(monProduit);
+        //        }
 
-            }
+        //    }
 
-            panierViewModel.produitPaniers = panier;
+        //    panierViewModel.produitPaniers = panier;
 
-            //Mise a jour de l'application
-            HttpContext.Application[idSession] = panierViewModel;
+        //    //Mise a jour de l'application
+        //    HttpContext.Application[idSession] = panierViewModel;
 
-            return Json(panier.Count, JsonRequestBehavior.AllowGet);
+        //    return Json(panier.Count, JsonRequestBehavior.AllowGet);
 
-        }
+        //}
 
         public JsonResult GetPanier(string idSession)
         {
@@ -279,13 +287,13 @@ namespace AfpEat.Controllers
                 return Json(new { statut = 0, message = "Vous devez être connecté pour passer une commande" }, JsonRequestBehavior.AllowGet);
             }
 
-            if (panier.menuPaniers.Count() == 0 && panier.produitPaniers.Count() == 0)
+            if (panier.MenuPaniers.Count() == 0 && panier.ProduitPaniers.Count() == 0)
             {
                 return Json(new { statut = 0, message = "Votre panier est vide." }, JsonRequestBehavior.AllowGet);
             }
 
             //idRestaurant si le menu ou le produit panier contient une entrée
-            int idRestaurant = panier.menuPaniers.Count() > 0 ? panier.menuPaniers.First().IdRestaurant : panier.produitPaniers.First().IdRestaurant;
+            int idRestaurant = panier.MenuPaniers.Count() > 0 ? panier.MenuPaniers.First().IdRestaurant : panier.ProduitPaniers.First().IdRestaurant;
 
             //Création de la commande
             Commande commande = new Commande()
@@ -296,16 +304,16 @@ namespace AfpEat.Controllers
                 IdEtatCommande = 1,
             };
 
-            if (panier.produitPaniers != null && panier.produitPaniers.Count() > 0)
+            if (panier.ProduitPaniers != null && panier.ProduitPaniers.Count() > 0)
             {
                 //On calcule le prix total des produits
-                foreach (ItemPanier produitPanier in panier.produitPaniers)
+                foreach (ItemPanier produitPanier in panier.ProduitPaniers)
                 {
                     prixTotal += produitPanier.Prix * produitPanier.Quantite;
                 }
 
                 // Ajout des produits dans commandeProduit
-                foreach (ItemPanier produitPanier in panier.produitPaniers)
+                foreach (ItemPanier produitPanier in panier.ProduitPaniers)
                 {
                     CommandeProduit commandeProduit = new CommandeProduit()
                     {
@@ -323,10 +331,10 @@ namespace AfpEat.Controllers
             }
 
             //Ajout des produits lié a un menu
-            if (panier.menuPaniers != null && panier.menuPaniers.Count() > 0)
+            if (panier.MenuPaniers != null && panier.MenuPaniers.Count() > 0)
             {
                 //On calcule le prix total des menus
-                foreach (MenuPanier menuPanier in panier.menuPaniers)
+                foreach (MenuPanier menuPanier in panier.MenuPaniers)
                 {
                     prixTotal += menuPanier.Prix * menuPanier.Quantite;
 

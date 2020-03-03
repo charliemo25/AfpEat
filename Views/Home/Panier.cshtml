@@ -1,4 +1,4 @@
-﻿@model AfpEat.Models.PanierViewModel
+﻿@model AfpEat.Models.PanierModel
 
 @{
     ViewBag.Title = "Panier";
@@ -11,10 +11,10 @@
 
     <h2>Panier</h2>
 
-    @if (Model != null && Model.menuPaniers != null && Model.menuPaniers.Count() > 0)
+    @if (Model != null && Model.MenuPaniers != null && Model.MenuPaniers.Count() > 0)
     {
         <ul>
-            @foreach (var menuPanier in Model.menuPaniers)
+            @foreach (var menuPanier in Model.MenuPaniers)
             {
                 <li>
                     @menuPanier.Nom @menuPanier.Prix€ X @menuPanier.Quantite <img src="/Images/@menuPanier.Photo" width="150" height="150" alt="" />
@@ -31,10 +31,10 @@
         </ul>
     }
 
-    @if (Model != null && Model.produitPaniers != null && Model.produitPaniers.Count() > 0)
+    @if (Model != null && Model.ProduitPaniers != null && Model.ProduitPaniers.Count() > 0)
     {
         <ul>
-            @foreach (var produit in Model.produitPaniers)
+            @foreach (var produit in Model.ProduitPaniers)
             {
 
                 <li>

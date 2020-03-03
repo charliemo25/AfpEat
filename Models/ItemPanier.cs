@@ -19,5 +19,10 @@ namespace AfpEat.Models
             return 0;
         }
 
+        public virtual int GetIdMenu()
+        {
+            return 0;
+        }
+
     }
 }

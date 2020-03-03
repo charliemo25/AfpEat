@@ -15,6 +15,10 @@ namespace AfpEat.Models
             Produits = new List<ProduitPanier>();
         }
 
+        public override int GetIdMenu()
+        {
+            return IdMenu;
+        }
         public bool Equals(MenuPanier other)
         {
 

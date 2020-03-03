@@ -5,18 +5,13 @@ using System.Web;
 
 namespace AfpEat.Models
 {
-    public class ProduitPanier: ItemPanier ,IEquatable<ProduitPanier>
+    public class ProduitComposePanier: ItemPanier
     {
         public int IdProduit { get; set; }
-
+        public List<ProduitPanier> produits { get; set; }
         public override int GetIdProduit()
         {
             return IdProduit;
-        }
-
-        public bool Equals(ProduitPanier other)
-        {
-            return this.IdProduit == other.IdProduit;
         }
     }
 }

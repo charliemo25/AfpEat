@@ -21,8 +21,10 @@ namespace AfpEat.Controllers
 
         public ActionResult Panier()
         {
-            PanierViewModel panier = (PanierViewModel)HttpContext.Application[Session.SessionID];
+            //On récupère le contenu du panier en session
+            PanierModel panier = (PanierModel)HttpContext.Application[Session.SessionID];
 
+            
             return View(panier);
         }
 

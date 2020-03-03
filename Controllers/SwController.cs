@@ -339,31 +339,30 @@ namespace AfpEat.Controllers
             {
                 CommandeProduit commandeProduit = new CommandeProduit();
 
-                if (itemPanier is ProduitPanier)
+                if (itemPanier is ProduitPanier produit)
                 {
                     //Propriétés d'un ProduitPanier
-                    commandeProduit.IdProduit = itemPanier.GetIdProduit();
-                    commandeProduit.Prix = itemPanier.Prix;
-                    commandeProduit.Quantite = itemPanier.Quantite;
+                    commandeProduit.IdProduit = produit.IdProduit;
+                    commandeProduit.Prix = produit.Prix;
+                    commandeProduit.Quantite = produit.Quantite;
 
                     commande.CommandeProduits.Add(commandeProduit);
-
                 }
-                else if (itemPanier is MenuPanier)
+                else if (itemPanier is MenuPanier menu)
                 {
-                    
                     //ajouter les produits avec le menu correspondant
-                    foreach (ProduitPanier produitPanier in itemPanier.GetProduitPaniers())
+                    foreach (ProduitPanier produitPanier in menu.Produits)
                     {
                         //Ajout du produit contenu dans le menu
-                        commandeProduit.IdProduit = produitPanier.GetIdProduit();
-                        commandeProduit.Prix = itemPanier.Prix;
-                        commandeProduit.Quantite = itemPanier.Quantite;
+                        commandeProduit.IdProduit = produitPanier.IdProduit;
+                        commandeProduit.Prix = menu.Prix;
+                        commandeProduit.Quantite = menu.Quantite;
+
                         //Ajout du menu correspondant au produit
-                        commandeProduit.Menus.Add(db.Menus.Find(itemPanier.GetIdMenu()));
+                        commandeProduit.Menus.Add(db.Menus.Find(menu.IdMenu));
+
                         //Ajout dans la commande
                         commande.CommandeProduits.Add(commandeProduit);
-
                     }
                 }
             }

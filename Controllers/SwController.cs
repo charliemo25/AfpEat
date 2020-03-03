@@ -161,21 +161,6 @@ namespace AfpEat.Controllers
                 return Json(0, JsonRequestBehavior.AllowGet);
             }
 
-            //Récupere le produit
-            Produit produit = db.Produits.Find(idProduit);
-
-            //Ajout de produit dans produitPanier
-            ProduitPanier produitPanier = new ProduitPanier()
-            {
-                IdProduit = produit.IdProduit,
-                IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
-                Nom = produit.Nom,
-                Description = produit.Description,
-                Prix = produit.Prix,
-                Quantite = 1,
-                Photo = produit.Photo.Nom
-            };
-
             //Verifier si le produit existe deja dans le panier
             if (produitPaniers.Where(p => p.GetIdProduit() == idProduit).Count() > 0)
             {
@@ -184,6 +169,21 @@ namespace AfpEat.Controllers
             }
             else
             {
+                //Récupere le produit
+                Produit produit = db.Produits.Find(idProduit);
+
+                //Ajout de produit dans produitPanier
+                ProduitPanier produitPanier = new ProduitPanier()
+                {
+                    IdProduit = produit.IdProduit,
+                    IdRestaurant = produit.ProduitCategories.First().IdRestaurant,
+                    Nom = produit.Nom,
+                    Description = produit.Description,
+                    Prix = produit.Prix,
+                    Quantite = 1,
+                    Photo = produit.Photo.Nom
+                };
+
                 produitPaniers.Add(produitPanier);
             }
 

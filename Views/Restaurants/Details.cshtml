@@ -155,11 +155,11 @@
         );
 
         //permet de définir l'alert
-        function notify() {
+        function notify(result) {
 
             let notify = $.notify(
-                        {
-	                        message: 'Le produit a bien été ajouté au panier.'
+                {
+                        message: result.message
                         },
                         {
 	                        type: 'success'
@@ -182,7 +182,7 @@
                     },
                     success: function (result)
                     {
-                        notify();
+                        notify(result);
                     }
                 });
         }

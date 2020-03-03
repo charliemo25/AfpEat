@@ -24,5 +24,10 @@ namespace AfpEat.Models
             return 0;
         }
 
+        public virtual List<ProduitPanier> GetProduitPaniers()
+        {
+            return null;
+        }
+
     }
 }

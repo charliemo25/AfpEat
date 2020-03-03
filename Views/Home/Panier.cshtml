@@ -11,7 +11,7 @@
 
     <h2>Panier</h2>
 
-    @if (Model != null && Model.Where(m => m.GetIdMenu() > 0).Count() > 0)
+    @if (Model != null && Model.Where(m =>m.GetIdMenu() > 0).Count() > 0)
     {
          <ul>
             @foreach (AfpEat.Models.MenuPanier menuPanier in Model.Where(m => m.GetIdMenu() > 0))

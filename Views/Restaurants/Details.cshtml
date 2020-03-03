@@ -215,7 +215,7 @@
         }
 
         function AddMenu(idMenu, arrayIdProduit) {
-            let data = { 'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
+            let data = { 'idRestaurant': @Model.Restaurant.IdRestaurant ,'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
             console.log(data);
 
             $.ajax({

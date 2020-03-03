@@ -11,13 +11,14 @@ namespace AfpEat.Controllers
     {
         private AfpEatEntities db = new AfpEatEntities();
 
-        public JsonResult AddMenu(int idMenu, List<int> idProduits, string idSession)
+        public JsonResult AddMenu(int idRestaurant ,int idMenu, List<int> idProduits, string idSession)
         {
             //Récupère l'utilisateur à partir de son id de session
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
 
             //On récupère les produits dans le panier
             PanierModel panier = (PanierModel)HttpContext.Application[idSession] ?? new PanierModel();
+            panier.IdRestaurant = idRestaurant;
 
             if (sessionUtilisateur == null)
             {
@@ -285,19 +286,6 @@ namespace AfpEat.Controllers
 
         }
 
-        public JsonResult GetPanier(string idSession)
-        {
-            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-            PanierViewModel panier = null;
-
-            if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)
-            {
-                panier = (PanierViewModel)HttpContext.Application[idSession];
-            }
-            return Json(panier, JsonRequestBehavior.AllowGet);
-
-        }
-
         public JsonResult SaveCommande(string idSession)
         {
 
@@ -376,6 +364,7 @@ namespace AfpEat.Controllers
 
             //Changer le solde de l'utilisateur
             utilisateur.Solde -= commande.Prix;
+            Session["utilisateur"] = utilisateur;
 
             db.SaveChanges();
             return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
@@ -414,6 +403,18 @@ namespace AfpEat.Controllers
 
             }
             return Json(new { error = 1, message = "La connexion a echoué." }, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult GetPanier(string idSession)
+        {
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+            PanierViewModel panier = null;
+
+            if (HttpContext.Application[idSession] != null && sessionUtilisateur != null)
+            {
+                panier = (PanierViewModel)HttpContext.Application[idSession];
+            }
+            return Json(panier, JsonRequestBehavior.AllowGet);
 
         }
 

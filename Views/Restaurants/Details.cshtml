@@ -3,10 +3,6 @@
 @{
     ViewBag.Title = "Details";
 }
-
-    <form action="Utilisateur/Connexion" method="POST">
-        <button type="submit"></button>
-    </form>
 <!-- DetailsRestaurants -->
 <section id="DetailsRestaurant" class="container mt-3">
     <!-- Carousel -->
@@ -143,6 +139,19 @@
 
 @section Scripts{
     <script type="text/javascript">
+        //Paramètres par défaut de bootstrap-notify
+        $.notifyDefaults(
+        {
+            
+        },
+        {
+            placement:
+            {
+	    	    from: "bottom",
+		        align: "left"
+	        }
+        }
+        );
 
         function AddProduit(idProduit) {
 
@@ -159,8 +168,13 @@
                     },
                     success: function (result)
                     {
-                        //Remplacer par une alert
-                        console.log("Le produit a bien été ajouté");
+                        $.notify(
+                        {
+	                        message: 'Le produit a bien été ajouté au panier.'
+                        },
+                        {
+	                        type: 'success'
+                        });
                     }
                 });
         }
@@ -181,7 +195,13 @@
                     success: function (result)
                     {
                         //Remplacer par une alert
-                        console.log("Le produit a bien été supprimé");
+                        $.notify(
+                        {
+	                        message: 'Le produit a bien été supprimé du panier'
+                        },
+                        {
+	                        type: 'danger'
+                        });
                     }
                 });
         }
@@ -202,7 +222,13 @@
                     success: function (result)
                     {
                         //Remplacer par une alert
-                        console.log("Le menu à bien été ajouté.");
+                        $.notify(
+                        {
+	                        message: 'Le menu a bien été ajouté au panier.'
+                        },
+                        {
+	                        type: 'success'
+                        });
                     }
             });
         }

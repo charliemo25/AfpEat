@@ -154,7 +154,7 @@ namespace AfpEat.Controllers
             //On récupère le panier
             panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
             //On récupère les menus dans le panier
-            List<ProduitPanier> produitPaniers = panierViewModel.produitPaniers ?? new List<ProduitPanier>();
+            List<ItemPanier> produitPaniers = panierViewModel.produitPaniers ?? new List<ItemPanier>();
 
             if (sessionUtilisateur == null)
             {
@@ -177,9 +177,9 @@ namespace AfpEat.Controllers
             };
 
             //Verifier si le produit existe deja dans le panier
-            if (produitPaniers.Where(p => p.IdProduit == idProduit).Count() > 0)
+            if (produitPaniers.Where(p => p.GetIdProduit() == idProduit).Count() > 0)
             {
-                ProduitPanier monProduit = produitPaniers.Where(p => p.IdProduit == idProduit).First();
+                ItemPanier monProduit = produitPaniers.Where(p => p.GetIdProduit() == idProduit).First();
                 monProduit.Quantite++;
             }
             else

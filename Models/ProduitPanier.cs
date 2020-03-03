@@ -9,6 +9,11 @@ namespace AfpEat.Models
     {
         public int IdProduit { get; set; }
 
+        public override int GetIdProduit()
+        {
+            return IdProduit;
+        }
+
         public bool Equals(ProduitPanier other)
         {
             return this.IdProduit == other.IdProduit;

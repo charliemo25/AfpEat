@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AfpEat.Models
 {
-    public class ItemPanier
+    public abstract class ItemPanier
     {
         public int IdRestaurant { get; set; }
         public string Nom { get; set; }
@@ -13,5 +13,11 @@ namespace AfpEat.Models
         public string Photo { get; set; }
         public decimal Prix { get; set; }
         public int Quantite { get; set; }
+
+        public virtual int GetIdProduit()
+        {
+            return 0;
+        }
+
     }
 }

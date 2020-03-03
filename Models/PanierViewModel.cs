@@ -7,13 +7,13 @@ namespace AfpEat.Models
 {
     public class PanierViewModel
     {
-        public List<ProduitPanier> produitPaniers { get; set; }
+        public List<ItemPanier> produitPaniers { get; set; }
         public List<MenuPanier> menuPaniers { get; set; }
 
         public PanierViewModel()
         {
             menuPaniers = new List<MenuPanier>();
-            produitPaniers = new List<ProduitPanier>();
+            produitPaniers = new List<ItemPanier>();
         }
 
     }

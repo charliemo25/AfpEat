@@ -150,6 +150,7 @@
     <Compile Include="Models\EtatCommande.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ItemPanier.cs" />
     <Compile Include="Models\Menu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

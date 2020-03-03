@@ -18,6 +18,7 @@ namespace AfpEat.Models
             int idProduit = item.GetIdProduit();
             int idMenu = item.GetIdMenu();
             bool isAdded = true;
+
             //Ajout d'un produit ou d'un produit Compose
             if ((item is ProduitPanier || item is ProduitComposePanier) && idProduit > 0)
             {

@@ -58,27 +58,23 @@ namespace AfpEat.Controllers
                 Photo = menu.Photo.Nom
             };
 
-            //Verifier si le menu existe deja dans le panier
-            if (panier.Where(m => m.GetIdMenu() == menuPanier.IdMenu).Count() > 0)
+            //Initialise un ItemPanier qui contient tout les menuPaniers
+            List<ItemPanier> itemPaniers = panier.Where(p => p is MenuPanier).Count() > 0 ? panier.Where(p => p is MenuPanier).ToList() : null;
+            
+            //si itemPaniers est nul et si elle contient plus d'un MenuPanier egal à celui qu'on rajoute 
+            if (itemPaniers != null && itemPaniers.Where(i => i is MenuPanier iM && iM.Equals(menuPanier)).Count() > 0)
             {
 
-                //Liste de tout les menus existants
-                List<MenuPanier> menuPaniers = new List<MenuPanier>();
-
-                foreach (MenuPanier menuPanier1 in panier)
-                {
-                    menuPaniers.Add(menuPanier1);
-                }
-
+                //Permet de sortir d'une boucle pour ajouter un menu
                 bool addMenu = false;
 
-                //Parcours des menuPanier
-                for (int i = 0; i < menuPaniers.Count(); i++)
+                //Parcours des menuPaniers
+                for (int i = 0; i < itemPaniers.Count(); i++)
                 {
                     //Compare les produits dans 2 menuPanier
-                    if (menuPaniers[i].Equals(menuPanier))
+                    if (itemPaniers[i] is MenuPanier menuPanier1 &&  menuPanier1.Equals(menuPanier))
                     {
-                        menuPaniers[i].Quantite++;
+                        menuPanier1.Quantite++;
                     }
                     else
                     {
@@ -86,14 +82,14 @@ namespace AfpEat.Controllers
                     }
                 }
 
-                //Permet d'ajouter le menu si il n'est pas contenu dans le panier avec les mêmes produits
-                if (addMenu && panier.Where(m => m.Equals(menuPanier)).Count() == 0)
+                //Permet d'ajouter le menuPanier si il n'est pas contenu dans le panier avec les mêmes produits
+                if (addMenu && itemPaniers.Where(m => m is MenuPanier menu1 && menu1.Equals(menuPanier)).Count() == 0)
                 {
                     panier.Add(menuPanier);
                 }
 
             }
-            else
+            else 
             {
                 //Si le menu panier n'existe pas
                 panier.Add(menuPanier);

@@ -8,18 +8,24 @@ namespace AfpEat.Models
     public class PanierModel : List<ItemPanier>
     {
 
+        public int IdRestaurant { get; set; }
         public int Quantite { get; set; }
         public decimal Montant { get; set; }
 
+        public void AddItemPanier(ItemPanier itemPanier)
+        {
+
+        }
+
         public void GetQuantite()
         {
-            int Quantite = 0;
+            Quantite = 0;
             parcourir();
         }
 
         public void GetMontant()
         {
-            decimal Montant = 0;
+            Montant = 0;
             parcourir();
         }
 
@@ -29,6 +35,7 @@ namespace AfpEat.Models
             {
                 Montant += itemPanier.Quantite * itemPanier.Prix;
                 Quantite += itemPanier.Quantite;
+                IdRestaurant = itemPanier.IdRestaurant;
             }
         }
     }

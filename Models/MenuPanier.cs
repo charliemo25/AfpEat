@@ -19,6 +19,12 @@ namespace AfpEat.Models
         {
             return IdMenu;
         }
+
+        public override List<ProduitPanier> GetProduitPaniers()
+        {
+            return this.Produits;
+        }
+
         public bool Equals(MenuPanier other)
         {
             //Pouvoir comparer des listes de produits

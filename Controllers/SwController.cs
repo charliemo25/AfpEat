@@ -351,41 +351,22 @@ namespace AfpEat.Controllers
                 }
                 else if (itemPanier is MenuPanier)
                 {
-                    CommandeProduit commandeMenuProduit = new CommandeProduit();
                     
-                    //Ajout du menu correspondant au produit
-                    commandeMenuProduit.Menus.Add(db.Menus.Find(itemPanier.GetIdMenu()));
+                    //ajouter les produits avec le menu correspondant
+                    foreach (ProduitPanier produitPanier in itemPanier.GetProduitPaniers())
+                    {
+                        //Ajout du produit contenu dans le menu
+                        commandeProduit.IdProduit = produitPanier.GetIdProduit();
+                        commandeProduit.Prix = itemPanier.Prix;
+                        commandeProduit.Quantite = itemPanier.Quantite;
+                        //Ajout du menu correspondant au produit
+                        commandeProduit.Menus.Add(db.Menus.Find(itemPanier.GetIdMenu()));
+                        //Ajout dans la commande
+                        commande.CommandeProduits.Add(commandeProduit);
 
-                    //Faire un foreach pour ajouter les produits avec le menu correspondant
-
-
-                    //Ajout dans la commande
-                    commande.CommandeProduits.Add(commandeMenuProduit);
+                    }
                 }
             }
-
-            //Ajout des produits lié a un menu
-            //if (panier.MenuPaniers != null && panier.MenuPaniers.Count() > 0)
-            //{
-            //    //On calcule le prix total des menus
-            //    foreach (MenuPanier menuPanier in panier.MenuPaniers)
-            //    {
-            //        prixTotal += menuPanier.Prix * menuPanier.Quantite;
-
-            //        foreach (var produit in menuPanier.Produits)
-            //        {
-            //            CommandeProduit commandeMenuProduit = new CommandeProduit()
-            //            {
-            //                IdProduit = produit.IdProduit,
-
-            //            };
-            //            //Ajout du menu correspondant au produit
-            //            commandeMenuProduit.Menus.Add(db.Menus.Find(menuPanier.IdMenu));
-            //            //Ajout dans la commande
-            //            commande.CommandeProduits.Add(commandeMenuProduit);
-            //        }
-            //    }
-            //}
 
             panier.GetMontant();
 

@@ -192,7 +192,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;
 
-            return Json(new { statut = 1, idProduit = idProduit}, JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message ="Le produit a bien été ajouté." ,idProduit = idProduit}, JsonRequestBehavior.AllowGet);
 
         }
 

@@ -13,7 +13,7 @@ namespace AfpEat.Models
 
         private AfpEatEntities db = new AfpEatEntities();
 
-        public bool AddItemPanier(ItemPanier item, List<int> idProduits)
+        public bool AddItem(ItemPanier item, List<int> idProduits)
         {
             int idProduit = item.GetIdProduit();
             int idMenu = item.GetIdMenu();

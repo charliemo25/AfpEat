@@ -27,12 +27,13 @@ namespace AfpEat.Controllers
             //Récupere le menu
             Menu menu = db.Menus.Find(idMenu);
 
-            //Récupere les produits sélectionnés
+            //Récupere les produits sélectionnés dans ce menu
             List<ProduitPanier> produitPaniers = new List<ProduitPanier>();
 
             foreach (var idProduit in idProduits)
             {
                 Produit monProduit = db.Produits.Find(idProduit);
+
                 ProduitPanier produitPanier = new ProduitPanier()
                 {
                     IdProduit = monProduit.IdProduit,
@@ -45,7 +46,7 @@ namespace AfpEat.Controllers
                 produitPaniers.Add(produitPanier);
             }
 
-            //Ajout du menu dans menuPanier
+            //Creation d'un menuPanier pour comparer avec ceux contenu dans le panier
             MenuPanier menuPanier = new MenuPanier()
             {
                 IdMenu = menu.IdMenu,
@@ -103,6 +104,35 @@ namespace AfpEat.Controllers
 
             return Json(panier.Count, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public JsonResult AddItemPanier(int idProduit, int idMenu, List<int> idProduits, string idSession)
+        {
+            //Récupère l'utilisateur à partir de son id de session
+            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
+
+            //On récupère les produits dans le panier
+            PanierModel panier = (PanierModel)HttpContext.Application[idSession] ?? new PanierModel();
+
+            if (sessionUtilisateur == null)
+            {
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+
+            if(idProduit > 0)
+            {
+                
+            }
+
+            if(idMenu > 0)
+            {
+
+            }
+
+            //Mise a jour de l'application
+            HttpContext.Application[idSession] = panier;
+
+            return Json(panier.Count, JsonRequestBehavior.AllowGet);
         }
 
         //public JsonResult RemoveMenu(int idMenu, List<int> idProduits, string idSession)
@@ -406,6 +436,25 @@ namespace AfpEat.Controllers
             }
             return Json(new { error = 1, message = "La connexion a echoué." }, JsonRequestBehavior.AllowGet);
 
+        }
+
+        private ProduitPanier GetProduitPanier(int idProduit)
+        {
+            Produit produit = db.Produits.Find(idProduit);
+            
+            if(produit == null) {
+                return null;
+            }
+            ProduitPanier produitPanier = new ProduitPanier()
+            {
+                IdProduit = produit.IdProduit,
+                Description = produit.Description,
+                Nom = produit.Nom,
+                Prix = produit.Prix,
+                Photo = produit.Photo.Nom,
+                Quantite = produit.Quantite
+            };
+            return produitPanier;
         }
 
     }

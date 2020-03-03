@@ -255,6 +255,14 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-notify\.gitignore" />
+    <Content Include="Scripts\bootstrap-notify\bootstrap-notify.js" />
+    <Content Include="Scripts\bootstrap-notify\bootstrap-notify.min.js" />
+    <Content Include="Scripts\bootstrap-notify\dist\bootstrap-notify.js" />
+    <Content Include="Scripts\bootstrap-notify\dist\bootstrap-notify.min.js" />
+    <Content Include="Scripts\bootstrap-notify\Gruntfile.js" />
+    <Content Include="Scripts\bootstrap-notify\package.js" />
+    <Content Include="Scripts\bootstrap-notify\test_meteor.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -300,6 +308,12 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Content\style.scss" />
+    <Content Include="Scripts\bootstrap-notify\bower.json" />
+    <Content Include="Scripts\bootstrap-notify\composer.json" />
+    <Content Include="Scripts\bootstrap-notify\jshintrc.json" />
+    <Content Include="Scripts\bootstrap-notify\LICENSE" />
+    <Content Include="Scripts\bootstrap-notify\package.json" />
+    <Content Include="Scripts\bootstrap-notify\README.md" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

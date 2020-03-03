@@ -283,7 +283,7 @@ namespace AfpEat.Controllers
             }
 
             //idRestaurant si le menu ou le produit panier contient une entrée
-            int idRestaurant = panier.menuPaniers.Count() > 0 ? panier.menuPaniers.First().IdRestaurant : idRestaurant = panier.produitPaniers.First().IdRestaurant;
+            int idRestaurant = panier.menuPaniers.Count() > 0 ? panier.menuPaniers.First().IdRestaurant : panier.produitPaniers.First().IdRestaurant;
 
             //Création de la commande
             Commande commande = new Commande()
@@ -291,7 +291,6 @@ namespace AfpEat.Controllers
                 IdUtilisateur = utilisateur.IdUtilisateur,
                 IdRestaurant = idRestaurant,
                 Date = DateTime.Now,
-                Prix = prixTotal,
                 IdEtatCommande = 1,
             };
 
@@ -348,6 +347,8 @@ namespace AfpEat.Controllers
             {
                 return Json(new { statut = 0, message = "Votre solde est insuffisant." }, JsonRequestBehavior.AllowGet);
             }
+
+            commande.Prix = prixTotal;
 
             //Sauvegarde de la commande dans la bdd
             db.Commandes.Add(commande);

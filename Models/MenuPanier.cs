@@ -8,11 +8,11 @@ namespace AfpEat.Models
     public class MenuPanier: ItemPanier, IEquatable<MenuPanier>
     {
         public int IdMenu { get; set; }
-        public List<Produit> Produits { get; set; }
+        public List<ProduitPanier> Produits { get; set; }
 
         public MenuPanier()
         {
-            Produits = new List<Produit>();
+            Produits = new List<ProduitPanier>();
         }
 
         public bool Equals(MenuPanier other)

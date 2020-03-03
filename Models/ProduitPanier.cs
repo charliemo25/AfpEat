@@ -16,7 +16,7 @@ namespace AfpEat.Models
 
         public bool Equals(ProduitPanier other)
         {
-            return this.IdProduit == other.IdProduit;
+            return this == other;
         }
     }
 }

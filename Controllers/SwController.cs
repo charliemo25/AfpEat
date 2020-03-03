@@ -57,16 +57,15 @@ namespace AfpEat.Controllers
                 Photo = menu.Photo.Nom
             };
 
-            //Liste de tout les menus existants
-            List<MenuPanier> menuPaniers = new List<MenuPanier>();
-            menuPaniers = menuPaniers.Where(m => m.GetIdMenu() > 0).ToList();
-
             //Verifier si le menu existe deja dans le panier
-            if (menuPaniers.Count() > 0)
+            if (panier.Where(m => m.GetIdMenu() == menuPanier.IdMenu).Count() > 0 )
             {
-                bool addMenu = false;
 
-                
+                //Liste de tout les menus existants
+                List<ItemPanier> menuPaniers = new List<ItemPanier>();
+                menuPaniers = panier.Where(m => m.GetIdMenu() == menuPanier.IdMenu).ToList();
+
+                bool addMenu = false;
 
                 //Parcours des menuPanier
                 for (int i = 0; i < menuPaniers.Count(); i++)
@@ -98,7 +97,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(menuPaniers.Count, JsonRequestBehavior.AllowGet);
+            return Json(panier.Count, JsonRequestBehavior.AllowGet);
 
         }
 

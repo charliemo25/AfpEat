@@ -154,7 +154,7 @@ namespace AfpEat.Controllers
             //On récupère le panier
             panierViewModel = (PanierViewModel)HttpContext.Application[idSession] ?? new PanierViewModel();
             //On récupère les menus dans le panier
-            List<ItemPanier> produitPaniers = panierViewModel.produitPaniers ?? new List<ItemPanier>();
+            PanierModel produitPaniers = panierViewModel.produitPaniers ?? new PanierModel();
 
             if (sessionUtilisateur == null)
             {
@@ -187,7 +187,7 @@ namespace AfpEat.Controllers
                 produitPaniers.Add(produitPanier);
             }
 
-            panierViewModel.produitPaniers = produitPaniers.ToList();
+            panierViewModel.produitPaniers = produitPaniers;
 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panierViewModel;

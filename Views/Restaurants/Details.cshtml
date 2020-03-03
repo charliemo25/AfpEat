@@ -139,6 +139,7 @@
 
 @section Scripts{
     <script type="text/javascript">
+
         //Paramètres par défaut de bootstrap-notify
         $.notifyDefaults(
         {
@@ -152,6 +153,19 @@
 	        }
         }
         );
+
+        //permet de définir l'alert
+        function notify() {
+
+            let notify = $.notify(
+                        {
+	                        message: 'Le produit a bien été ajouté au panier.'
+                        },
+                        {
+	                        type: 'success'
+                });
+            return notify;
+        }
 
         function AddProduit(idProduit) {
 
@@ -168,13 +182,7 @@
                     },
                     success: function (result)
                     {
-                        $.notify(
-                        {
-	                        message: 'Le produit a bien été ajouté au panier.'
-                        },
-                        {
-	                        type: 'success'
-                        });
+                        notify();
                     }
                 });
         }
@@ -221,7 +229,6 @@
                     },
                     success: function (result)
                     {
-                        //Remplacer par une alert
                         $.notify(
                         {
 	                        message: 'Le menu a bien été ajouté au panier.'

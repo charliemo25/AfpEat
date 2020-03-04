@@ -42,6 +42,12 @@ namespace AfpEat.Controllers
 
         public JsonResult AddMenu(int idRestaurant ,int idMenu, List<int> idProduits, string idSession)
         {
+            //Vérifie si l'utilisateur à bien selectionner des produits
+            if (idProduits.Contains(0))
+            {
+                return Json(new { statut=0, message="Veuillez selectionner tout les produits."}, JsonRequestBehavior.AllowGet);
+            }
+
             //Récupère l'utilisateur à partir de son id de session
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
 
@@ -129,7 +135,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut=1, message="Le menu a bien été ajouté." }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut=1, message="Le menu a bien été ajouté.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -205,7 +211,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut=1, message="Le menu à bien été supprimé." }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut=1, message="Le menu à bien été supprimé.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
 
 
         }
@@ -253,7 +259,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut = 1, message = "Le produit a bien été ajouté.", idProduit = idProduit }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message = "Le produit a bien été ajouté.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -302,7 +308,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut = 1, message = "Le produit a bien été supprimé." }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message = "Le produit a bien été supprimé.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
 
         }
 

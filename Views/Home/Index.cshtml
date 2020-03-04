@@ -5,35 +5,33 @@
 }
 
 <section id="Home" class="container mt-5">
-    <ul class="nav nav-pills pb-3" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="typeCuisine-tab" data-toggle="tab" href="#typeCuisine" role="tab" aria-controls="typeCuisine" aria-selected="true">Cuisines</a>
+    <ul class="nav nav-pills  pb-3" id="myTab" role="tablist">
+        <li class="nav-item ">
+            <a class="nav-link active btn btn-outline-dark" id="typeCuisine-tab" data-toggle="tab" href="#typeCuisine" role="tab" aria-controls="typeCuisine" aria-selected="true">Cuisines</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" id="restaurant-tab" data-toggle="tab" href="#restaurant" role="tab" aria-controls="restaurant" aria-selected="false">Restaurants</a>
+        <li class="nav-item ml-2">
+            <a class="nav-link btn btn-outline-dark" id="restaurant-tab" data-toggle="tab" href="#restaurant" role="tab" aria-controls="restaurant" aria-selected="false">Restaurants</a>
         </li>
     </ul>
 
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="typeCuisine" role="tabpanel" aria-labelledby="typeCuisine-tab">
             <!-- TypeCuisines -->
-            <section class="container-fluid" id="TypeCuisine">
-                <div class="row">
-                    @foreach (var typeCuisine in Model)
-                    {
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 m-3">
-                            <div class="contain card card-type">
-                                <img src="/Images/@typeCuisine.Photo.Nom" alt="..." class="card-img-top" width="250" height="250">
-                                <div class="middle">
-                                    <div class="text">
-                                        <h3>@typeCuisine.Nom</h3>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            @foreach (var typeCuisine in Model)
+            {
+            <text>
+                <div class="col mb-4">
+                    <div class="card border border-0 shadow">
+                        <img src="/Images/@typeCuisine.Photo.Nom" height="200" class="card-img-top" alt="...">
+                        <div class="carousel-caption">
+                            <a href="#" class="btn btn-lg btn-success">@typeCuisine.Nom</a>
                         </div>
-                    }
+                    </div>
                 </div>
-            </section>
+            </text>
+            }
+            </div>
         </div>
         <div class="tab-pane fade" id="restaurant" role="tabpanel" aria-labelledby="restaurant-tab">
             <!-- Restaurants -->

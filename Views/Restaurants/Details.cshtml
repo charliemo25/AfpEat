@@ -3,154 +3,153 @@
 @{
     ViewBag.Title = "Details";
 }
-<!-- DetailsRestaurants -->
-<section id="DetailsRestaurant" class="container mt-3">
-    <!-- Carousel -->
-    <div id="carouselDetails" class="carousel slide carousel-fade" data-ride="carousel">
-        <div class="carousel-inner">
-            @for (var i = 0; i < Model.Restaurant.Photos.Count(); i++)
-            {
+    <!-- DetailsRestaurants -->
+    <section id="DetailsRestaurant" class="container mt-3">
+        <!-- Carousel -->
+        <div id="carouselDetails" class="carousel slide carousel-fade" data-ride="carousel">
+            <div class="carousel-inner">
+                @for (var i = 0; i < Model.Restaurant.Photos.Count(); i++)
+                {
 
-                <div class="carousel-item @(i == 0 ? "active" : "") ">
-                    @*<img src="/Images/@Model.Restaurant.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400" height="400" alt="...">*@
-                </div>
-
-            }
-        </div>
-        <a class="carousel-control-prev" href="#carouselDetails" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Précedent</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselDetails" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Suivant</span>
-        </a>
-    </div>
-    <hr />
-    <!-- Details -->
-    <div class="row" id="Details">
-        <div class="col-12">
-            <h2>@Model.Restaurant.Nom</h2>
-            <p>@Model.Restaurant.Description)</p>
-        </div>
-    </div>
-    <!-- Commande -->
-    <div id="Commande" class="row">
-        <div class="col-12">
-            <!-- Categorie -->
-            <div class="card">
-                <!-- Nom de la categorie -->
-                <div class="card-header" id="accordionCategorie">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#CollapseMenu" aria-expanded="true" aria-controls="CollapseMenu">
-                            Menus
-                        </button>
-                    </h2>
-                </div>
-
-                <!-- Contenu -->
-                <div id="CollapseMenu" class="collapse show" aria-labelledby="idCategorieMenu" data-parent="#accordionCategorie">
-                    <div class="card-body">
-                        <!-- Afficher une liste des menus -->
-                        <ul class="list-group-flush">
-                            @foreach (var menu in Model.RestaurantMenus)
-                            {
-                                <li class="list-group-item">
-                                    <div class="imgMenu"><img src="/Images/@menu.Menu.Photo.Nom" width="75" height="75"  alt="" /></div>
-                                    <p> @menu.Menu.Nom @menu.Menu.Prix€</p>
-                                    <!-- Etend le menu -->
-                                    <button type="button" class="mb-3 btnPlusMenu btn btn-outline-success" data-toggle="collapse" href="#@menu.Menu.Nom.Replace(" ", "")" role="button" aria-expanded="false" aria-controls="@menu.Menu.Nom.Replace(" ", "")"><i class="fas fa-plus"></i></button>
-                                    <!-- Affichage des produits par categorie contenu dans le menu -->
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="collapse multi-collapse" id="@menu.Menu.Nom.Replace(" ", "")">
-                                                <div class="card card-body">
-                                                    <!-- Select par categorie de produit -->
-                                                    <form>
-                                                        <div class="form-row">
-                                                            @foreach (var categorie in menu.RestaurantProduits)
-                                                            {
-                                                                <div class="form-group col-12 col-sm-6">
-                                                                    <label for="@categorie.NomCategorie">@categorie.NomCategorie :</label>
-                                                                    <select class="form-control" id="@categorie.NomCategorie">
-                                                                        <option selected>@categorie.NomCategorie</option>
-                                                                        @foreach (var produit in categorie.Produits)
-                                                                        {
-                                                                            @:<option value="@produit.IdProduit">@produit.Nom</option>
-                                                                        }
-                                                                    </select>
-                                                                </div>
-                                                            }
-                                                            <input type="hidden" class="menu" value="@menu.Menu.IdMenu" />
-                                                            <div class="col-12">
-                                                                <button type="submit" class="btn btn-outline-success btn-lg btn-block">Ajouter au panier</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            }
-                        </ul>
+                    <div class="carousel-item @(i == 0 ? "active" : "") ">
+                        @*<img src="/Images/@Model.Restaurant.Photos.ElementAt(i).Nom" class="d-block img-fluid" width="400" height="400" alt="...">*@
                     </div>
-                </div>
+
+                }
             </div>
-
-            @foreach (var categorie in Model.RestaurantProduits)
-            {
-                string idCategorieProduit = "Categorie" + categorie.NomCategorie;
-                string idCollapseProduit = "CollapseProduit" + categorie.NomCategorie;
-
+            <a class="carousel-control-prev" href="#carouselDetails" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Précedent</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselDetails" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Suivant</span>
+            </a>
+        </div>
+        <hr />
+        <!-- Details -->
+        <div class="row" id="Details">
+            <div class="col-12">
+                <h2>@Model.Restaurant.Nom</h2>
+                <p>@Model.Restaurant.Description)</p>
+            </div>
+        </div>
+        <!-- Commande -->
+        <div id="Commande" class="row">
+            <div class="col-12">
                 <!-- Categorie -->
                 <div class="card">
                     <!-- Nom de la categorie -->
                     <div class="card-header" id="accordionCategorie">
                         <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
-                                @categorie.NomCategorie
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#CollapseMenu" aria-expanded="true" aria-controls="CollapseMenu">
+                                Menus
                             </button>
                         </h2>
                     </div>
+
                     <!-- Contenu -->
-                    <div id="@idCollapseProduit" class="collapse show" aria-labelledby="@idCategorieProduit" data-parent="#accordionCategorie">
+                    <div id="CollapseMenu" class="collapse show" aria-labelledby="idCategorieMenu" data-parent="#accordionCategorie">
                         <div class="card-body">
-                            <!-- Afficher une liste des produits -->
+                            <!-- Afficher une liste des menus -->
                             <ul class="list-group-flush">
-                                @foreach (var produit in categorie.Produits)
+                                @foreach (var menu in Model.RestaurantMenus)
                                 {
-                                    <li class="list-group-item itemProduit">
-                                        <div class="imgProduit"><img src="/Images/@produit.Photo.Nom" width="75" height="75" alt="" /></div>
-                                        <p><small>Quantité restante: @produit.Quantite</small></p>
-                                        <p>@produit.Nom @produit.Prix €</p>
-                                        <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
-                                        <button type="button" class="btnMoins btn btn-outline-danger" disabled><i class="fas fa-minus"></i></button>
-                                        <span class="quantite">
-                                            @if (Model.Panier.Where(p => p.GetIdProduit() == produit.IdProduit).Count() > 0)
-                                            {
-                                                <text>
-                                                @Model.Panier.Where(p => p.GetIdProduit() == produit.IdProduit).FirstOrDefault().Quantite
-                                                </text>
-                                            }
-                                            else
-                                            {
-                                                @:0
-                                            }
-                                        </span>
-                                        <input type="hidden" class="produit" value="@produit.IdProduit" />
+                                    <li class="list-group-item">
+                                        <div class="imgMenu"><img src="/Images/@menu.Menu.Photo.Nom" width="75" height="75" alt="" /></div>
+                                        <p> @menu.Menu.Nom @menu.Menu.Prix€</p>
+                                        <!-- Etend le menu -->
+                                        <button type="button" class="mb-3 btnPlusMenu btn btn-outline-success" data-toggle="collapse" href="#@menu.Menu.Nom.Replace(" ", "")" role="button" aria-expanded="false" aria-controls="@menu.Menu.Nom.Replace(" ", "")"><i class="fas fa-plus"></i></button>
+                                        <!-- Affichage des produits par categorie contenu dans le menu -->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="collapse multi-collapse" id="@menu.Menu.Nom.Replace(" ", "")">
+                                                    <div class="card card-body">
+                                                        <!-- Select par categorie de produit -->
+                                                        <form>
+                                                            <div class="form-row">
+                                                                @foreach (var categorie in menu.RestaurantProduits)
+                                                                {
+                                                                    <div class="form-group col-12 col-sm-6">
+                                                                        <label for="@categorie.NomCategorie">@categorie.NomCategorie :</label>
+                                                                        <select class="form-control" id="@categorie.NomCategorie">
+                                                                            <option selected>@categorie.NomCategorie</option>
+                                                                            @foreach (var produit in categorie.Produits)
+                                                                            {
+                                                                                @:<option value="@produit.IdProduit">@produit.Nom</option>
+                                                                            }
+                                                                        </select>
+                                                                    </div>
+                                                                }
+                                                                <input type="hidden" class="menu" value="@menu.Menu.IdMenu" />
+                                                                <div class="col-12">
+                                                                    <button type="submit" class="btn btn-outline-success btn-lg btn-block">Ajouter au panier</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                 }
                             </ul>
-
                         </div>
                     </div>
                 </div>
-            }
-        </div>
-    </div>
-</section>
 
+                @foreach (var categorie in Model.RestaurantProduits)
+                {
+                    string idCategorieProduit = "Categorie" + categorie.NomCategorie;
+                    string idCollapseProduit = "CollapseProduit" + categorie.NomCategorie;
+
+                    <!-- Categorie -->
+                    <div class="card">
+                        <!-- Nom de la categorie -->
+                        <div class="card-header" id="accordionCategorie">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@idCollapseProduit" aria-expanded="true" aria-controls="@idCollapseProduit">
+                                    @categorie.NomCategorie
+                                </button>
+                            </h2>
+                        </div>
+                        <!-- Contenu -->
+                        <div id="@idCollapseProduit" class="collapse show" aria-labelledby="@idCategorieProduit" data-parent="#accordionCategorie">
+                            <div class="card-body">
+                                <!-- Afficher une liste des produits -->
+                                <ul class="list-group-flush">
+                                    @foreach (var produit in categorie.Produits)
+                                    {
+                                        <li class="list-group-item itemProduit">
+                                            <div class="imgProduit"><img src="/Images/@produit.Photo.Nom" width="75" height="75" alt="" /></div>
+                                            <p><small>Quantité restante: @produit.Quantite</small></p>
+                                            <p>@produit.Nom @produit.Prix €</p>
+                                            <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                            <button type="button" class="btnMoins btn btn-outline-danger" disabled><i class="fas fa-minus"></i></button>
+                                            <span class="quantite">
+                                                @if (Model.Panier.Where(p => p.GetIdProduit() == produit.IdProduit).Count() > 0)
+                                                {
+                                                    <text>
+                                                        @Model.Panier.Where(p => p.GetIdProduit() == produit.IdProduit).FirstOrDefault().Quantite
+                                                    </text>
+                                                }
+                                                else
+                                                {
+                                                    @:0
+                                                }
+                                            </span>
+                                            <input type="hidden" class="produit" value="@produit.IdProduit" />
+                                        </li>
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
 @section Scripts{
     <script type="text/javascript">
 
@@ -162,7 +161,7 @@
 
                 if (quantite > 0) {
                     $(v).find('.btnMoins').prop('disabled', false);
-                } 
+                }
             });
 
             //Ajout d'un menu au panier

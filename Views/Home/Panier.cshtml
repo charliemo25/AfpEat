@@ -67,9 +67,18 @@
                 </div>
             }
         }
-        <div class="col-12 m-2">
-            <button id="btnCommande" class="btn btn-outline-danger">Passer la commande</button>
-        </div>
+    <div class="col-12 m-2">
+        @if (Model != null && Model.Count() > 0)
+        {
+            <button id="btnCommande" class="btn btn-success">Passer la commande</button>
+            <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-danger">Retour au restaurant</a>
+        }
+        else
+        {
+            <p>Votre panier est vide.</p>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Revenir à l'accueil</a>
+        }
+    </div>
     </div>
 </section>
 

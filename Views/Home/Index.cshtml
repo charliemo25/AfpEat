@@ -40,13 +40,13 @@
                     @foreach (var restaurant in restaurants)
                     {
                         <text>
-                            <div class="card border-0">
+                            <div class="card border-0 bg-transparent">
                                 <div class="row no-gutters">
                                     <div class="col-auto">
                                         <!--<img src="//placehold.it/200" class="img-fluid" alt="">-->
                                         <img src="/Images/@restaurant.Photos.First().Nom" alt="" />
                                     </div>
-                                    <div class="col mx-2">
+                                    <div class="col mx-2 bg-white">
                                         <div class="card-block p-2">
                                             <h4 class="card-title text-left">@restaurant.Nom</h4>
                                             <p class="card-text">@restaurant.TypeCuisine.Nom</p>

@@ -90,7 +90,7 @@ namespace AfpEat.Controllers
                 listRestaurantMenus.Add(restaurantMenus);
             }
 
-            PanierModel panier = (PanierModel)HttpContext.Application[Session.SessionID] ?? new AfpEat.Models.PanierModel();
+            PanierModel panier = (PanierModel)HttpContext.Application[Session.SessionID] ?? new PanierModel();
 
             //Les données à envoyer a la vue 
             RestaurantsDetailsModel restaurantsDetailsModel = new RestaurantsDetailsModel()

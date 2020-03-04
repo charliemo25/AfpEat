@@ -63,7 +63,7 @@
                     </text>
                 }
             <a href="@Url.Action("Panier", "Home")" class="text-reset mr-3">
-                <i class="fas  fa-shopping-cart"></i> Votre Total: (@panier.Quantite)  <span id="PanierTotal">@montant</span>
+                <i class="fas  fa-shopping-cart"></i> Votre Total: @*(@panier.Quantite)*@  <span id="PanierTotal">@montant</span>
             </a>
             </div>
         </div>
@@ -90,18 +90,17 @@
 <script type="text/javascript">
 
     //Paramètres par défaut de bootstrap-notify
-    $.notifyDefaults(
-        {
-            
-        },
-        {
-            placement:
-            {
-	    	    from: "bottom",
-		        align: "left"
-	        }
-        }
-    );
+    $.notifyDefaults({
+        //newest_on_top: true,
+	    placement: {
+            from: "bottom",
+            align:"right"
+	    },
+	    animate:{
+		    enter: "animated fadeInUp",
+		    exit: "animated fadeOutDown"
+	    }
+    });
 
     //permet de définir l'alert
     function notify(result) {

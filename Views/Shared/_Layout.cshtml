@@ -1,6 +1,9 @@
 ﻿@{
     AfpEat.Models.Utilisateur user = (AfpEat.Models.Utilisateur)Session["utilisateur"];
     AfpEat.Models.PanierModel panier = (AfpEat.Models.PanierModel)HttpContext.Current.Application[Session.SessionID] ?? new AfpEat.Models.PanierModel();
+
+    string montant = String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+
 }
 
 
@@ -60,7 +63,7 @@
                     </text>
                 }
                 <a href="@Url.Action("Panier", "Home")" class="text-reset mr-3">
-                    <i class="fas  fa-shopping-cart"></i> Votre Total: <span id="PanierTotal">@panier.Montant€</span>
+                    <i class="fas  fa-shopping-cart"></i> Votre Total: <span id="PanierTotal">@montant</span>
                 </a>
             </div>
         </div>
@@ -132,7 +135,7 @@
                     success: function (result)
                     {
                         notify(result);
-                        $('#PanierTotal').text(parseFloat(result.montant).toFixed(2) + "€");
+                        $('#PanierTotal').text(result.montant);
                     }
                 });
         }
@@ -153,7 +156,7 @@
                     success: function (result)
                     {
                         notify(result);
-                        $('#PanierTotal').text(parseFloat(result.montant).toFixed(2) + "€");
+                        $('#PanierTotal').text(result.montant);
                     }
             });
         }
@@ -174,7 +177,7 @@
                     success: function (result)
                     {
                         notify(result);
-                        $('#PanierTotal').text(parseFloat(result.montant).toFixed(2) + "€");
+                        $('#PanierTotal').text(result.montant);
                     }
                 });
     }
@@ -195,7 +198,7 @@
                     success: function (result)
                     {
                         notify(result);
-                        $('#PanierTotal').text(parseFloat(result.montant).toFixed(2) + "€");
+                        $('#PanierTotal').text(result.montant);
                     }
             });
     }

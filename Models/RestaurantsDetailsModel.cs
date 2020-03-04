@@ -10,6 +10,7 @@ namespace AfpEat.Models
         public Restaurant Restaurant { get; set; }
         public List<RestaurantProduits> RestaurantProduits { get; set; }
         public List<RestaurantMenus> RestaurantMenus { get; set; }
+        public PanierModel Panier { get; set; }
         public RestaurantsDetailsModel()
         {
             RestaurantProduits = new List<RestaurantProduits>();

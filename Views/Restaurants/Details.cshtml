@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Details";
-    AfpEat.Models.PanierModel panier = (AfpEat.Models.PanierModel)HttpContext.Current.Application[Session.SessionID] ?? new AfpEat.Models.PanierModel();
 }
 <!-- DetailsRestaurants -->
 <section id="DetailsRestaurant" class="container mt-3">
@@ -120,11 +119,22 @@
                             <ul class="list-group-flush">
                                 @foreach (var produit in categorie.Produits)
                                 {
-                                    <li class="list-group-item">
+                                    <li class="list-group-item itemProduit">
                                         <p>@produit.Quantite @produit.Nom @produit.Prix€</p>
                                         <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
-                                        <button type="button" class="btnMoins btn btn-outline-danger" disabled><i class="fas fa-minus"></i></button>
-                                        <span class="quantite">0</span>
+                                        <button type="button" class="btnMoins btn btn-outline-danger"><i class="fas fa-minus"></i></button>
+                                        <span class="quantite">
+                                            @if (Model.Panier.Where(p => p.GetIdProduit() == produit.IdProduit).Count() > 0)
+                                            {
+                                                <text>
+                                                @Model.Panier.Where(p => p.GetIdProduit() == produit.IdProduit).FirstOrDefault().Quantite
+                                                </text>
+                                            }
+                                            else
+                                            {
+                                                @:0
+                                            }
+                                        </span>
                                         <input type="hidden" class="produit" value="@produit.IdProduit" />
                                     </li>
                                 }
@@ -142,6 +152,13 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            //Verifier l'etat des bouton moins de tout les produit
+            //each($('.itemProduit'), function (k, v) {
+
+            //    console.log($(v).find('.btnMoins'));
+            //    console.log($(v).find('.'));
+            //});
 
             //Ajout d'un menu au panier
             $("form").submit(function (e) {

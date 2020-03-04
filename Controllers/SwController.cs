@@ -1,6 +1,7 @@
 ﻿using AfpEat.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -135,7 +136,10 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut=1, message="Le menu a bien été ajouté.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
+
+            string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+
+            return Json(new { statut=1, message="Le menu a bien été ajouté.", montant }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -211,7 +215,10 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut=1, message="Le menu à bien été supprimé.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
+
+            string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+
+            return Json(new { statut=1, message="Le menu à bien été supprimé.", montant }, JsonRequestBehavior.AllowGet);
 
 
         }
@@ -259,7 +266,10 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut = 1, message = "Le produit a bien été ajouté.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
+
+            string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+
+            return Json(new { statut = 1, message = "Le produit a bien été ajouté.", montant }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -308,7 +318,9 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(new { statut = 1, message = "Le produit a bien été supprimé.", montant = panier.Montant }, JsonRequestBehavior.AllowGet);
+            string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+
+            return Json(new { statut = 1, message = "Le produit a bien été supprimé.", montant}, JsonRequestBehavior.AllowGet);
 
         }
 

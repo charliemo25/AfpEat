@@ -129,7 +129,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(panier.Count, JsonRequestBehavior.AllowGet);
+            return Json(new { statut=1, message="Le menu a bien été ajouté." }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -205,7 +205,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(panier.Count, JsonRequestBehavior.AllowGet);
+            return Json(new { statut=1, message="Le menu à bien été supprimé." }, JsonRequestBehavior.AllowGet);
 
 
         }
@@ -302,7 +302,7 @@ namespace AfpEat.Controllers
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
-            return Json(panier.Count, JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message = "Le produit a bien été supprimé." }, JsonRequestBehavior.AllowGet);
 
         }
 

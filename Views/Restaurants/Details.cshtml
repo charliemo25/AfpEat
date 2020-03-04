@@ -140,106 +140,6 @@
 @section Scripts{
     <script type="text/javascript">
 
-        //Paramètres par défaut de bootstrap-notify
-        $.notifyDefaults(
-        {
-            
-        },
-        {
-            placement:
-            {
-	    	    from: "bottom",
-		        align: "left"
-	        }
-        }
-        );
-
-        //permet de définir l'alert
-        function notify(result) {
-
-            let notify = $.notify(
-                {
-                        message: result.message
-                        },
-                        {
-	                        type: 'success'
-                });
-            return notify;
-        }
-
-        function AddProduit(idProduit) {
-
-            let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
-
-            $.ajax({
-                    url: "@Url.Action("AddProduit", "Sw")",
-                    type: "Post",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "JSON",
-                    data: JSON.stringify(data),
-                    error: function (result) {
-                        console.log('erreur')
-                    },
-                    success: function (result)
-                    {
-                        notify(result);
-                    }
-                });
-        }
-
-        function RemoveProduit(idProduit) {
-
-            let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
-
-            $.ajax({
-                    url: "@Url.Action("RemoveProduit", "Sw")",
-                    type: "Post",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "JSON",
-                    data: JSON.stringify(data),
-                    error: function (result) {
-                        console.log('erreur')
-                    },
-                    success: function (result)
-                    {
-                        //Remplacer par une alert
-                        $.notify(
-                        {
-	                        message: 'Le produit a bien été supprimé du panier'
-                        },
-                        {
-	                        type: 'danger'
-                        });
-                    }
-                });
-        }
-
-        function AddMenu(idMenu, arrayIdProduit) {
-            let data = { 'idRestaurant': @Model.Restaurant.IdRestaurant ,'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
-            console.log(data);
-
-            $.ajax({
-                    url: "@Url.Action("AddMenu", "Sw")",
-                    type: "Post",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "JSON",
-                    data: JSON.stringify(data),
-                    error: function (result) {
-                        console.log('erreur')
-                    },
-                    success: function (result)
-                    {
-                        $.notify(
-                        {
-	                        message: 'Le menu a bien été ajouté au panier.'
-                        },
-                        {
-	                        type: 'success'
-                        });
-                    }
-            });
-        }
-
         $(document).ready(function () {
 
             //Ajout d'un menu au panier
@@ -247,6 +147,10 @@
 
                 //Empeche de submit le form
                 e.preventDefault();
+
+                let idMenu = $(this).find('.menu').val();
+                let idRestaurant = @Model.Restaurant.IdRestaurant;
+
                 //Initialisation de la liste des idProduit
                 let idProduits = [];
 
@@ -254,8 +158,7 @@
                     idProduits.push($(v).val());
                 });
 
-                let idMenu = $(this).find('.menu').val();
-                AddMenu(idMenu, idProduits);
+                AddMenu(idMenu, idProduits, idRestaurant);
             });
 
             //Ajout d'un produit au panier

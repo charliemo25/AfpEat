@@ -83,10 +83,120 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-    @section Scripts{
-        <script type="text/javascript">
+<script type="text/javascript">
 
-        </script>
+    //Paramètres par défaut de bootstrap-notify
+    $.notifyDefaults(
+        {
+            
+        },
+        {
+            placement:
+            {
+	    	    from: "bottom",
+		        align: "left"
+	        }
+        }
+    );
+
+    //permet de définir l'alert
+    function notify(result) {
+
+        let type = result.statut ? 'success' : 'danger';
+
+        let notify = $.notify(
+            {
+                message: result.message
+            },
+            {
+	            type: type
+            }
+        );
+        return notify;
     }
+
+    function AddProduit(idProduit) {
+
+            let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
+
+            $.ajax({
+                    url: "@Url.Action("AddProduit", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        notify(result);
+                    }
+                });
+        }
+
+        function AddMenu(idMenu, arrayIdProduit, idRestaurant) {
+            let data = { 'idRestaurant': idRestaurant, 'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
+            console.log(data);
+
+            $.ajax({
+                    url: "@Url.Action("AddMenu", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        notify(result);
+                    }
+            });
+        }
+
+    function RemoveProduit(idProduit) {
+
+            let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
+
+            $.ajax({
+                    url: "@Url.Action("RemoveProduit", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur')
+                    },
+                    success: function (result)
+                    {
+                        notify(result);
+                    }
+                });
+    }
+
+    function RemoveMenu(idMenu, arrayIdProduit) {
+            let data = { 'idMenu': idMenu, 'idProduits': arrayIdProduit, 'idSession': '@Session.SessionID' };
+            console.log(data);
+
+            $.ajax({
+                    url: "@Url.Action("RemoveMenu", "Sw")",
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    error: function (result) {
+                        console.log('erreur');
+                    },
+                    success: function (result)
+                    {
+                        notify(result);
+                    }
+            });
+    }
+
+</script>
+}
+
 </body>
 </html>

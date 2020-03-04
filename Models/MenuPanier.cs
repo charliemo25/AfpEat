@@ -20,9 +20,15 @@ namespace AfpEat.Models
             return IdMenu;
         }
 
-        public override List<ProduitPanier> GetProduitPaniers()
+        public override List<ProduitPanier> GetProduitPaniers(List<int> idProduits)
         {
-            return this.Produits;
+            List<ProduitPanier> produitPaniers = new List<ProduitPanier>();
+            foreach(int id in idProduits)
+            {
+                produitPaniers.Add(Produits.Where(p => p.IdProduit == id).FirstOrDefault());
+            }
+
+            return produitPaniers;
         }
 
         public bool Equals(MenuPanier other)

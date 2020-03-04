@@ -59,7 +59,6 @@ namespace AfpEat.Controllers
 
             //Récupere les produits sélectionnés dans ce menu
             List<ProduitPanier> produitPaniers = new List<ProduitPanier>();
-
             foreach (var idProduit in idProduits)
             {
                 Produit monProduit = db.Produits.Find(idProduit);
@@ -125,6 +124,8 @@ namespace AfpEat.Controllers
                 panier.Add(menuPanier);
             }
 
+            panier.SetPanier();
+
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
 
@@ -132,14 +133,13 @@ namespace AfpEat.Controllers
 
         }
 
-        public JsonResult RemoveMenu(int idMenu, int idRestaurant, List<int> idProduits, string idSession)
+        public JsonResult RemoveMenu(int idMenu, List<int> idProduits, string idSession)
         {
             //Récupère l'utilisateur à partir de son id de session
             SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
 
             //On récupère les produits dans le panier
             PanierModel panier = (PanierModel)HttpContext.Application[idSession] ?? new PanierModel();
-            panier.IdRestaurant = idRestaurant;
 
             if (sessionUtilisateur == null)
             {
@@ -183,39 +183,24 @@ namespace AfpEat.Controllers
             //Initialise un ItemPanier qui contient tout les menuPaniers
             List<ItemPanier> itemPaniers = panier.Where(p => p is MenuPanier).Count() > 0 ? panier.Where(p => p is MenuPanier).ToList() : null;
 
-            //si itemPaniers est nul et si elle contient plus d'un MenuPanier egal à celui qu'on rajoute 
+            //si itemPaniers est nul et si elle contient plus d'un MenuPanier egal à celui qu'on supprime 
             if (itemPaniers != null && itemPaniers.Where(i => i is MenuPanier iM && iM.Equals(menuPanier)).Count() > 0)
             {
-
-                //Permet de sortir d'une boucle pour ajouter un menu
-                bool addMenu = false;
-
                 //Parcours des menuPaniers
                 for (int i = 0; i < itemPaniers.Count(); i++)
                 {
                     //Compare les produits dans 2 menuPanier
                     if (itemPaniers[i] is MenuPanier menuPanier1 && menuPanier1.Equals(menuPanier))
                     {
-                        menuPanier1.Quantite++;
-                    }
-                    else
-                    {
-                        addMenu = true;
+                        menuPanier1.Quantite--;
+                        if(menuPanier1.Quantite <= 0)
+                        {
+                            panier.Remove(menuPanier1);
+                        }
                     }
                 }
-
-                //Permet d'ajouter le menuPanier si il n'est pas contenu dans le panier avec les mêmes produits
-                if (addMenu && itemPaniers.Where(m => m is MenuPanier menu1 && menu1.Equals(menuPanier)).Count() == 0)
-                {
-                    panier.Add(menuPanier);
-                }
-
             }
-            else
-            {
-                //Si le menu panier n'existe pas
-                panier.Add(menuPanier);
-            }
+            panier.SetPanier();
 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
@@ -234,7 +219,7 @@ namespace AfpEat.Controllers
 
             if (sessionUtilisateur == null)
             {
-                return Json(0, JsonRequestBehavior.AllowGet);
+                return Json(new { statut = 0, message = "Erreur." }, JsonRequestBehavior.AllowGet);
             }
 
             //Verifier si le produit existe deja dans le panier
@@ -263,8 +248,7 @@ namespace AfpEat.Controllers
                 panier.Add(produitPanier);
             }
 
-            panier.GetQuantite();
-            panier.GetMontant();
+            panier.SetPanier();
 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
@@ -297,7 +281,7 @@ namespace AfpEat.Controllers
                 Description = produit.Description,
                 Prix = produit.Prix,
                 Quantite = 1,
-                Photo = "Boulangerie.jpg"
+                Photo = produit.Photo.Nom
             };
 
             //Verifier si le produit existe deja dans le panier
@@ -313,8 +297,7 @@ namespace AfpEat.Controllers
 
             }
 
-            panier.GetQuantite();
-            panier.GetMontant();
+            panier.SetPanier();
 
             //Mise a jour de l'application
             HttpContext.Application[idSession] = panier;
@@ -388,7 +371,7 @@ namespace AfpEat.Controllers
                 }
             }
 
-            panier.GetMontant();
+            panier.SetPanier();
 
             if (panier.Montant > utilisateur.Solde)
             {

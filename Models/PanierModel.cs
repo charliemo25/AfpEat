@@ -8,8 +8,8 @@ namespace AfpEat.Models
     public class PanierModel : List<ItemPanier>
     {
         public int IdRestaurant { get; set; }
-        public int Quantite { get; set; }
-        public decimal Montant { get; set; }
+        public int Quantite { get; private set; }
+        public decimal Montant { get; private set; }
 
         private AfpEatEntities db = new AfpEatEntities();
 
@@ -158,14 +158,9 @@ namespace AfpEat.Models
             return isRemoved;
         }
 
-    public void GetQuantite()
+    public void SetPanier()
     {
         Quantite = 0;
-        parcourir();
-    }
-
-    public void GetMontant()
-    {
         Montant = 0;
         parcourir();
     }

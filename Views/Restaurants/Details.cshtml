@@ -122,7 +122,7 @@
                                     <li class="list-group-item itemProduit">
                                         <p>@produit.Quantite @produit.Nom @produit.Prix€</p>
                                         <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
-                                        <button type="button" class="btnMoins btn btn-outline-danger"><i class="fas fa-minus"></i></button>
+                                        <button type="button" class="btnMoins btn btn-outline-danger" disabled><i class="fas fa-minus"></i></button>
                                         <span class="quantite">
                                             @if (Model.Panier.Where(p => p.GetIdProduit() == produit.IdProduit).Count() > 0)
                                             {
@@ -154,11 +154,13 @@
         $(document).ready(function () {
 
             //Verifier l'etat des bouton moins de tout les produit
-            //each($('.itemProduit'), function (k, v) {
+            $.each($('.itemProduit'), function (k, v) {
+                let quantite = $(v).find('.quantite').text().replace(/ /g, "");
 
-            //    console.log($(v).find('.btnMoins'));
-            //    console.log($(v).find('.'));
-            //});
+                if (quantite > 0) {
+                    $(v).find('.btnMoins').prop('disabled', false);
+                } 
+            });
 
             //Ajout d'un menu au panier
             $("form").submit(function (e) {

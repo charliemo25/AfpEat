@@ -62,9 +62,9 @@
                         </a>
                     </text>
                 }
-                <a href="@Url.Action("Panier", "Home")" class="text-reset mr-3">
-                    <i class="fas  fa-shopping-cart"></i> Votre Total: <span id="PanierTotal">@montant</span>
-                </a>
+            <a href="@Url.Action("Panier", "Home")" class="text-reset mr-3">
+                <i class="fas  fa-shopping-cart"></i> Votre Total: (@panier.Quantite)  <span id="PanierTotal">@montant</span>
+            </a>
             </div>
         </div>
     </nav>

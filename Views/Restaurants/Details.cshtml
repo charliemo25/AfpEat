@@ -56,7 +56,8 @@
                             @foreach (var menu in Model.RestaurantMenus)
                             {
                                 <li class="list-group-item">
-                                    <p>@menu.Menu.Nom @menu.Menu.Prix€</p>
+                                    <div class="imgMenu"><img src="/Images/@menu.Menu.Photo.Nom" width="75" height="75"  alt="" /></div>
+                                    <p> @menu.Menu.Nom @menu.Menu.Prix€</p>
                                     <!-- Etend le menu -->
                                     <button type="button" class="mb-3 btnPlusMenu btn btn-outline-success" data-toggle="collapse" href="#@menu.Menu.Nom.Replace(" ", "")" role="button" aria-expanded="false" aria-controls="@menu.Menu.Nom.Replace(" ", "")"><i class="fas fa-plus"></i></button>
                                     <!-- Affichage des produits par categorie contenu dans le menu -->
@@ -120,7 +121,8 @@
                                 @foreach (var produit in categorie.Produits)
                                 {
                                     <li class="list-group-item itemProduit">
-                                        <p>@produit.Quantite @produit.Nom @produit.Prix€</p>
+                                        <div class="imgProduit"><img src="/Images/@produit.Photo.Nom" width="75" height="75" alt="" /></div>
+                                        <p>@produit.Quantite @produit.Nom @produit.Prix €</p>
                                         <button type="button" class="btnPlus btn btn-outline-success"><i class="fas fa-plus"></i></button>
                                         <button type="button" class="btnMoins btn btn-outline-danger" disabled><i class="fas fa-minus"></i></button>
                                         <span class="quantite">

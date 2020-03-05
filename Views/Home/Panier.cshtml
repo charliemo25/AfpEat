@@ -6,123 +6,95 @@
 
 }
 <section id="Panier" class="container mt-5">
-    <div class="row row-cols-1">
-        @if (Model != null && Model.Where(m => m.GetIdMenu() > 0).Count() > 0)
-        {
-            foreach (AfpEat.Models.MenuPanier menuPanier in Model.Where(m => m.GetIdMenu() > 0))
-            {
-                <div class="card border-0 bg-transparent mb-3">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="/Images/@menuPanier.Photo" width="150" height="150" class="card-img" alt="...">
-                        </div>
-                        <div class="col mx-2 bg-white">
-                            <div class="card-block p-2">
-                                <h4 class="card-title text-left">@menuPanier.Nom</h4>
-                                <p class="card-text produitMenu">
-                                    <ul class="list-group list-group-flush ">
-                                        @foreach (AfpEat.Models.ProduitPanier produit in menuPanier.Produits)
-                                        {
-                                            <li class="list-group-item" data-idProduit="@produit.IdProduit">@produit.Nom</li>
-                                        }
-                                    </ul>
-                                </p>
-                                <p class="card-text">
-                                    <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger">
-                                        <span class="badge badge-dark">@menuPanier.Quantite</span> Supprimer un menu
-                                    </button>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-        @if (Model != null && Model.Where(m => m.GetIdProduit() > 0).Count() > 0)
-        {
-            foreach (AfpEat.Models.ProduitPanier produit in Model.Where(p => p.GetIdProduit() > 0 && p.GetIdMenu() == 0))
-            {
-                <div class="card border-0 bg-transparent mb-3">
-                    <div class="row no-gutters">
-                        <div class="col-auto">
-                            <img src="/Images/@produit.Photo" width="150" height="150" class="card-img" alt="...">
-                        </div>
-                        <div class="col mx-2 bg-white">
-                            <div class="card-block p-2">
-                                <h4 class="card-title text-left">@produit.Nom</h4>
-                                <p class="card-text">
-                                    <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger">
-                                        <span class="badge badge-dark">@produit.Quantite</span> Supprimer un produit
-                                    </button>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-    </div>
     <div class="row">
-        <div class="col-12 m-2">
-            @if (Model != null && Model.Count() > 0)
-            {
-                <button id="btnCommande" class="btn btn-success">Passer la commande</button>
-                <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-danger">Retour au restaurant</a>
-            }
-            else
-            {
-                <p>Votre panier est vide.</p>
-                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Revenir à l'accueil</a>
-            }
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Produit</th>
+                            <th scope="col" class="text-center">Quantité</th>
+                            <th scope="col" class="text-left">Prix</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Where(m => m.GetIdMenu() > 0).Count() > 0)
+                        {
+                            foreach (AfpEat.Models.MenuPanier menuPanier in Model.Where(m => m.GetIdMenu() > 0))
+                            {
+                                <tr>
+                                    <td><img src="/Images/@menuPanier.Photo" width="50" height="50" /> </td>
+                                    <td class="produitMenu">
+                                        @menuPanier.Nom
+                                        <ul class="list-group">
+                                            @foreach (AfpEat.Models.ProduitPanier produit in menuPanier.Produits)
+                                            {
+                                                <li class="list-group-item" data-idProduit="@produit.IdProduit">@produit.Nom</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                    <td class="text-center">@menuPanier.Quantite</td>
+                                    <td class="text-left">
+                                        @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (menuPanier.Prix * menuPanier.Quantite))
+                                    </td>
+                                    <td class="text-right"><button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-trash-alt"></i> </button> </td>
+                                </tr>
+                            }
+                        }
+                        @if (Model != null && Model.Where(m => m.GetIdProduit() > 0).Count() > 0)
+                        {
+                            foreach (AfpEat.Models.ProduitPanier produit in Model.Where(p => p.GetIdProduit() > 0 && p.GetIdMenu() == 0))
+                            {
+                                <tr>
+                                    <td><img src="/Images/@produit.Photo" width="50" height="50" /> </td>
+                                    <td>@produit.Nom</td>
+                                    <td class="text-center">@produit.Quantite</td>
+                                    <td class="text-left">
+                                        @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (produit.Prix * produit.Quantite))
+                                    </td>
+                                    <td class="text-right"><button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-trash-alt"></i> </button> </td>
+                                </tr>
+                            }
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right"><strong>Total</strong></td>
+                            <td class="text-right"><strong>@String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", Model.Montant)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-block btn-lg btn-outline-dark">Retour à l'accueil</a>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <button id="btnCommande" class="btn btn-lg btn-block btn-outline-success text-uppercase">Passer la commande</button>
+                </div>
+            </div>
         </div>
     </div>
+    @*<div class="row">
+            <div class="col-12 m-2">
+                @if (Model != null && Model.Count() > 0)
+                {
+                    <button id="btnCommande" class="btn btn-success">Passer la commande</button>
+                    <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-danger">Retour au restaurant</a>
+                }
+                else
+                {
+                    <p>Votre panier est vide.</p>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Revenir à l'accueil</a>
+                }
+            </div>
+        </div>*@
 </section>
-
-<div class="container mb-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col"> </th>
-                                <th scope="col">Produit</th>
-                                <th scope="col" class="text-center">Quantité</th>
-                                <th scope="col" class="text-right">Prix</th>
-                                <th> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                                <td>Un truc</td>
-                                <td class="text-center">10</td>
-                                <td class="text-right">70,00 €</td>
-                                <td class="text-right"><button class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> </button> </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td class="text-right"><strong>Total</strong></td>
-                                <td class="text-right"><strong>346,90 €</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col mb-2">
-                <div class="row">
-                    <div class="col-sm-12  col-md-6">
-                        <a href="@Url.Action("Index", "Home")" class="btn btn-block btn-outline-dark">Retour à l'accueil</a>
-                    </div>
-                    <div class="col-sm-12 col-md-6 text-right">
-                        <button id="btnCommande" class="btn btn-lg btn-block btn-success text-uppercase">Passer la commande</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 @section Scripts{
     <script type="text/javascript">

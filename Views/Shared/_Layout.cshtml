@@ -129,6 +129,7 @@
                     success: function (result)
                     {
                         notify(result);
+                        console.log(result.montant)
                         $('#PanierTotal').text(result.montant);
                     }
                 });

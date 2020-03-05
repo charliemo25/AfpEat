@@ -6,7 +6,7 @@
   font-family: "text";
   src: url("Fonts/Spartan-Regular.ttf");
 }
-body {
+.bg-home {
   /* Location of the image */
   background-image: url(/Images/accueil.jpg);
   /* Background image is centered vertically and horizontally at all times */
@@ -22,6 +22,9 @@ body {
   /* Set a background color that will be displayed
    while the background image is loading */
   background-color: #464646;
+}
+
+body {
   font-family: text;
 }
 body h1, body h2, body h3, body h4, body h5, body h6 {

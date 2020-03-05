@@ -2,6 +2,8 @@
     AfpEat.Models.Utilisateur user = (AfpEat.Models.Utilisateur)Session["utilisateur"];
     AfpEat.Models.PanierModel panier = (AfpEat.Models.PanierModel)HttpContext.Current.Application[Session.SessionID] ?? new AfpEat.Models.PanierModel();
 
+    var pageName = ViewContext.RouteData.Values["controller"].ToString();
+
     string montant = String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
 
 }
@@ -17,12 +19,17 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100
+      @if (pageName == "Home") 
+      { 
+          @:bg-home 
+      }
+">
     <!-- Navbar -->
     <nav class="navbar navbar-dark bg-custom-afpa navbar-expand-sm pl-5 pr-5 mb-5 fixed-top">
         <a class="navbar-brand" href="@Url.Action("Index", "Home")">
             <i class="fas fa-utensils"></i>
-            AfpEat
+            AfpEat @pageName
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-3" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

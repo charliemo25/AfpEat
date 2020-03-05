@@ -58,24 +58,52 @@
                                 </tr>
                             }
                         }
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-right"><strong>Total</strong></td>
-                            <td class="text-right"><strong>@String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", Model.Montant)</strong></td>
-                        </tr>
+                    <tr>
+                        <td></td>
+                        <td class="text-right"><strong>Total</strong></td>
+                        @if (Model != null)
+                        {
+                            <td class="text-center">
+                                @Model.Quantite
+                            </td>
+                            <td class="text-left">
+                                <strong>
+                                    @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", Model.Montant)
+                                </strong>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="text-center">
+                                0
+                            </td>
+                            <td class="text-right">
+                                <strong>
+                                    0,00 €
+                                </strong>
+                            </td>
+                        }
+                        <td></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-block btn-lg btn-outline-dark">Retour à l'accueil</a>
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-block btn-lg btn-outline-dark">Retour au restaurant</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-block btn-lg btn-outline-dark">Retour à l'accueil</a>
+                    }
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button id="btnCommande" class="btn btn-lg btn-block btn-outline-success text-uppercase">Passer la commande</button>
+                    <button id="btnCommande" class="btn btn-lg btn-block btn-outline-success">Passer la commande</button>
                 </div>
             </div>
         </div>
@@ -132,11 +160,10 @@ $(document).ready(function () {
         $(".btnSupprMenu").click(function () {
             let idMenu = $(this).attr('data-idMenu');
             let idProduits = [];
-
-            $.each($(this).parent().prevUntil(1).find('li'), function (k, v) {
+            console.log($(this).parent().prevAll('.produitMenu').find('ul li'))
+            $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
                 idProduits.push($(v).data('idproduit'));
             })
-
             RemoveMenu(idMenu, idProduits);
 
         });

@@ -35,7 +35,7 @@
                                             }
                                         </ul>
                                     </td>
-                                    <td class="text-center">@menuPanier.Quantite</td>
+                                    <td class="text-center qte">@menuPanier.Quantite</td>
                                     <td class="text-left">
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (menuPanier.Prix * menuPanier.Quantite))
                                     </td>
@@ -50,11 +50,11 @@
                                 <tr>
                                     <td><img src="/Images/@produit.Photo" width="50" height="50" /> </td>
                                     <td>@produit.Nom</td>
-                                    <td class="text-center">@produit.Quantite</td>
+                                    <td class="text-center qte">@produit.Quantite</td>
                                     <td class="text-left">
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (produit.Prix * produit.Quantite))
                                     </td>
-                                    <td class="text-right"><button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-trash-alt"></i> </button> </td>
+                                    <td class="text-right"><button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-minus"></i> </button> </td>
                                 </tr>
                             }
                         }
@@ -160,19 +160,28 @@ $(document).ready(function () {
         $(".btnSupprMenu").click(function () {
             let idMenu = $(this).attr('data-idMenu');
             let idProduits = [];
-            console.log($(this).parent().prevAll('.produitMenu').find('ul li'))
             $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
                 idProduits.push($(v).data('idproduit'));
             })
             RemoveMenu(idMenu, idProduits);
-
         });
 
         //Suppression d'un produit
         $(".btnSupprProduit").click(function () {
             let produit = $(this).data('idproduit');
+            let quantite = $(this).parent().prevAll('.qte').text();
+
+            if (quantite <= 1) {
+                $(this).parent().parent().html('');
+            }
+            else {
+                quantite--;
+                $(this).parent().prevAll('.qte').text(quantite);
+            }
             RemoveProduit(produit);
         });
+
+    
 
         $("#btnCommande").click(function () {
 

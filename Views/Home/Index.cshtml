@@ -22,7 +22,7 @@
                 {
                     <text>
                         <div class="col mb-4">
-                            <div class="card border border-0 shadow-lg fadeIn animated ">
+                            <div class="card border border-0 shadow-lg fadeIn animated contain-hover">
                                 <img src="/Images/@typeCuisine.Photo.Nom" height="200" class="card-img-top" alt="...">
                                 <div class="carousel-caption">
                                     <a href="#" class="btn btn-lg btn-success fadeIn animated delay-1s">@typeCuisine.Nom</a>
@@ -40,10 +40,9 @@
                     @foreach (var restaurant in restaurants)
                     {
                         <text>
-                            <div class="card border-0 bg-transparent">
+                            <div class="card border-0 bg-transparent mb-3">
                                 <div class="row no-gutters">
                                     <div class="col-auto">
-                                        <!--<img src="//placehold.it/200" class="img-fluid" alt="">-->
                                         <img src="/Images/@restaurant.Photos.First().Nom" alt="" />
                                     </div>
                                     <div class="col mx-2 bg-white">

@@ -7,78 +7,69 @@
 }
 
 <section id="Panier" class="container mt-5">
-    <div class="row">
-        <!-- Liste des menus dans le panier -->
-        <div class="col-12 m-2">
-            @if (Model != null && Model.Where(m => m.GetIdMenu() > 0).Count() > 0)
-            {
-                foreach (AfpEat.Models.MenuPanier menuPanier in Model.Where(m => m.GetIdMenu() > 0))
-                {
-                    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 card mb-3" style="max-width: 540px;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <img src="/Images/@menuPanier.Photo" width="150" height="150" class="card-img" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">@menuPanier.Nom</h5>
-                                    <p class="card-text produitMenu">
-                                        <ul class="list-group-flush">
-                                            @foreach (AfpEat.Models.ProduitPanier produit in menuPanier.Produits)
-                                            {
-                                                <li class="list-group-item" data-idProduit="@produit.IdProduit">@produit.Nom</li>
-                                            }
-                                        </ul>
-                                    </p>
-                                    <p class="card-text">
-                                        <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger">
-                                            <span class="badge badge-dark">@menuPanier.Quantite</span> Supprimer un menu
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
-
-        <!-- Liste des produits dans le panier -->
-        @if (Model != null && Model.Where(m => m.GetIdProduit() > 0).Count() > 0)
+    <div class="row row-cols-1">
+        @foreach (AfpEat.Models.MenuPanier menuPanier in Model.Where(m => m.GetIdMenu() > 0))
         {
-            foreach (AfpEat.Models.ProduitPanier produit in Model.Where(p => p.GetIdProduit() > 0 && p.GetIdMenu() == 0))
-            {
-                <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3 card mb-3" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="/Images/@produit.Photo" width="150" height="150" class="card-img" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">@produit.Nom</h5>
-                                <p class="card-text">
-                                    <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger">
-                                        <span class="badge badge-dark">@produit.Quantite</span> Supprimer un produit
-                                    </button>
-                                </p>
-                            </div>
+            <div class="card border-0 bg-transparent mb-3">
+                <div class="row no-gutters">
+                    <div class="col-auto">
+                        <img src="/Images/@menuPanier.Photo" width="150" height="150" class="card-img" alt="...">
+                    </div>
+                    <div class="col mx-2 bg-white">
+                        <div class="card-block p-2">
+                            <h4 class="card-title text-left">@menuPanier.Nom</h4>
+                            <p class="card-text produitMenu">
+                                <ul class="list-group list-group-flush ">
+                                    @foreach (AfpEat.Models.ProduitPanier produit in menuPanier.Produits)
+                                    {
+                                        <li class="list-group-item" data-idProduit="@produit.IdProduit">@produit.Nom</li>
+                                    }
+                                </ul>
+                            </p>
+                            <p class="card-text">
+                                <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger">
+                                    <span class="badge badge-dark">@menuPanier.Quantite</span> Supprimer un menu
+                                </button>
+                            </p>
                         </div>
                     </div>
                 </div>
-            }
+            </div>
         }
-    <div class="col-12 m-2">
-        @if (Model != null && Model.Count() > 0)
+        @foreach (AfpEat.Models.ProduitPanier produit in Model.Where(p => p.GetIdProduit() > 0 && p.GetIdMenu() == 0))
         {
-            <button id="btnCommande" class="btn btn-success">Passer la commande</button>
-            <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-danger">Retour au restaurant</a>
-        }
-        else
-        {
-            <p>Votre panier est vide.</p>
-            <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Revenir à l'accueil</a>
+            <div class="card border-0 bg-transparent mb-3">
+                <div class="row no-gutters">
+                    <div class="col-auto">
+                        <img src="/Images/@produit.Photo" width="150" height="150" class="card-img" alt="...">
+                    </div>
+                    <div class="col mx-2 bg-white">
+                        <div class="card-block p-2">
+                            <h4 class="card-title text-left">@produit.Nom</h4>
+                            <p class="card-text">
+                                <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger">
+                                    <span class="badge badge-dark">@produit.Quantite</span> Supprimer un produit
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
     </div>
+    <div class="row">
+        <div class="col-12 m-2">
+            @if (Model != null && Model.Count() > 0)
+            {
+                <button id="btnCommande" class="btn btn-success">Passer la commande</button>
+                <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-danger">Retour au restaurant</a>
+            }
+            else
+            {
+                <p>Votre panier est vide.</p>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Revenir à l'accueil</a>
+            }
+        </div>
     </div>
 </section>
 

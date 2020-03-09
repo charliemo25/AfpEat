@@ -41,7 +41,7 @@
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (menuPanier.Prix * menuPanier.Quantite))
                                     </td>
                                     <td class="text-right">
-                                        <button type="button" class="btnAddProduit btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                        <button type="button" data-idMenu="@menuPanier.IdMenu" class="btnAddMenu btn btn-outline-success"><i class="fas fa-plus"></i></button>
                                         <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger ml-2"><i class="fas fa-minus"></i> </button>
                                     </td>
                                 </tr>
@@ -60,7 +60,7 @@
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (produit.Prix * produit.Quantite))
                                     </td>
                                     <td class="text-right">
-                                        <button type="button" class="btnAddProduit btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                        <button type="button" data-idProduit="@produit.IdProduit" class="btnAddProduit btn btn-outline-success"><i class="fas fa-plus"></i></button>
                                         <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger ml-2"><i class="fas fa-minus"></i> </button>
                                     </td>
                                 </tr>
@@ -160,7 +160,7 @@
         let prixUnique = parseFloat(prix.replace(',', '.')) / quantite;
         prix = parseFloat(prix.replace(',', '.'));
 
-        if (add) {
+        if (!add) {
             if (quantite <= 1) {
                 $(element).parent().parent().html('');
             }
@@ -169,7 +169,7 @@
                 $(element).parent().prevAll('.qte').text(quantite);
                 $(element).parent().prevAll('.prix').text(ConvertEuro(prix - prixUnique));
             }
-        } else if (!add) {
+        } else if (add) {
             quantite++;
             $(element).parent().prevAll('.qte').text(quantite);
             $(element).parent().prevAll('.prix').text(ConvertEuro(prix + prixUnique));
@@ -181,16 +181,31 @@ $(document).ready(function () {
 
         //Suppresion d'un menu
         $(".btnSupprMenu").click(function () {
-            let idMenu = $(this).attr('data-idMenu');
+            let idMenu = $(this).data('idmenu');
             let idProduits = [];
 
             $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
                 idProduits.push($(v).data('idproduit'));
             });
 
-
             SetCol($(this));
             RemoveMenu(idMenu, idProduits);
+        });
+
+        //Ajout d'un menu
+        $(".btnAddMenu").click(function () {
+            let menu = $(this).data('idmenu');
+            let idRestaurant = @Model.IdRestaurant;
+            let idProduits = [];
+
+            $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
+                idProduits.push($(v).data('idproduit'));
+            });
+
+            console.log(menu, idProduits, idRestaurant);
+
+            SetCol($(this), true);
+            AddMenu(menu, idProduits, idRestaurant);
         });
 
         //Suppression d'un produit
@@ -208,8 +223,6 @@ $(document).ready(function () {
             
             SetCol($(this), true);
             AddProduit(produit);
-
-
         });
 
         $("#btnCommande").click(function () {

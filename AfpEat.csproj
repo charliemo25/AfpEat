@@ -463,6 +463,7 @@
     <Content Include="Views\Produits\Index.cshtml" />
     <Content Include="Views\Home\Panier.cshtml" />
     <Content Include="Views\Utilisateurs\Historique.cshtml" />
+    <Content Include="Views\Home\_PanierValid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

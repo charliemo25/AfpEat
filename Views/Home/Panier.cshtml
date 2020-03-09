@@ -143,18 +143,6 @@
         });
     }
 
-    function SetCol(element) {
-        let quantite = $(element).parent().prevAll('.qte').text();
-
-        if (quantite <= 1) {
-            $(element).parent().parent().html('');
-        }
-        else {
-            quantite--;
-            $(element).parent().prevAll('.qte').text(quantite);
-        }
-    }
-
 $(document).ready(function () {
     
         //Suppresion d'un menu

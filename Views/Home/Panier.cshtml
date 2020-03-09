@@ -37,7 +37,7 @@
                                         </ul>
                                     </td>
                                     <td class="text-center qte">@menuPanier.Quantite</td>
-                                    <td class="text-left">
+                                    <td class="text-left prix">
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (menuPanier.Prix * menuPanier.Quantite))
                                     </td>
                                     <td class="text-right"><button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-minus"></i> </button> </td>
@@ -53,7 +53,7 @@
                                     <td><img src="/Images/@produit.Photo" width="50" height="50" /> </td>
                                     <td>@produit.Nom</td>
                                     <td class="text-center qte">@produit.Quantite</td>
-                                    <td class="text-left">
+                                    <td class="text-left prix">
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (produit.Prix * produit.Quantite))
                                     </td>
                                     <td class="text-right"><button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-minus"></i> </button> </td>
@@ -143,11 +143,20 @@
         });
     }
 
-$(document).ready(function () {
+    function SetCol(element) {
+        let quantite = $(element).parent().prevAll('.qte').text();
 
-    const quantiteTotal = $('#QuantiteTotal');
-    console.log(quantiteTotal);
-        
+        if (quantite <= 1) {
+            $(element).parent().parent().html('');
+        }
+        else {
+            quantite--;
+            $(element).parent().prevAll('.qte').text(quantite);
+        }
+    }
+
+$(document).ready(function () {
+    
         //Suppresion d'un menu
         $(".btnSupprMenu").click(function () {
             let idMenu = $(this).attr('data-idMenu');
@@ -158,13 +167,8 @@ $(document).ready(function () {
                 idProduits.push($(v).data('idproduit'));
             });
 
-            if (quantite <= 1) {
-                $(this).parent().parent().html('');
-            }
-            else {
-                quantite--;
-                $(this).parent().prevAll('.qte').text(quantite);
-            }
+
+            SetCol($(this));
 
             RemoveMenu(idMenu, idProduits);
         });
@@ -174,13 +178,8 @@ $(document).ready(function () {
             let produit = $(this).data('idproduit');
             let quantite = $(this).parent().prevAll('.qte').text();
 
-            if (quantite <= 1) {
-                $(this).parent().parent().html('');
-            }
-            else {
-                quantite--;
-                $(this).parent().prevAll('.qte').text(quantite);
-            }
+            
+            SetCol($(this));
             RemoveProduit(produit);
         });
 
@@ -191,7 +190,7 @@ $(document).ready(function () {
             if (@isConnected) {
                 PasserCommande();
             } else {
-                $("#ConnexionModal").modal("show");
+                console.log("non connecté");
             }
         });
 

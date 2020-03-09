@@ -40,7 +40,10 @@
                                     <td class="text-left prix">
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (menuPanier.Prix * menuPanier.Quantite))
                                     </td>
-                                    <td class="text-right"><button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-minus"></i> </button> </td>
+                                    <td class="text-right">
+                                        <button type="button" class="btnAddProduit btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                        <button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger ml-2"><i class="fas fa-minus"></i> </button>
+                                    </td>
                                 </tr>
                             }
                         }
@@ -56,7 +59,10 @@
                                     <td class="text-left prix">
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (produit.Prix * produit.Quantite))
                                     </td>
-                                    <td class="text-right"><button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger"><i class="fas fa-minus"></i> </button> </td>
+                                    <td class="text-right">
+                                        <button type="button" class="btnAddProduit btn btn-outline-success"><i class="fas fa-plus"></i></button>
+                                        <button data-idProduit="@produit.IdProduit" class="btnSupprProduit btn btn-outline-danger ml-2"><i class="fas fa-minus"></i> </button>
+                                    </td>
                                 </tr>
                             }
                         }
@@ -147,33 +153,37 @@
         });
     }
 
-    function SetCol(element) {
+    function SetCol(element, add) {
 
         let quantite = $(element).parent().prevAll('.qte').text();
         let prix = $(element).parent().prevAll('.prix').text();
         let prixUnique = parseFloat(prix.replace(',', '.')) / quantite;
         prix = parseFloat(prix.replace(',', '.'));
-        
 
-        if (quantite <= 1) {
-            $(element).parent().parent().html('');
-        }
-        else {
-            quantite--;
+        if (add) {
+            if (quantite <= 1) {
+                $(element).parent().parent().html('');
+            }
+            else {
+                quantite--;
+                $(element).parent().prevAll('.qte').text(quantite);
+                $(element).parent().prevAll('.prix').text(ConvertEuro(prix - prixUnique));
+            }
+        } else if (!add) {
+            quantite++;
             $(element).parent().prevAll('.qte').text(quantite);
-            $(element).parent().prevAll('.prix').text(ConvertEuro(prix - prixUnique));
+            $(element).parent().prevAll('.prix').text(ConvertEuro(prix + prixUnique));
         }
-
     }
 
 
 $(document).ready(function () {
-    
+
         //Suppresion d'un menu
         $(".btnSupprMenu").click(function () {
             let idMenu = $(this).attr('data-idMenu');
             let idProduits = [];
-            
+
             $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
                 idProduits.push($(v).data('idproduit'));
             });
@@ -187,12 +197,20 @@ $(document).ready(function () {
         $(".btnSupprProduit").click(function () {
             let produit = $(this).data('idproduit');
 
-            
-            SetCol($(this));
+            SetCol($(this), false);
             RemoveProduit(produit);
         });
 
+        //Ajout d'un produit
+        $(".btnAddProduit").click(function () {
 
+            let produit = $(this).data('idproduit');
+            
+            SetCol($(this), true);
+            AddProduit(produit);
+
+
+        });
 
         $("#btnCommande").click(function () {
 

@@ -113,6 +113,12 @@
         return notify;
     }
 
+    function Total(qte, prix) {
+        $("#QuantiteTotal").text(qte);
+        $("#PrixTotal").text(prix);
+        $("#PanierTotal").text(prix);
+    }
+
     function AddProduit(idProduit) {
 
             let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };
@@ -129,7 +135,7 @@
                     success: function (result)
                     {
                         notify(result);
-                        console.log(result.montant)
+                        Total(result.quantite, result.montant);
                         $('#PanierTotal').text(result.montant);
                     }
                 });
@@ -151,7 +157,7 @@
                     success: function (result)
                     {
                         notify(result);
-                        $('#PanierTotal').text(result.montant);
+                        Total(result.quantite, result.montant);
                     }
             });
         }
@@ -172,7 +178,7 @@
                     success: function (result)
                     {
                         notify(result);
-                        $('#PanierTotal').text(result.montant);
+                        Total(result.quantite, result.montant);
                     }
                 });
     }
@@ -193,12 +199,11 @@
                     success: function (result)
                     {
                         notify(result);
-                        $('#PanierTotal').text(result.montant);
+                        Total(result.quantite, result.montant);
                     }
             });
     }
 
     </script>
-    }
 </body>
 </html>

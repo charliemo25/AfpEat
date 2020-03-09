@@ -20,6 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Affichage des menus -->
                         @if (Model != null && Model.Where(m => m.GetIdMenu() > 0).Count() > 0)
                         {
                             foreach (AfpEat.Models.MenuPanier menuPanier in Model.Where(m => m.GetIdMenu() > 0))
@@ -39,10 +40,11 @@
                                     <td class="text-left">
                                         @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", (menuPanier.Prix * menuPanier.Quantite))
                                     </td>
-                                    <td class="text-right"><button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-trash-alt"></i> </button> </td>
+                                    <td class="text-right"><button data-idMenu="@menuPanier.IdMenu" class="btnSupprMenu btn btn-outline-danger"><i class="fas fa-minus"></i> </button> </td>
                                 </tr>
                             }
                         }
+                        <!-- Affichage des produits -->
                         @if (Model != null && Model.Where(m => m.GetIdProduit() > 0).Count() > 0)
                         {
                             foreach (AfpEat.Models.ProduitPanier produit in Model.Where(p => p.GetIdProduit() > 0 && p.GetIdMenu() == 0))
@@ -58,33 +60,33 @@
                                 </tr>
                             }
                         }
-                    <tr>
-                        <td></td>
-                        <td class="text-right"><strong>Total</strong></td>
-                        @if (Model != null)
-                        {
-                            <td class="text-center">
-                                @Model.Quantite
-                            </td>
-                            <td class="text-left">
-                                <strong>
-                                    @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", Model.Montant)
-                                </strong>
-                            </td>
-                        }
-                        else
-                        {
-                            <td class="text-center">
-                                0
-                            </td>
-                            <td class="text-right">
-                                <strong>
-                                    0,00 €
-                                </strong>
-                            </td>
-                        }
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <td></td>
+                            <td class="text-right"><strong>Total</strong></td>
+                            @if (Model != null)
+                            {
+                                <td id="QuantiteTotal" class="text-center">
+                                    @Model.Quantite
+                                </td>
+                                <td class="text-left" id="PrixTotal">
+                                    <strong>
+                                        @String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", Model.Montant)
+                                    </strong>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="text-center">
+                                    0
+                                </td>
+                                <td class="text-right">
+                                    <strong>
+                                        0,00 €
+                                    </strong>
+                                </td>
+                            }
+                            <td></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -92,41 +94,28 @@
 
         <div class="col mb-2">
             <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    @if (Model != null && Model.Count() > 0)
-                    {
-                        <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-block btn-lg btn-outline-dark">Retour au restaurant</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Index", "Home")" class="btn btn-block btn-lg btn-outline-dark">Retour à l'accueil</a>
-                    }
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <button id="btnCommande" class="btn btn-lg btn-block btn-outline-success">Passer la commande</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    @*<div class="row">
-            <div class="col-12 m-2">
                 @if (Model != null && Model.Count() > 0)
                 {
-                    <button id="btnCommande" class="btn btn-success">Passer la commande</button>
-                    <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-danger">Retour au restaurant</a>
+                    <div class="col-sm-12  col-md-6">
+                        <a href="@Url.Action("Details/"+Model.First().IdRestaurant , "Restaurants")" class="btn btn-block btn-lg btn-outline-dark">Retour au restaurant</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <button id="btnCommande" class="btn btn-lg btn-block btn-outline-success">Passer la commande</button>
+                    </div>
                 }
                 else
                 {
-                    <p>Votre panier est vide.</p>
-                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-dark">Revenir à l'accueil</a>
+                    <div class="col-sm-12  col-md-6">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-block btn-lg btn-outline-dark">Retour à l'accueil</a>
+                    </div>
                 }
             </div>
-        </div>*@
+        </div>
+    </div>
 </section>
 
 @section Scripts{
     <script type="text/javascript">
-
 
     function PasserCommande() {
 
@@ -156,13 +145,27 @@
 
 $(document).ready(function () {
 
+    const quantiteTotal = $('#QuantiteTotal');
+    console.log(quantiteTotal);
+        
         //Suppresion d'un menu
         $(".btnSupprMenu").click(function () {
             let idMenu = $(this).attr('data-idMenu');
             let idProduits = [];
+            let quantite = $(this).parent().prevAll('.qte').text();
+            
             $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
                 idProduits.push($(v).data('idproduit'));
-            })
+            });
+
+            if (quantite <= 1) {
+                $(this).parent().parent().html('');
+            }
+            else {
+                quantite--;
+                $(this).parent().prevAll('.qte').text(quantite);
+            }
+
             RemoveMenu(idMenu, idProduits);
         });
 
@@ -181,7 +184,7 @@ $(document).ready(function () {
             RemoveProduit(produit);
         });
 
-    
+
 
         $("#btnCommande").click(function () {
 

@@ -138,8 +138,9 @@ namespace AfpEat.Controllers
 
 
             string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+            int quantite = panier.Quantite;
 
-            return Json(new { statut=1, message="Le menu a bien été ajouté.", montant }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut=1, message="Le menu a bien été ajouté.", montant , quantite}, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -217,8 +218,9 @@ namespace AfpEat.Controllers
 
 
             string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+            int quantite = panier.Quantite;
 
-            return Json(new { statut=1, message="Le menu à bien été supprimé.", montant }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut=1, message="Le menu à bien été supprimé.", montant, quantite }, JsonRequestBehavior.AllowGet);
 
 
         }
@@ -268,8 +270,9 @@ namespace AfpEat.Controllers
 
 
             string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+            int quantite = panier.Quantite;
 
-            return Json(new { statut = 1, message = "Le produit a bien été ajouté.", montant }, JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message = "Le produit a bien été ajouté.", montant, quantite }, JsonRequestBehavior.AllowGet);
 
         }
 
@@ -319,8 +322,9 @@ namespace AfpEat.Controllers
             HttpContext.Application[idSession] = panier;
 
             string montant = String.Format(CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", panier.Montant);
+            int quantite = panier.Quantite;
 
-            return Json(new { statut = 1, message = "Le produit a bien été supprimé.", montant}, JsonRequestBehavior.AllowGet);
+            return Json(new { statut = 1, message = "Le produit a bien été supprimé.", montant, quantite}, JsonRequestBehavior.AllowGet);
 
         }
 

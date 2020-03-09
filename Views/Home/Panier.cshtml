@@ -143,13 +143,31 @@
         });
     }
 
+    function SetCol(element) {
+
+        let quantite = $(element).parent().prevAll('.qte').text();
+        let prix = $(element).parent().prevAll('.prix').text();
+        prix = prix.replace(',', '.');
+        console.log();
+
+        if (quantite <= 1) {
+            $(element).parent().parent().html('');
+        }
+        else {
+            quantite--;
+            $(element).parent().prevAll('.qte').text(quantite);
+        }
+
+        prix = prix / quantite;
+    }
+
+
 $(document).ready(function () {
     
         //Suppresion d'un menu
         $(".btnSupprMenu").click(function () {
             let idMenu = $(this).attr('data-idMenu');
             let idProduits = [];
-            let quantite = $(this).parent().prevAll('.qte').text();
             
             $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
                 idProduits.push($(v).data('idproduit'));
@@ -157,14 +175,12 @@ $(document).ready(function () {
 
 
             SetCol($(this));
-
             RemoveMenu(idMenu, idProduits);
         });
 
         //Suppression d'un produit
         $(".btnSupprProduit").click(function () {
             let produit = $(this).data('idproduit');
-            let quantite = $(this).parent().prevAll('.qte').text();
 
             
             SetCol($(this));

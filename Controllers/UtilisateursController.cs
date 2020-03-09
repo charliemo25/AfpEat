@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using AfpEat.Models;
 
@@ -26,10 +27,12 @@ namespace AfpEat.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.Matricule == user.Matricule);
 
-                Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.Matricule == user.Matricule && p.Password == user.Password);
+                bool passwordValid = Crypto.VerifyHashedPassword(utilisateur.Password, user.Password);
 
-                if (utilisateur != null)
+                if (utilisateur != null && passwordValid)
                 {
                     utilisateur.IdSession = Session.SessionID;
                     db.SaveChanges();
@@ -106,6 +109,7 @@ namespace AfpEat.Controllers
         {
             if (ModelState.IsValid)
             {
+                utilisateur.Password = Crypto.HashPassword(utilisateur.Password);
                 utilisateur.Statut = true;
                 
                 db.Utilisateurs.Add(utilisateur);

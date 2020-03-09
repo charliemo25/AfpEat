@@ -119,19 +119,6 @@
         $("#PanierTotal").text(prix);
     }
 
-    function SetCol(element) {
-        let quantite = $(element).parent().prevAll('.qte').text();
-        let prix = $(element).parent().prevAll('.prix').text();
-
-        if (quantite <= 1) {
-            $(element).parent().parent().html('');
-        }
-        else {
-            quantite--;
-            $(element).parent().prevAll('.qte').text(quantite);
-        }
-    }
-
     function AddProduit(idProduit) {
 
             let data = { 'idProduit': idProduit, 'idSession': '@Session.SessionID' };

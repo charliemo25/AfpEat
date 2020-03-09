@@ -117,6 +117,10 @@
 @section Scripts{
     <script type="text/javascript">
 
+    function ConvertEuro(float) {
+        return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(float);
+    }
+
     function PasserCommande() {
 
         let data = { 'idSession':'@Session.SessionID'};
@@ -147,8 +151,9 @@
 
         let quantite = $(element).parent().prevAll('.qte').text();
         let prix = $(element).parent().prevAll('.prix').text();
-        prix = prix.replace(',', '.');
-        console.log();
+        let prixUnique = parseFloat(prix.replace(',', '.')) / quantite;
+        prix = parseFloat(prix.replace(',', '.'));
+        
 
         if (quantite <= 1) {
             $(element).parent().parent().html('');
@@ -156,9 +161,9 @@
         else {
             quantite--;
             $(element).parent().prevAll('.qte').text(quantite);
+            $(element).parent().prevAll('.prix').text(ConvertEuro(prix - prixUnique));
         }
 
-        prix = prix / quantite;
     }
 
 

@@ -363,10 +363,10 @@ namespace AfpEat.Controllers
             // Ajout des produits dans commandeProduit
             foreach (ItemPanier itemPanier in panier)
             {
-                CommandeProduit commandeProduit = new CommandeProduit();
-
                 if (itemPanier is ProduitPanier produit)
                 {
+                    CommandeProduit commandeProduit = new CommandeProduit();
+
                     //Propriétés d'un ProduitPanier
                     commandeProduit.IdProduit = produit.IdProduit;
                     commandeProduit.Prix = produit.Prix;
@@ -379,6 +379,8 @@ namespace AfpEat.Controllers
                     //ajouter les produits avec le menu correspondant
                     foreach (ProduitPanier produitPanier in menu.Produits)
                     {
+                        CommandeProduit commandeProduit = new CommandeProduit();
+
                         //Ajout du produit contenu dans le menu
                         commandeProduit.IdProduit = produitPanier.IdProduit;
                         commandeProduit.Prix = menu.Prix;
@@ -411,8 +413,7 @@ namespace AfpEat.Controllers
             Session["utilisateur"] = utilisateur;
 
             //changer les quantite de produits
-            List<CommandeProduit> commandeProduits = commande.CommandeProduits.ToList();
-            foreach(CommandeProduit item in commandeProduits)
+            foreach(CommandeProduit item in commande.CommandeProduits.ToList())
             {
                 db.Produits.Find(item.IdProduit).Quantite -= item.Quantite;
             }

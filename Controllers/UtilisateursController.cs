@@ -90,23 +90,6 @@ namespace AfpEat.Controllers
             return View();
         }
 
-        // GET: Utilisateurs/Details/5
-        public ActionResult Details(int? id)
-        {
-            var user = (Utilisateur)Session["Utilisateur"];
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-            if (utilisateur == null)
-            {
-                return HttpNotFound();
-            }
-            return View(utilisateur);
-        }
-
         // GET: Utilisateurs/Create
         public ActionResult Create()
         {
@@ -134,7 +117,7 @@ namespace AfpEat.Controllers
         }
 
         // GET: Utilisateurs/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Profil(int? id)
         {
             if (id == null)
             {
@@ -162,32 +145,6 @@ namespace AfpEat.Controllers
                 return RedirectToAction("Index");
             }
             return View(utilisateur);
-        }
-
-        // GET: Utilisateurs/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-            if (utilisateur == null)
-            {
-                return HttpNotFound();
-            }
-            return View(utilisateur);
-        }
-
-        // POST: Utilisateurs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-            db.Utilisateurs.Remove(utilisateur);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

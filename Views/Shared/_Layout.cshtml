@@ -40,35 +40,32 @@
             </ul>
             <!-- Partie droite -->
             <ul class="navbar-nav ml-auto">
-                @*<li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>*@
-                <li class="nav-item">
-                    @if (user != null)
-                    {
-                        <text>
-                            <a href="#" class="text-reset mr-3">
+                @if (user != null)
+                {
+                    <text>
+                        <li class="nav-item dropdown">
+                            <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas  fa-user "></i> @user.Prenom, votre solde: @user.Solde€
                             </a>
-                        </text>
-                    }
-                    else
-                    {
-                        <text>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#"><i class="fas fa-history"></i> Historique de Commande</a>
+                                <a class="dropdown-item" href="#"><i class="far fa-credit-card"></i> Recharger son solde</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><i class="fas  fa-user-alt"></i> Déconnexion</a>
+                            </div>
+                        </li>
+                    </text>
+                }
+                else
+                {
+                    <text>
+                        <li class="nav-item">
                             <a href="@Url.Action("Connexion", "Utilisateurs")" class="btn btn-outline-dark mr-3">
                                 <i class="fas fa-user "></i> Se connecter
                             </a>
-                        </text>
-                    }
-                </li>
+                        </li>
+                    </text>
+                }
                 <li class="nav-item align-self-center">
                     <a href="@Url.Action("Panier", "Home")" class="text-reset mr-3">
                         <i class="fas  fa-shopping-cart"></i> Votre Total: @*(@panier.Quantite)*@  <span id="PanierTotal">@montant</span>

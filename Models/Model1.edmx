@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AfpEatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AfpEatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categorie">
           <Key>
             <PropertyRef Name="IdCategorie" />
@@ -130,8 +130,9 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             <PropertyRef Name="IdRestaurant" />
           </Key>
           <Property Name="IdRestaurant" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdUtilisateur" Type="int" Nullable="false" />
           <Property Name="IdTypeCuisine" Type="int" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="Adresse" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Tel" Type="varchar" MaxLength="12" Nullable="false" />
@@ -194,6 +195,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
           <Property Name="Statut" Type="bit" Nullable="false" />
           <Property Name="Solde" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IdSession" Type="varchar" MaxLength="50" />
+          <Property Name="role" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="FK_Commande_EtatCommande">
           <End Role="EtatCommande" Type="Self.EtatCommande" Multiplicity="1" />
@@ -459,6 +461,18 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Restaurant_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="IdUtilisateur" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="IdUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RestaurantPhoto_Photo">
           <End Role="Photo" Type="Self.Photo" Multiplicity="1" />
           <End Role="RestaurantPhoto" Type="Self.RestaurantPhoto" Multiplicity="*" />
@@ -609,6 +623,10 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             <End Role="TypeCuisine" EntitySet="TypeCuisine" />
             <End Role="Restaurant" EntitySet="Restaurant" />
           </AssociationSet>
+          <AssociationSet Name="FK_Restaurant_Utilisateur" Association="Self.FK_Restaurant_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="Restaurant" EntitySet="Restaurant" />
+          </AssociationSet>
           <AssociationSet Name="FK_RestaurantPhoto_Photo" Association="Self.FK_RestaurantPhoto_Photo">
             <End Role="Photo" EntitySet="Photo" />
             <End Role="RestaurantPhoto" EntitySet="RestaurantPhoto" />
@@ -622,7 +640,8 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             <End Role="TypeCuisine" EntitySet="TypeCuisine" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AfpEatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -747,8 +766,9 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             <PropertyRef Name="IdRestaurant" />
           </Key>
           <Property Name="IdRestaurant" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdUtilisateur" Type="Int32" Nullable="false" />
           <Property Name="IdTypeCuisine" Type="Int32" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Adresse" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tel" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
@@ -761,6 +781,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
           <NavigationProperty Name="Menus" Relationship="Self.FK_Menu_Restaurant" FromRole="Restaurant" ToRole="Menu" />
           <NavigationProperty Name="ProduitCategories" Relationship="Self.FK_ProduitCategorie_Restaurant" FromRole="Restaurant" ToRole="ProduitCategorie" />
           <NavigationProperty Name="TypeCuisine" Relationship="Self.FK_Restaurant_TypeCuisine" FromRole="Restaurant" ToRole="TypeCuisine" />
+          <NavigationProperty Name="Utilisateur" Relationship="Self.FK_Restaurant_Utilisateur" FromRole="Restaurant" ToRole="Utilisateur" />
           <NavigationProperty Name="Photos" Relationship="Self.RestaurantPhoto" FromRole="Restaurant" ToRole="Photo" />
         </EntityType>
         <EntityType Name="SessionUtilisateur">
@@ -811,8 +832,10 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
           <Property Name="Statut" Type="Boolean" Nullable="false" />
           <Property Name="Solde" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IdSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Commandes" Relationship="Self.FK_Commande_Utilisateur" FromRole="Utilisateur" ToRole="Commande" />
           <NavigationProperty Name="Operations" Relationship="Self.FK_Operation_Utilisateur" FromRole="Utilisateur" ToRole="Operation" />
+          <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurant_Utilisateur" FromRole="Utilisateur" ToRole="Restaurant" />
         </EntityType>
         <Association Name="FK_ProduitCategorie_Categorie">
           <End Role="Categorie" Type="Self.Categorie" Multiplicity="1" />
@@ -994,6 +1017,18 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Restaurant_Utilisateur">
+          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilisateur">
+              <PropertyRef Name="IdUtilisateur" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="IdUtilisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="CommandeProduitMenu">
           <End Role="CommandeProduit" Type="Self.CommandeProduit" Multiplicity="*" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
@@ -1088,6 +1123,10 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
           </AssociationSet>
           <AssociationSet Name="FK_Restaurant_TypeCuisine" Association="Self.FK_Restaurant_TypeCuisine">
             <End Role="TypeCuisine" EntitySet="TypeCuisines" />
+            <End Role="Restaurant" EntitySet="Restaurants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurant_Utilisateur" Association="Self.FK_Restaurant_Utilisateur">
+            <End Role="Utilisateur" EntitySet="Utilisateurs" />
             <End Role="Restaurant" EntitySet="Restaurants" />
           </AssociationSet>
           <AssociationSet Name="CommandeProduitMenu" Association="Self.CommandeProduitMenu">
@@ -1214,8 +1253,9 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
             <EntityTypeMapping TypeName="AfpEatModel.Restaurant">
               <MappingFragment StoreEntitySet="Restaurant">
                 <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
-                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="IdUtilisateur" ColumnName="IdUtilisateur" />
                 <ScalarProperty Name="IdTypeCuisine" ColumnName="IdTypeCuisine" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Adresse" ColumnName="Adresse" />
                 <ScalarProperty Name="Tel" ColumnName="Tel" />
@@ -1275,6 +1315,7 @@ avertissement 6002: La table/vue 'AfpEAT.dbo.MenuCategorie' n'a pas de clé prim
                 <ScalarProperty Name="Statut" ColumnName="Statut" />
                 <ScalarProperty Name="Solde" ColumnName="Solde" />
                 <ScalarProperty Name="IdSession" ColumnName="IdSession" />
+                <ScalarProperty Name="role" ColumnName="role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

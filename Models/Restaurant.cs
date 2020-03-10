@@ -24,8 +24,9 @@ namespace AfpEat.Models
         }
     
         public int IdRestaurant { get; set; }
-        public string Nom { get; set; }
+        public int IdUtilisateur { get; set; }
         public int IdTypeCuisine { get; set; }
+        public string Nom { get; set; }
         public string Description { get; set; }
         public string Adresse { get; set; }
         public string Tel { get; set; }
@@ -42,6 +43,7 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProduitCategorie> ProduitCategories { get; set; }
         public virtual TypeCuisine TypeCuisine { get; set; }
+        public virtual Utilisateur Utilisateur { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Photo> Photos { get; set; }
     }

@@ -48,10 +48,11 @@
                                 <i class="fas  fa-user "></i> @user.Prenom, votre solde: @user.Solde€
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#"><i class="fas fa-history"></i> Historique de Commande</a>
+                                <a class="dropdown-item" href="@Url.Action("Edit", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-cog"></i> Profil</a>
+                                <a class="dropdown-item" href="@Url.Action("Historique", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-history"></i> Historique de Commande</a>
                                 <a class="dropdown-item" href="#"><i class="far fa-credit-card"></i> Recharger son solde</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i class="fas  fa-user-alt"></i> Déconnexion</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
                             </div>
                         </li>
                     </text>
@@ -61,7 +62,7 @@
                     <text>
                         <li class="nav-item">
                             <a href="@Url.Action("Connexion", "Utilisateurs")" class="btn btn-outline-dark mr-3">
-                                <i class="fas fa-user "></i> Se connecter
+                                <i class="fas fa-sign-in-alt"></i> Se connecter
                             </a>
                         </li>
                     </text>

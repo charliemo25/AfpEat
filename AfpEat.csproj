@@ -129,7 +129,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CommandesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RestaurantsController.cs" />
     <Compile Include="Controllers\SwController.cs" />
@@ -445,19 +444,13 @@
     <Content Include="Views\Restaurants\Edit.cshtml" />
     <Content Include="Views\Restaurants\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Create.cshtml" />
-    <Content Include="Views\Utilisateurs\Delete.cshtml" />
     <Content Include="Views\Utilisateurs\Details.cshtml" />
     <Content Include="Views\Utilisateurs\Edit.cshtml" />
     <Content Include="Views\Utilisateurs\Index.cshtml" />
     <Content Include="Views\Utilisateurs\Connexion.cshtml" />
-    <Content Include="Views\Commandes\Create.cshtml" />
-    <Content Include="Views\Commandes\Delete.cshtml" />
-    <Content Include="Views\Commandes\Details.cshtml" />
-    <Content Include="Views\Commandes\Edit.cshtml" />
-    <Content Include="Views\Commandes\Index.cshtml" />
     <Content Include="Views\Home\Panier.cshtml" />
-    <Content Include="Views\Utilisateurs\Historique.cshtml" />
     <Content Include="Views\Home\_PanierValid.cshtml" />
+    <Content Include="Views\Utilisateurs\Historique.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

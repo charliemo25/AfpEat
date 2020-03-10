@@ -130,16 +130,15 @@ namespace AfpEat.Controllers
             }
             return View(utilisateur);
         }
-
-        // POST: Utilisateurs/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdUtilisateur,Nom,Prenom,Matricule,Password,Statut,Solde")] Utilisateur utilisateur)
+        public ActionResult Profil([Bind(Include = "IdUtilisateur,Nom,Prenom,Matricule,Password")] Utilisateur utilisateur)
         {
             if (ModelState.IsValid)
             {
+                utilisateur.Password = Crypto.HashPassword(utilisateur.Password);
+
                 db.Entry(utilisateur).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

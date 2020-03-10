@@ -100,10 +100,6 @@ namespace AfpEat.Controllers
             //si itemPaniers est nul et si elle contient plus d'un MenuPanier egal à celui qu'on rajoute 
             if (itemPaniers != null && itemPaniers.Where(i => i is MenuPanier iM && iM.Equals(menuPanier)).Count() > 0)
             {
-
-                //Permet de sortir d'une boucle pour ajouter un menu
-                bool addMenu = false;
-
                 //Parcours des menuPaniers
                 for (int i = 0; i < itemPaniers.Count(); i++)
                 {
@@ -114,12 +110,12 @@ namespace AfpEat.Controllers
                     }
                     else
                     {
-                        addMenu = true;
+                        continue;
                     }
                 }
 
                 //Permet d'ajouter le menuPanier si il n'est pas contenu dans le panier avec les mêmes produits
-                if (addMenu && itemPaniers.Where(m => m is MenuPanier menu1 && menu1.Equals(menuPanier)).Count() == 0)
+                if (itemPaniers.Where(m => m is MenuPanier menu1 && menu1.Equals(menuPanier)).Count() == 0)
                 {
                     panier.Add(menuPanier);
                 }

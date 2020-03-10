@@ -393,12 +393,14 @@ namespace AfpEat.Controllers
                 }
             }
 
+            //Calcul la quantité et le prixTotal du panier
             panier.SetPanier();
 
             if (panier.Montant > utilisateur.Solde)
             {
                 return Json(new { statut = 0, message = "Votre solde est insuffisant." }, JsonRequestBehavior.AllowGet);
             }
+
             commande.Prix = panier.Montant;
 
             //Sauvegarde de la commande dans la bdd
@@ -408,7 +410,10 @@ namespace AfpEat.Controllers
             utilisateur.Solde -= commande.Prix;
             Session["utilisateur"] = utilisateur;
 
-            db.SaveChanges();
+            //changer les quantite de produits
+            var item = commande.CommandeProduits;
+            
+            //db.SaveChanges();
             return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
         }
 

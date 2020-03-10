@@ -147,7 +147,7 @@
                     document.location.href = '@Url.Action("Index", "Home")';
                 }
                 else {
-                    console.log(result.message);
+                    notify(result);
                 }
             }
         });
@@ -201,8 +201,6 @@ $(document).ready(function () {
             $.each($(this).parent().prevAll('.produitMenu').find('ul li'), function (k, v) {
                 idProduits.push($(v).data('idproduit'));
             });
-
-            console.log(menu, idProduits, idRestaurant);
 
             SetCol($(this), true);
             AddMenu(menu, idProduits, idRestaurant);

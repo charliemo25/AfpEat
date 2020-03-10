@@ -411,9 +411,13 @@ namespace AfpEat.Controllers
             Session["utilisateur"] = utilisateur;
 
             //changer les quantite de produits
-            var item = commande.CommandeProduits;
+            List<CommandeProduit> commandeProduits = commande.CommandeProduits.ToList();
+            foreach(CommandeProduit item in commandeProduits)
+            {
+                db.Produits.Find(item.IdProduit).Quantite -= item.Quantite;
+            }
             
-            //db.SaveChanges();
+            db.SaveChanges();
             return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
         }
 

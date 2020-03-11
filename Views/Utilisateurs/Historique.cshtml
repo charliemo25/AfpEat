@@ -12,7 +12,7 @@
             <h2>Historique</h2>
             @foreach (var commande in Model)
             {
-                <h2>@commande.IdCommande, @commande.Prix €, @commande.EtatCommande.Nom</h2>
+                <h3>@commande.IdCommande, @commande.Prix €, @commande.EtatCommande.Nom</h3>
                 <ul>
                     @foreach (var commandeProduit in commande.CommandeProduits)
                     {

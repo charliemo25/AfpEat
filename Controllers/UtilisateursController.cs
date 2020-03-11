@@ -70,7 +70,29 @@ namespace AfpEat.Controllers
                 return HttpNotFound();
             }
 
+            //Liste de toutes les commandes d'un utilisateur
             List<Commande> commandes = db.Commandes.Where(c => c.IdUtilisateur == utilisateur.IdUtilisateur).ToList();
+
+            //Liste de tout les produits dans la commande
+            List<CommandeProduit> commandeProduits = new List<CommandeProduit>();
+
+            //Liste de tout les produits dans la commande avec un menu rattaché
+            List<CommandeProduit> commandeMenus = new List<CommandeProduit>();
+
+            foreach(var commande in commandes)
+            {
+                foreach(var commandeProduit in commande.CommandeProduits)
+                {
+                    if (commandeProduit.Menus.Count() == 1)
+                    {
+                        commandeMenus.Add(commandeProduit);
+                    }
+                    else
+                    {
+                        commandeProduits.Add(commandeProduit);
+                    }
+                }
+            }
 
             return View(commandes);
         }

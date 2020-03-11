@@ -418,12 +418,6 @@ namespace AfpEat.Controllers
             return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetHistoriqueUtilisateur(string idSession)
-        {
-            Utilisateur utilisateur = (Utilisateur)Session["utilisateur"];
-            return Json("", JsonRequestBehavior.AllowGet);
-        }
-
         public JsonResult LoginUtilisateur(string idSession, string matricule, string password)
         {
             Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(u => u.Matricule == matricule && u.Password == password);

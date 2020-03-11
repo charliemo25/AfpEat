@@ -21,6 +21,7 @@ namespace AfpEat.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Connexion([Bind(Include = "Matricule,Password")] Utilisateur user)
@@ -48,6 +49,12 @@ namespace AfpEat.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult Deconnexion()
+        {
+                Session["utilisateur"] = null;
+                return RedirectToAction("Connexion");
         }
 
         public ActionResult Historique(int? id)
@@ -133,17 +140,34 @@ namespace AfpEat.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Profil([Bind(Include = "IdUtilisateur,Nom,Prenom,Matricule,Password")] Utilisateur utilisateur)
+        public ActionResult Profil(FormCollection formCollection)
         {
-            if (ModelState.IsValid)
-            {
-                utilisateur.Password = Crypto.HashPassword(utilisateur.Password);
 
-                db.Entry(utilisateur).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+            if (formCollection == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(utilisateur);
+
+            Utilisateur utilisateur = (Utilisateur)Session["utilisateur"];
+            
+            if (utilisateur == null)
+            {
+                return HttpNotFound();
+            }
+            
+            //Récupère et compare les mdp
+            string password = formCollection["Password1"] == formCollection["Password2"] ? Crypto.HashPassword(formCollection["Password1"]) : null;
+
+            if(password == null)
+            {
+                //Ajouter un message d'erreur
+                return View(utilisateur);
+            }
+
+            utilisateur.Password = password;
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

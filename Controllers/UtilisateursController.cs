@@ -70,8 +70,7 @@ namespace AfpEat.Controllers
                 return HttpNotFound();
             }
 
-
-            List<Commande> commandes = new List<Commande>();
+            List<Commande> commandes = db.Commandes.Where(c => c.IdUtilisateur == utilisateur.IdUtilisateur).ToList();
 
             return View(commandes);
         }

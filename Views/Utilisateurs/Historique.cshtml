@@ -10,7 +10,16 @@
     <div class="row">
         <div class="col-12">
             <h2>Historique</h2>
-            <p>Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.</p>
+            @foreach (var commande in Model)
+            {
+                <h2>@commande.IdCommande, @commande.Prix €, @commande.EtatCommande.Nom</h2>
+                <ul>
+                    @foreach (var commandeProduit in commande.CommandeProduits)
+                    {
+                        <li>@commandeProduit.Produit.Nom, @commandeProduit.Quantite, @commandeProduit.Prix €</li>
+                    }
+                </ul>
+            }
         </div>
     </div>
 </section>
@@ -19,8 +28,8 @@
 @section Scripts{
     <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-    });
+        });
     </script>
 }

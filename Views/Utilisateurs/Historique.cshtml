@@ -6,23 +6,44 @@
 
 }
 
-<section id="HistoriqueUtilisateur" class="container mt-5">
-    <div class="row">
-        <div class="col-12">
-            <h2>Historique</h2>
+    <section id="HistoriqueUtilisateur" class="container mt-5">
+        <div class="row row-cols-1">
             @foreach (var commande in Model)
             {
-                <h3>@commande.IdCommande, @commande.Prix €, @commande.EtatCommande.Nom</h3>
-                <ul>
-                    @foreach (var commandeProduit in commande.CommandeProduits)
-                    {
-                        <li>@commandeProduit.Produit.Nom, @commandeProduit.Quantite, @commandeProduit.Prix €</li>
-                    }
-                </ul>
+                <text>
+                    <div class="card mb-3 ">
+                        <div class="row no-gutters">
+                            <div class="col-auto">
+                                <img src="/Images/@commande.Restaurant.Photos.First().Nom" alt="" />
+                            </div>
+                            <div class="col mx-2 bg-white">
+                                <div class="card-block p-2">
+                                    <h4 class="card-title text-left">@commande.EtatCommande.Nom</h4>
+                                    <p class="card-text">@String.Format(System.Globalization.CultureInfo.GetCultureInfo("fr-FR"), "{0:C}", commande.Prix)</p>
+                                    <p class="card-text">
+                                        <ul class="list-group">
+                                            @foreach (var commandeProduit in commande.CommandeProduits)
+                                            {
+                                                if (commandeProduit.Menus.Count > 0)
+                                                {
+                                                    <li class="list-group-item">@commandeProduit.Menus.First().Nom, @commandeProduit.Produit.Nom, @commandeProduit.Quantite</li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="list-group-item">@commandeProduit.Produit.Nom, @commandeProduit.Quantite</li>
+
+                                                }
+                                            }
+                                        </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </text>
             }
         </div>
-    </div>
-</section>
+    </section>
 
 
 @section Scripts{

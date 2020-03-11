@@ -25,20 +25,21 @@ namespace AfpEat.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Categorie> Categories { get; set; }
-        public virtual DbSet<Commande> Commandes { get; set; }
-        public virtual DbSet<CommandeProduit> CommandeProduits { get; set; }
-        public virtual DbSet<EtatCommande> EtatCommandes { get; set; }
-        public virtual DbSet<Menu> Menus { get; set; }
-        public virtual DbSet<Operation> Operations { get; set; }
-        public virtual DbSet<Photo> Photos { get; set; }
-        public virtual DbSet<Produit> Produits { get; set; }
-        public virtual DbSet<ProduitCategorie> ProduitCategories { get; set; }
-        public virtual DbSet<Restaurant> Restaurants { get; set; }
-        public virtual DbSet<SessionUtilisateur> SessionUtilisateurs { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TypeCuisine> TypeCuisines { get; set; }
-        public virtual DbSet<TypeVersement> TypeVersements { get; set; }
-        public virtual DbSet<Utilisateur> Utilisateurs { get; set; }
+        public virtual DbSet<Categorie> Categorie { get; set; }
+        public virtual DbSet<Commande> Commande { get; set; }
+        public virtual DbSet<CommandeProduit> CommandeProduit { get; set; }
+        public virtual DbSet<EtatCommande> EtatCommande { get; set; }
+        public virtual DbSet<Menu> Menu { get; set; }
+        public virtual DbSet<Operation> Operation { get; set; }
+        public virtual DbSet<Photo> Photo { get; set; }
+        public virtual DbSet<Produit> Produit { get; set; }
+        public virtual DbSet<ProduitCategorie> ProduitCategorie { get; set; }
+        public virtual DbSet<Restaurant> Restaurant { get; set; }
+        public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<SessionUtilisateur> SessionUtilisateur { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TypeCuisine> TypeCuisine { get; set; }
+        public virtual DbSet<TypeVersement> TypeVersement { get; set; }
+        public virtual DbSet<Utilisateur> Utilisateur { get; set; }
     }
 }

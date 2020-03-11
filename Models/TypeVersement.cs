@@ -17,7 +17,7 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TypeVersement()
         {
-            this.Operations = new HashSet<Operation>();
+            this.Operation = new HashSet<Operation>();
         }
     
         public int IdTypeVersement { get; set; }
@@ -25,6 +25,6 @@ namespace AfpEat.Models
         public bool Statut { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Operation> Operations { get; set; }
+        public virtual ICollection<Operation> Operation { get; set; }
     }
 }

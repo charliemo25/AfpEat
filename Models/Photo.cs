@@ -17,25 +17,25 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Photo()
         {
-            this.Menus = new HashSet<Menu>();
-            this.Produits = new HashSet<Produit>();
-            this.TypeCuisines = new HashSet<TypeCuisine>();
-            this.Produits1 = new HashSet<Produit>();
-            this.Restaurants = new HashSet<Restaurant>();
+            this.Menu = new HashSet<Menu>();
+            this.Produit = new HashSet<Produit>();
+            this.TypeCuisine = new HashSet<TypeCuisine>();
+            this.Produit1 = new HashSet<Produit>();
+            this.Restaurant = new HashSet<Restaurant>();
         }
     
         public int IdPhoto { get; set; }
         public string Nom { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menus { get; set; }
+        public virtual ICollection<Menu> Menu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Produit> Produits { get; set; }
+        public virtual ICollection<Produit> Produit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TypeCuisine> TypeCuisines { get; set; }
+        public virtual ICollection<TypeCuisine> TypeCuisine { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Produit> Produits1 { get; set; }
+        public virtual ICollection<Produit> Produit1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Restaurant> Restaurants { get; set; }
+        public virtual ICollection<Restaurant> Restaurant { get; set; }
     }
 }

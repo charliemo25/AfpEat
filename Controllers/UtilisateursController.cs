@@ -57,9 +57,11 @@ namespace AfpEat.Controllers
                 return RedirectToAction("Connexion");
         }
 
-        public ActionResult Historique(int? id)
+        public ActionResult Historique()
         {
             
+
+
             return View();
         }
 

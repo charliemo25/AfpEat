@@ -17,9 +17,9 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Utilisateur()
         {
-            this.Commandes = new HashSet<Commande>();
-            this.Operations = new HashSet<Operation>();
-            this.Restaurants = new HashSet<Restaurant>();
+            this.Commande = new HashSet<Commande>();
+            this.Operation = new HashSet<Operation>();
+            this.Restaurant = new HashSet<Restaurant>();
         }
     
         public int IdUtilisateur { get; set; }
@@ -29,14 +29,15 @@ namespace AfpEat.Models
         public string Password { get; set; }
         public bool Statut { get; set; }
         public decimal Solde { get; set; }
+        public Nullable<int> IdRole { get; set; }
         public string IdSession { get; set; }
-        public string role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Commande> Commandes { get; set; }
+        public virtual ICollection<Commande> Commande { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Operation> Operations { get; set; }
+        public virtual ICollection<Operation> Operation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Restaurant> Restaurants { get; set; }
+        public virtual ICollection<Restaurant> Restaurant { get; set; }
+        public virtual Role Role { get; set; }
     }
 }

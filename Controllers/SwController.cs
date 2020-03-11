@@ -420,7 +420,7 @@ namespace AfpEat.Controllers
 
         public JsonResult GetHistoriqueUtilisateur(string idSession)
         {
-            
+            Utilisateur utilisateur = (Utilisateur)Session["utilisateur"];
             return Json("", JsonRequestBehavior.AllowGet);
         }
 

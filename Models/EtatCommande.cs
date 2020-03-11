@@ -17,13 +17,13 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EtatCommande()
         {
-            this.Commande = new HashSet<Commande>();
+            this.Commandes = new HashSet<Commande>();
         }
     
         public int IdEtatCommande { get; set; }
         public string Nom { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Commande> Commande { get; set; }
+        public virtual ICollection<Commande> Commandes { get; set; }
     }
 }

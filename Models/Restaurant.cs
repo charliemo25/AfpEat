@@ -17,10 +17,11 @@ namespace AfpEat.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Restaurant()
         {
-            this.Commande = new HashSet<Commande>();
-            this.Menu = new HashSet<Menu>();
-            this.ProduitCategorie = new HashSet<ProduitCategorie>();
-            this.Photo = new HashSet<Photo>();
+            this.Commandes = new HashSet<Commande>();
+            this.Menus = new HashSet<Menu>();
+            this.ProduitCategories = new HashSet<ProduitCategorie>();
+            this.Photos = new HashSet<Photo>();
+            this.Utilisateurs = new HashSet<Utilisateur>();
         }
     
         public int IdRestaurant { get; set; }
@@ -37,14 +38,16 @@ namespace AfpEat.Models
         public bool Statut { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Commande> Commande { get; set; }
+        public virtual ICollection<Commande> Commandes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Menu> Menu { get; set; }
+        public virtual ICollection<Menu> Menus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProduitCategorie> ProduitCategorie { get; set; }
+        public virtual ICollection<ProduitCategorie> ProduitCategories { get; set; }
         public virtual TypeCuisine TypeCuisine { get; set; }
         public virtual Utilisateur Utilisateur { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Photo> Photo { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Utilisateur> Utilisateurs { get; set; }
     }
 }

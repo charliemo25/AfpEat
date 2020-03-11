@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4ee52687087f4aabbf915290a1f7bc22" Name="Diagram1">
-        <EntityTypeShape EntityType="AfpEatModel.Categorie" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Commande" Width="1.5" PointX="10.5" PointY="14.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.CommandeProduit" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.EtatCommande" Width="1.5" PointX="8.25" PointY="19" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Menu" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Operation" Width="1.5" PointX="11.25" PointY="18.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Photo" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Produit" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.ProduitCategorie" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Restaurant" Width="1.5" PointX="8.25" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Role" Width="1.5" PointX="3.75" PointY="18" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.SessionUtilisateur" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.sysdiagrams" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.TypeCuisine" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.TypeVersement" Width="1.5" PointX="9" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AfpEatModel.Utilisateur" Width="1.5" PointX="6" PointY="17" IsExpanded="true" />
+      <Diagram DiagramId="e758998b9c194175aee4f1c0debb59ee" Name="Diagram1">
+        <EntityTypeShape EntityType="AfpEatModel.Categorie" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Commande" Width="1.5" PointX="10.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.CommandeProduit" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.EtatCommande" Width="1.5" PointX="8.25" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Menu" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Operation" Width="1.5" PointX="15.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Photo" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Produit" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.ProduitCategorie" Width="1.5" PointX="8.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Restaurant" Width="1.5" PointX="8.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Role" Width="1.5" PointX="11.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.SessionUtilisateur" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.TypeCuisine" Width="1.5" PointX="3" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.TypeVersement" Width="1.5" PointX="13.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AfpEatModel.Utilisateur" Width="1.5" PointX="13.5" PointY="15.5" IsExpanded="true" />
         <AssociationConnector Association="AfpEatModel.FK_ProduitCategorie_Categorie" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.FK_Commande_EtatCommande" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.FK_Commande_Restaurant" ManuallyRouted="false" />
@@ -43,6 +43,7 @@
         <AssociationConnector Association="AfpEatModel.ProduitMenu" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.ProduitPhoto" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.RestaurantPhoto" ManuallyRouted="false" />
+        <AssociationConnector Association="AfpEatModel.UtilisateurFavoris" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

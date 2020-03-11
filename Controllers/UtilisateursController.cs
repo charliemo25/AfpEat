@@ -59,10 +59,10 @@ namespace AfpEat.Controllers
 
         public ActionResult Historique()
         {
-            
+            PanierModel panier = (PanierModel)Session[Session.SessionID];
 
 
-            return View();
+            return View(panier);
         }
 
         // GET: Utilisateurs

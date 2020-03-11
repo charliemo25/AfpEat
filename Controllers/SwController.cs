@@ -420,20 +420,7 @@ namespace AfpEat.Controllers
 
         public JsonResult GetHistoriqueUtilisateur(string idSession)
         {
-            SessionUtilisateur sessionUtilisateur = db.SessionUtilisateurs.Find(Session.SessionID);
-
-
-            if (sessionUtilisateur == null)
-            {
-                return Json(0, JsonRequestBehavior.AllowGet);
-            }
-
-            PanierViewModel historiqueUtilisateur = null;
-            Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.IdSession == idSession);
-
-
-            List<Commande> commande = db.Commandes.Where(c => c.IdUtilisateur == utilisateur.IdUtilisateur).ToList();
-
+            
             return Json("", JsonRequestBehavior.AllowGet);
         }
 

@@ -172,7 +172,6 @@
     </Compile>
     <Compile Include="Models\PanierModel.cs" />
     <Compile Include="Models\MenuPanier.cs" />
-    <Compile Include="Models\PanierViewModel.cs" />
     <Compile Include="Models\Photo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -59,23 +59,8 @@ namespace AfpEat.Controllers
 
         public ActionResult Historique(int? id)
         {
-            //Passez l'hitorique de toutes les commandes d'un utilisateur
-            PanierViewModel panier = (PanierViewModel)HttpContext.Application[Session.SessionID];
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
             
-            if (utilisateur == null)
-            {
-                return HttpNotFound();
-            }
-
-            //return View(utilisateur);
-            return View(panier);
+            return View();
         }
 
         // GET: Utilisateurs

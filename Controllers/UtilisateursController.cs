@@ -57,12 +57,23 @@ namespace AfpEat.Controllers
                 return RedirectToAction("Connexion");
         }
 
-        public ActionResult Historique()
+        public ActionResult Historique(int? id)
         {
-            PanierModel panier = (PanierModel)Session[Session.SessionID];
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            if (utilisateur == null)
+            {
+                return HttpNotFound();
+            }
 
 
-            return View(panier);
+            List<Commande> commandes = new List<Commande>();
+
+            return View(commandes);
         }
 
         // GET: Utilisateurs

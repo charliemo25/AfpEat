@@ -1,4 +1,4 @@
-﻿@model AfpEat.Models.PanierModel
+﻿@model IEnumerable<AfpEat.Models.Commande>
 
 @{
     ViewBag.Title = "Historique";
@@ -19,36 +19,7 @@
 @section Scripts{
     <script type="text/javascript">
 
-    function getHistorique() {
-
-        let data = { 'idSession':'@Session.SessionID'};
-
-        $.ajax({
-            url: "@Url.Action("GetHistoriqueUtilisateur", "Sw")",
-            type: "Post",
-            contentType: "application/json; charset=utf-8",
-            dataType: "JSON",
-            data: JSON.stringify(data),
-            error: function (result) {
-                console.log('erreur');
-            },
-            success: function (result)
-            {
-                if (result.statut) {
-                    //Changer la redirection pour un récapitulatif de la commande
-                    //document.location.href = '@Url.Action("Index", "Home")';
-                }
-                else {
-                    console.log(result.message);
-                }
-            }
-        });
-    }
-
-
     $(document).ready(function () {
-
-        getHistorique();
 
     });
     </script>

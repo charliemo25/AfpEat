@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AfpEatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AfpEatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categorie">
           <Key>
             <PropertyRef Name="IdCategorie" />
@@ -633,7 +633,8 @@
             <End Role="TypeCuisine" EntitySet="TypeCuisine" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AfpEatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -697,8 +698,8 @@
           <NavigationProperty Name="Photo" Relationship="Self.FK_Menu_Photo" FromRole="Menu" ToRole="Photo" />
           <NavigationProperty Name="Restaurant" Relationship="Self.FK_Menu_Restaurant" FromRole="Menu" ToRole="Restaurant" />
           <NavigationProperty Name="CommandeProduits" Relationship="Self.CommandeProduitMenu" FromRole="Menu" ToRole="CommandeProduit" />
-          <NavigationProperty Name="CommandeProduits1" Relationship="Self.ProduitMenu" FromRole="Menu" ToRole="CommandeProduit" />
           <NavigationProperty Name="Categories" Relationship="Self.MenuCategorie" FromRole="Menu" ToRole="Categorie" />
+          <NavigationProperty Name="CommandeProduits1" Relationship="Self.ProduitMenu" FromRole="Menu" ToRole="CommandeProduit" />
         </EntityType>
         <EntityType Name="Operation">
           <Key>
@@ -1025,6 +1026,10 @@
           <End Role="CommandeProduit" Type="Self.CommandeProduit" Multiplicity="*" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
         </Association>
+        <Association Name="MenuCategorie">
+          <End Role="Categorie" Type="Self.Categorie" Multiplicity="*" />
+          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+        </Association>
         <Association Name="ProduitMenu">
           <End Role="CommandeProduit" Type="Self.CommandeProduit" Multiplicity="*" />
           <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
@@ -1036,10 +1041,6 @@
         <Association Name="RestaurantPhoto">
           <End Role="Photo" Type="Self.Photo" Multiplicity="*" />
           <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
-        </Association>
-        <Association Name="MenuCategorie">
-          <End Role="Categorie" Type="Self.Categorie" Multiplicity="*" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
         </Association>
         <EntityContainer Name="AfpEatEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Categorie" />
@@ -1125,6 +1126,10 @@
             <End Role="CommandeProduit" EntitySet="CommandeProduits" />
             <End Role="Menu" EntitySet="Menus" />
           </AssociationSet>
+          <AssociationSet Name="MenuCategorie" Association="Self.MenuCategorie">
+            <End Role="Categorie" EntitySet="Categories" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
           <AssociationSet Name="ProduitMenu" Association="Self.ProduitMenu">
             <End Role="CommandeProduit" EntitySet="CommandeProduits" />
             <End Role="Menu" EntitySet="Menus" />
@@ -1136,10 +1141,6 @@
           <AssociationSet Name="RestaurantPhoto" Association="Self.RestaurantPhoto">
             <End Role="Photo" EntitySet="Photos" />
             <End Role="Restaurant" EntitySet="Restaurants" />
-          </AssociationSet>
-          <AssociationSet Name="MenuCategorie" Association="Self.MenuCategorie">
-            <End Role="Categorie" EntitySet="Categories" />
-            <End Role="Menu" EntitySet="Menus" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -1319,6 +1320,14 @@
               <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
             </EndProperty>
           </AssociationSetMapping>
+          <AssociationSetMapping Name="MenuCategorie" TypeName="AfpEatModel.MenuCategorie" StoreEntitySet="MenuCategorie">
+            <EndProperty Name="Categorie">
+              <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
+            </EndProperty>
+            <EndProperty Name="Menu">
+              <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="ProduitMenu" TypeName="AfpEatModel.ProduitMenu" StoreEntitySet="ProduitMenu">
             <EndProperty Name="CommandeProduit">
               <ScalarProperty Name="IdCommandeProduit" ColumnName="IdCommandeProduit" />
@@ -1341,14 +1350,6 @@
             </EndProperty>
             <EndProperty Name="Restaurant">
               <ScalarProperty Name="IdRestaurant" ColumnName="IdRestaurant" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="MenuCategorie" TypeName="AfpEatModel.MenuCategorie" StoreEntitySet="MenuCategorie">
-            <EndProperty Name="Categorie">
-              <ScalarProperty Name="IdCategorie" ColumnName="IdCategorie" />
-            </EndProperty>
-            <EndProperty Name="Menu">
-              <ScalarProperty Name="IdMenu" ColumnName="IdMenu" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

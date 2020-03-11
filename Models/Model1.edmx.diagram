@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="61e5d85e1c5243e9aec741a8c85653a7" Name="Diagram1">
+      <Diagram DiagramId="c1f35f5b2afa4ec39f834cbe88f9b927" Name="Diagram1">
         <EntityTypeShape EntityType="AfpEatModel.Categorie" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AfpEatModel.Commande" Width="1.5" PointX="10.5" PointY="14.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AfpEatModel.CommandeProduit" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
@@ -37,10 +37,10 @@
         <AssociationConnector Association="AfpEatModel.FK_Restaurant_TypeCuisine" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.FK_Restaurant_Utilisateur" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.CommandeProduitMenu" ManuallyRouted="false" />
+        <AssociationConnector Association="AfpEatModel.MenuCategorie" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.ProduitMenu" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.ProduitPhoto" ManuallyRouted="false" />
         <AssociationConnector Association="AfpEatModel.RestaurantPhoto" ManuallyRouted="false" />
-        <AssociationConnector Association="AfpEatModel.MenuCategorie" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

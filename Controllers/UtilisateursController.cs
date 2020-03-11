@@ -149,7 +149,8 @@ namespace AfpEat.Controllers
                 return View(utilisateur);
             }
 
-            utilisateur.Password = password;
+            db.Utilisateurs.Find(utilisateur.IdUtilisateur).Password = password;
+            
             db.SaveChanges();
 
             return RedirectToAction("Index");

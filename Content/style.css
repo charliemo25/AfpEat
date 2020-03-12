@@ -26,10 +26,16 @@
 
 body {
   font-family: text;
-  background-color: #eeeeee;
+  background-color: whitesmoke;
 }
 body h1, body h2, body h3, body h4, body h5, body h6 {
   font-family: titre;
+}
+body section {
+  background-color: white;
+}
+body #Home {
+  background-color: inherit;
 }
 body .bloc_left_price {
   color: #c01508;

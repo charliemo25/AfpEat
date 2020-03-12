@@ -29,10 +29,18 @@
 
 body {
     font-family: text;
-    background-color: #eeeeee;
+    background-color: whitesmoke;
 
     h1, h2, h3, h4, h5, h6 {
         font-family: titre;
+    }
+
+    section {
+        background-color: white;
+    }
+
+    #Home{
+        background-color: inherit;
     }
 
     .bloc_left_price {

@@ -415,6 +415,7 @@ namespace AfpEat.Controllers
             }
             
             db.SaveChanges();
+            panier = null;
             return Json(new { statut = 1, message = "Votre commande a été effectuer." }, JsonRequestBehavior.AllowGet);
         }
 

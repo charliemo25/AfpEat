@@ -94,6 +94,24 @@ namespace AfpEat.Controllers
                 }
             }
 
+            List<MenuPanier> menuPaniers = new List<MenuPanier>();
+            
+            List<Menu> menus = new List<Menu>();
+
+            //Récupère les 
+            foreach (var cProduitMenu in commandeMenus)
+            {
+                if (!menus.Contains(cProduitMenu.Menus.First()))
+                {
+                    //MenuPanier menuPanier = new MenuPanier()
+                    //{
+                    //    IdMenu = cProduitMenu.Menus.First().IdMenu,
+                    //};
+                    //menuPaniers.Add(menuPanier);
+                    menus.Add(cProduitMenu.Menus.First());
+                }
+            }
+
             return View(commandes);
         }
 

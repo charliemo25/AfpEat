@@ -40,23 +40,40 @@
             </ul>
             <!-- Partie droite -->
             <ul class="navbar-nav ml-auto">
+
                 @if (user != null)
                 {
-                    <text>
-                        <li class="nav-item dropdown">
-                            <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas  fa-user "></i> @user.Prenom, votre solde: @user.Solde€
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="@Url.Action("Favoris", "Utilisateurs")/@user.IdUtilisateur"><i class="far fa-star"></i> Favoris</a>
-                                <a class="dropdown-item" href="@Url.Action("Historique", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-history"></i> Historique de Commande</a>
-                                <a class="dropdown-item" href="#"><i class="far fa-credit-card"></i> Recharger son solde</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="@Url.Action("Profil", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-cog text-muted"></i> Profil</a>
-                                <a class="dropdown-item" href="@Url.Action("Deconnexion", "Utilisateurs")"><i class="fas fa-sign-out-alt text-danger"></i> Déconnexion</a>
-                            </div>
-                        </li>
-                    </text>
+                    if (user.IdRole == 1)
+                    {
+                        <text>
+                            <li class="nav-item dropdown">
+                                <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas  fa-user "></i> @user.Prenom, votre solde: @user.Solde€
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("Favoris", "Utilisateurs")/@user.IdUtilisateur"><i class="far fa-star"></i> Favoris</a>
+                                    <a class="dropdown-item" href="@Url.Action("Historique", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-history"></i> Historique de Commande</a>
+                                    <a class="dropdown-item" href="#"><i class="far fa-credit-card"></i> Recharger son solde</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action("Profil", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-cog text-muted"></i> Profil</a>
+                                    <a class="dropdown-item" href="@Url.Action("Deconnexion", "Utilisateurs")"><i class="fas fa-sign-out-alt text-danger"></i> Déconnexion</a>
+                                </div>
+                            </li>
+                        </text>
+                    }
+                    else if (user.IdRole == 2)
+                    {
+                        <text>
+                            <li class="nav-item dropdown">
+                                <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Restaurant
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("Edit", "Restaurants")/2"><i class="far fa-star"></i> Editer les produits</a>
+                                </div>
+                            </li>
+                        </text>
+                    }
                 }
                 else
                 {

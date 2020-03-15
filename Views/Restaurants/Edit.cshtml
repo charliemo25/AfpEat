@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Restaurant</h4>
         <hr />
@@ -101,15 +101,35 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<ul>
+    @foreach (var produitCategorie in Model.ProduitCategories)
+    {
+        <li>
+            @produitCategorie.Produit.Nom - @produitCategorie.Categorie.Nom
+        </li>
+}
+</ul>
+
+<ul>
+    @foreach (var menu in Model.Menus)
+    {
+        <li>
+            @menu.Nom
+        <ul>
+            @foreach (var categorie in menu.Categories)
+            {
+                <li>@categorie.Nom</li>
+            }
+        </ul>
+    </li>
+}
+</ul>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

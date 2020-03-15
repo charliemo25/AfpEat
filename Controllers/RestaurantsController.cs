@@ -22,6 +22,11 @@ namespace AfpEat.Controllers
             return View(restaurants.ToList());
         }
 
+        public ActionResult Commande()
+        {
+            return View();
+        }
+
         public List<RestaurantProduits> RestaurantProduits(Restaurant restaurant)
         {
             List<RestaurantProduits> listRestaurantProduits = new List<RestaurantProduits>();

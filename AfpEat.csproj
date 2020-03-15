@@ -452,6 +452,7 @@
     <Content Include="Views\Home\Panier.cshtml" />
     <Content Include="Views\Home\_PanierValid.cshtml" />
     <Content Include="Views\Utilisateurs\Historique.cshtml" />
+    <Content Include="Views\Restaurants\Commande.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

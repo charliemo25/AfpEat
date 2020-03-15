@@ -38,6 +38,7 @@ namespace AfpEat.Controllers
                     utilisateur.IdSession = Session.SessionID;
                     db.SaveChanges();
 
+
                     HttpContext.Session.Add("Utilisateur", utilisateur);
 
                     return RedirectToAction("Index", "Home");

@@ -8,7 +8,7 @@
 
     <section id="HistoriqueUtilisateur" class="container mt-5">
         <div class="row row-cols-1">
-            @foreach (var commande in Model)
+            @foreach (var commande in Model.OrderByDescending(c=> c.IdCommande))
             {
                 <text>
                     <div class="card mb-3 ">

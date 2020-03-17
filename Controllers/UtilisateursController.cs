@@ -163,15 +163,15 @@ namespace AfpEat.Controllers
 
             return View(utilisateur);
         }
-        
+
         // GET: Utilisateurs/Edit/5
-        public ActionResult Profil(int? id)
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult Profil()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
+            var user = User.Identity as AfpEat.Models.CustomIdentity;
+
+            Utilisateur utilisateur = user.Utilisateur;
+            
             if (utilisateur == null)
             {
                 return HttpNotFound();

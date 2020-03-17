@@ -38,11 +38,11 @@ namespace AfpEat
         {
             AfpEatEntities db = new AfpEatEntities();
             SessionUtilisateur sessionUtilisateur = new SessionUtilisateur();
-           
+
             sessionUtilisateur.IdSession = Session.SessionID;
             sessionUtilisateur.DateSession = DateTime.Now;
 
-            
+
             db.SessionUtilisateurs.Add(sessionUtilisateur);
             db.SaveChanges();
         }
@@ -59,7 +59,7 @@ namespace AfpEat
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
-            if (FormsAuthentication.CookiesSupported == true)
+            if (FormsAuthentication.CookiesSupported)
             {
                 if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)
                 {

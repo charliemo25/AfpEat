@@ -14,7 +14,7 @@ namespace AfpEat.Controllers
 
         public ActionResult Index()
         {
-            
+
             ViewBag.Restaurants = db.Restaurants.ToList();
             return View(db.TypeCuisines.ToList());
         }

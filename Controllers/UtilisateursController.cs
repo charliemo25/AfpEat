@@ -29,7 +29,6 @@ namespace AfpEat.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 Utilisateur utilisateur = db.Utilisateurs.FirstOrDefault(p => p.Matricule == user.Matricule);
 
                 bool passwordValid = Crypto.VerifyHashedPassword(utilisateur.Password, user.Password);
@@ -39,7 +38,7 @@ namespace AfpEat.Controllers
                     utilisateur.IdSession = Session.SessionID;
                     db.SaveChanges();
 
-                    FormsAuthentication.SetAuthCookie(utilisateur.IdUtilisateur.ToString(), false);
+                    FormsAuthentication.SetAuthCookie(utilisateur.Matricule, false);
 
                     HttpContext.Session.Add("Utilisateur", utilisateur);
 
@@ -56,8 +55,9 @@ namespace AfpEat.Controllers
 
         public ActionResult Deconnexion()
         {
-                Session["utilisateur"] = null;
-                return RedirectToAction("Connexion");
+            Session["utilisateur"] = null;
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Connexion");
         }
 
         [Authorize(Roles = "Utilisateur")]
@@ -67,7 +67,6 @@ namespace AfpEat.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
 
             Utilisateur utilisateur = db.Utilisateurs.Find(id);
             if (utilisateur == null)

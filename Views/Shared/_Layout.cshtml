@@ -1,5 +1,5 @@
 ﻿@{
-    AfpEat.Models.Utilisateur user = (AfpEat.Models.Utilisateur)Session["utilisateur"];
+    var user = User.Identity as AfpEat.Models.CustomIdentity;
     AfpEat.Models.PanierModel panier = (AfpEat.Models.PanierModel)HttpContext.Current.Application[Session.SessionID] ?? new AfpEat.Models.PanierModel();
 
     var pageName = ViewContext.RouteData.Values["action"].ToString();
@@ -41,27 +41,27 @@
             <!-- Partie droite -->
             <ul class="navbar-nav ml-auto">
 
-                @if (user != null)
+                @if (user != null && user.IsAuthenticated)
                 {
-                    if (user.Roles.First().IdRole == 1)
+                    if (User.IsInRole("Utilisateur"))
                     {
                         <text>
                             <li class="nav-item dropdown">
                                 <a class="text-dark nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas  fa-user "></i> @user.Prenom, votre solde: @user.Solde€
+                                    <i class="fas  fa-user "></i> @user.Utilisateur.Prenom, votre solde: @user.Utilisateur.Solde€
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="@Url.Action("Favoris", "Utilisateurs")/@user.IdUtilisateur"><i class="far fa-star"></i> Favoris</a>
-                                    <a class="dropdown-item" href="@Url.Action("Historique", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-history"></i> Historique de Commande</a>
+                                    <a class="dropdown-item" href="@Url.Action("Favoris", "Utilisateurs")/@user.Utilisateur.IdUtilisateur"><i class="far fa-star"></i> Favoris</a>
+                                    <a class="dropdown-item" href="@Url.Action("Historique", "Utilisateurs")/@user.Utilisateur.IdUtilisateur"><i class="fas fa-history"></i> Historique de Commande</a>
                                     <a class="dropdown-item" href="#"><i class="far fa-credit-card"></i> Recharger son solde</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="@Url.Action("Profil", "Utilisateurs")/@user.IdUtilisateur"><i class="fas fa-cog text-muted"></i> Profil</a>
+                                    <a class="dropdown-item" href="@Url.Action("Profil", "Utilisateurs")/@user.Utilisateur.IdUtilisateur"><i class="fas fa-cog text-muted"></i> Profil</a>
                                     <a class="dropdown-item" href="@Url.Action("Deconnexion", "Utilisateurs")"><i class="fas fa-sign-out-alt text-danger"></i> Déconnexion</a>
                                 </div>
                             </li>
                         </text>
                     }
-                    else if (user.Roles.First().IdRole == 2)
+                    else if (User.IsInRole("Restaurateur"))
                     {
                         <text>
                             <li class="nav-item dropdown">

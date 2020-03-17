@@ -43,7 +43,7 @@
 
                 @if (user != null)
                 {
-                    if (user.IdRole == 1)
+                    if (user.Roles.First().IdRole == 1)
                     {
                         <text>
                             <li class="nav-item dropdown">
@@ -61,7 +61,7 @@
                             </li>
                         </text>
                     }
-                    else if (user.IdRole == 2)
+                    else if (user.Roles.First().IdRole == 2)
                     {
                         <text>
                             <li class="nav-item dropdown">

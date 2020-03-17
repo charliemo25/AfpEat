@@ -20,6 +20,7 @@ namespace AfpEat.Models
             this.Commandes = new HashSet<Commande>();
             this.Operations = new HashSet<Operation>();
             this.Restaurants = new HashSet<Restaurant>();
+            this.Roles = new HashSet<Role>();
             this.Restaurants1 = new HashSet<Restaurant>();
         }
     
@@ -30,7 +31,6 @@ namespace AfpEat.Models
         public string Password { get; set; }
         public bool Statut { get; set; }
         public decimal Solde { get; set; }
-        public Nullable<int> IdRole { get; set; }
         public string IdSession { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -39,7 +39,8 @@ namespace AfpEat.Models
         public virtual ICollection<Operation> Operations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restaurant> Restaurants { get; set; }
-        public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Role> Roles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restaurant> Restaurants1 { get; set; }
     }

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Security;
 using AfpEat.Models;
 
 namespace AfpEat.Controllers
@@ -38,6 +39,7 @@ namespace AfpEat.Controllers
                     utilisateur.IdSession = Session.SessionID;
                     db.SaveChanges();
 
+                    FormsAuthentication.SetAuthCookie(utilisateur.IdUtilisateur.ToString(), false);
 
                     HttpContext.Session.Add("Utilisateur", utilisateur);
 
@@ -58,13 +60,15 @@ namespace AfpEat.Controllers
                 return RedirectToAction("Connexion");
         }
 
+        [Authorize(Roles = "Utilisateur")]
         public ActionResult Historique(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
+
             Utilisateur utilisateur = db.Utilisateurs.Find(id);
             if (utilisateur == null)
             {
@@ -160,7 +164,7 @@ namespace AfpEat.Controllers
 
             return View(utilisateur);
         }
-
+        
         // GET: Utilisateurs/Edit/5
         public ActionResult Profil(int? id)
         {

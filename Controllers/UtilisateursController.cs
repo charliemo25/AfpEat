@@ -55,21 +55,17 @@ namespace AfpEat.Controllers
 
         public ActionResult Deconnexion()
         {
-            Session["utilisateur"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Connexion");
         }
 
         [Authorize(Roles = "Utilisateur")]
-        public ActionResult Historique(int? id)
+        public ActionResult Historique()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Utilisateur utilisateur = db.Utilisateurs.Find(id);
-            if (utilisateur == null)
+            var identity = User.Identity as CustomIdentity;
+            Utilisateur utilisateur = identity.Utilisateur;
+            
+            if (!User.Identity.IsAuthenticated)
             {
                 return HttpNotFound();
             }
@@ -117,6 +113,21 @@ namespace AfpEat.Controllers
             }
 
             return View(commandes);
+        }
+
+        [Authorize(Roles = "Utilisateur")]
+        public ActionResult Favoris()
+        {
+
+            var identity = User.Identity as CustomIdentity;
+            Utilisateur utilisateur = identity.Utilisateur;
+
+            if (utilisateur == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(db.Restaurants.ToList());
         }
 
         // GET: Utilisateurs

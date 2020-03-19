@@ -1,0 +1,41 @@
+﻿@model IEnumerable<AfpEat.Models.Restaurant>
+@{
+    ViewBag.Title = "Favoris";
+
+}
+
+<section id="Favoris" class="container mt-5">
+    <!-- Restaurants -->
+    <div class="row row-cols-1">
+        @foreach (var restaurant in Model)
+        {
+            <text>
+                <div class="card border-0 bg-transparent mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-auto">
+                            <img src="/Images/@restaurant.Photos.First().Nom" alt="" />
+                        </div>
+                        <div class="col mx-2 bg-white">
+                            <div class="card-block p-2">
+                                <h4 class="card-title text-left">@restaurant.Nom</h4>
+                                <p class="card-text">@restaurant.TypeCuisine.Nom</p>
+                                <p class="card-text">
+                                    <ul class="list-group list-group-horizontal ">
+                                        @foreach (var categorie in restaurant.ProduitCategories.GroupBy(r => r.Categorie.Nom))
+                                        {
+                                            <li class="list-group-item small">@categorie.Key</li>
+                                        }
+                                    </ul>
+                                </p>
+                                <p class="card-text">
+                                    <a href="@Url.Action("Details/"+restaurant.IdRestaurant , "Restaurants")" class="text-right btn btn-outline-danger">Passer une commande</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </text>
+        }
+    </div>
+</section>
+
